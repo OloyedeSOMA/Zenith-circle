@@ -15,8 +15,4 @@ class RegisterSerializer(serializers.Serializer):
 
     
     def validate_email(self, value):
-        if user_email_exists(email=value):
-            raise ValidationError({
-                'detail': 'Email already exists'
-            })
         return value.lower()

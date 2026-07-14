@@ -32,6 +32,9 @@ class User(AbstractUser, BaseModel):
 
     objects = UserManager()
 
+    class Meta:
+        ordering = ["-created_at"]
+
 
     def __str__(self):
         return self.email
