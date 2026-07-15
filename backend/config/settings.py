@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'apps.posts.apps.PostsConfig',
     'rest_framework',
     'django_redis',
+    'anymail',
     'rest_framework_simplejwt',
     'rest_framework_simplejwt.token_blacklist',
     'drf_spectacular',
@@ -171,7 +172,11 @@ CSRF_COOKIE_SECURE = True
 AUTH_USER_MODEL = 'users.User'
 
 BACKEND_BASE_URL = os.environ.get('BACKEND_BASE_URL')
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+#EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_BACKEND = "anymail.backends.resend.EmailBackend"
+ANYMAIL = {
+    "RESEND_API_KEY": os.environ.get("RESEND_API_KEY"),
+}
 DEFAULT_FROM_EMAIL = os.environ.get('DEFAULT_FROM_EMAIL')
 
 
