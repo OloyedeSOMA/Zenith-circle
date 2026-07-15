@@ -174,5 +174,5 @@ SPECTACULAR_SETTINGS = {
     'DESCRIPTION': 'Verified Internships, Scholarships & Jobs in One Place',
     'VERSION': '1.0.0',
     'SERVE_INCLUDE_SCHEMA': False,
-    # OTHER SETTINGS
+    'SCHEMA_PATH_PREFIX': r'/api/v1/',
 }

@@ -14,16 +14,20 @@ def reset_password(*, user_id: str, token: str, password: str) -> User:
     """
     user = get_user_by_id(user_id=user_id)
     if not user:
-        raise ValidationError('Invalid reset password request')
+        raise ValidationError({
+            'detail': 'Invalid reset password request'
+        })
 
     key = f'opphub:passwordreset:{user.id}'
     cached_token = cache.get(key)
 
     if not cached_token or cached_token != token:
-        raise ValidationError('Invalid or expired token')
+        raise ValidationError({
+            'detail': 'Invalid or expired token'
+        })
 
     user.set_password(password)
-    user.save(update_fields=['password'])
+    user.save()
 
     cache.delete(key)
 

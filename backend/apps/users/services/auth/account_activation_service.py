@@ -20,16 +20,20 @@ def activate_account(*, user_id: str, token: str) -> User:
     if not user:
         raise NotFound('User not found')
 
-    if user.is_active:
-        raise ValidationError('User already verified')
+    if user.is_verified:
+        raise ValidationError({
+            'detail': 'User already verified'
+        })
 
     key = f'opphub:registertoken:{user_id}'
     cached_token = cache.get(key)
     if not cached_token or cached_token != token:
-        raise ValidationError('Invalid or expired activation token')
+        raise ValidationError({
+            'detail': 'Invalid or expired activation token'
+        })
 
-    user.is_active = True
-    user.save(update_fields=['is_active'])
+    user.is_verified = True
+    user.save(update_fields=['is_verified'])
     cache.delete(key)
 
 

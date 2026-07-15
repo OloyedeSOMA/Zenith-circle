@@ -3,7 +3,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from drf_spectacular.utils import extend_schema
 from apps.users.serializers.auth.forgot_password import ForgotPasswordSerializer
-from apps.common.email.verify import send_reset_password_email
+from apps.common.email.email_service import send_reset_password_email
 
 
 @extend_schema(request=ForgotPasswordSerializer, responses=None)

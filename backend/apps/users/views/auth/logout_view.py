@@ -24,7 +24,6 @@ class LogoutAPIView(APIView):
         refresh_token = serializer.validated_data['refresh_token']
         logout_user(refresh_token=refresh_token)
 
-        return Response(
-            'User logged out successfully',
-            status=status.HTTP_204_NO_CONTENT
-        )
+        return Response({
+            'detail': 'User logged out successfully',
+        }, status=status.HTTP_204_NO_CONTENT)

@@ -18,6 +18,10 @@ def login_user(*, email:str, password: str) -> dict:
     if not user:
         raise AuthenticationFailed('Invalid email or password')
 
+    if not user.is_verified:
+        raise AuthenticationFailed("Please verify your email address.")
+
+
     refresh = RefreshToken.for_user(user)
     update_last_login(None, user)
 
