@@ -21,6 +21,6 @@ class RegisterAPIView(APIView):
         register_user(**data)
 
         return Response({
-            'detail': 'Registration successful',
+            'detail': 'Registration successful, Please check your email to verify your account',
             'email': data['email']
         }, status=status.HTTP_201_CREATED)
