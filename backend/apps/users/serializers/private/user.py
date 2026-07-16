@@ -18,8 +18,9 @@ class PrivateUserSerializer(serializers.ModelSerializer):
             'last_name',
             'role',
             'is_active',
+            'is_verified',
             'last_login',
             'created_at',
         )
 
-        read_only_fields  = ['id', 'last_login', 'is_active', 'created_at']
+        read_only_fields  = ['id', 'last_login', 'is_active', 'is_verified', 'created_at']
