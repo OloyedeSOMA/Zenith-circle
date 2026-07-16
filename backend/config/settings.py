@@ -172,13 +172,14 @@ CSRF_COOKIE_SECURE = True
 AUTH_USER_MODEL = 'users.User'
 
 BACKEND_BASE_URL = os.environ.get('BACKEND_BASE_URL')
-#EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-EMAIL_BACKEND = "anymail.backends.resend.EmailBackend"
-ANYMAIL = {
-    "RESEND_API_KEY": os.environ.get("RESEND_API_KEY"),
-}
-DEFAULT_FROM_EMAIL = os.environ.get('DEFAULT_FROM_EMAIL')
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+# EMAIL_BACKEND = "anymail.backends.resend.EmailBackend"
+# ANYMAIL = {
+#     "RESEND_API_KEY": os.environ.get("RESEND_API_KEY"),
+# }
 
+DEFAULT_FROM_EMAIL = os.environ.get('DEFAULT_FROM_EMAIL')
+RESEND_API_KEY = os.environ["RESEND_API_KEY"]
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (

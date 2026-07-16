@@ -4,8 +4,12 @@ from django.contrib.auth import get_user_model
 from django.conf import settings
 from apps.users.selectors.user import get_user_by_email
 import secrets
+import resend
+import os
 
 
+
+resend.api_key = settings.RESEND_API_KEY
 User = get_user_model()
 
 TOKEN_TTL = 60 * 60 * 24 * 3
@@ -42,13 +46,23 @@ def send_account_activation_email(user: User):
     If you did not request this registration, please ignore this email
     """
 
-    send_mail(
-        subject=subject,
-        message=msg,
-        from_email=settings.DEFAULT_FROM_EMAIL,
-        recipient_list=[user.email],
-        fail_silently=False
-    )
+
+    params: resend.Emails.SendParams = {
+        'from': settings.DEFAULT_FROM_EMAIL,
+        'to': [user.email],
+        'subject': subject,
+        'text': msg,
+        }
+
+    resend.Emails.send(params)
+
+    # send_mail(
+    #     subject=subject,
+    #     message=msg,
+    #     from_email=settings.DEFAULT_FROM_EMAIL,
+    #     recipient_list=[user.email],
+    #     fail_silently=False
+    # )
 
 
 
@@ -79,10 +93,19 @@ def send_reset_password_email(*, email: str):
     If you did not request this reset link, please ignore this email 
     """
 
-    send_mail(
-        subject=subject,
-        message=msg,
-        from_email=settings.DEFAULT_FROM_EMAIL,
-        recipient_list=[user.email],
-        fail_silently=False
-    )
+    params: resend.Emails.SendParams = {
+        'from': settings.DEFAULT_FROM_EMAIL,
+        'to': [user.email],
+        'subject': subject,
+        'text': msg,
+        }
+
+    resend.Emails.send(params)
+
+    # send_mail(
+    #     subject=subject,
+    #     message=msg,
+    #     from_email=settings.DEFAULT_FROM_EMAIL,
+    #     recipient_list=[user.email],
+    #     fail_silently=False
+    # )
