@@ -210,5 +210,5 @@ CORS_ALLOWED_ORIGINS = [
 ]
 
 CSRF_TRUSTED_ORIGINS = [
-    "https://opportunityhubng.onrender.com",
+    "https://opportunityhubng.my.to",
 ]

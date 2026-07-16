@@ -28,7 +28,7 @@ def send_account_activation_email(user: User):
     
     activation_link = f'{settings.BACKEND_BASE_URL}/api/v1/auth/activate-account/?id={user_id}&token={token}'
 
-    subject = f'Verify your email address - Storefront'
+    subject = f'Activate your account - OpportunityHub NG'
 
     msg = f"""
 
