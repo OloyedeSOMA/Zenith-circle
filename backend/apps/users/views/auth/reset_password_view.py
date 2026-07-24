@@ -8,7 +8,7 @@ from apps.users.services.auth.reset_password_service import reset_password
 
 
 
-@extend_schema(request=ResetPasswordSerializer, responses=PrivateUserSerializer)
+@extend_schema(tags=['Auth'], request=ResetPasswordSerializer, responses=PrivateUserSerializer)
 class ResetPasswordAPIView(APIView):
     """
 

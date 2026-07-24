@@ -7,6 +7,7 @@ from apps.users.views.auth.account_activation_view import AccountActivationAPIVi
 from apps.users.views.auth.resend_account_activation_view import ResendAccountActivationAPIView
 from apps.users.views.auth.forgot_password_view import ForgotPasswordAPIView
 from apps.users.views.auth.reset_password_view import ResetPasswordAPIView
+from apps.users.views.auth.token_refresh_view import AuthTokenRefreshAPIView
 
 
 urlpatterns = [
@@ -19,5 +20,5 @@ urlpatterns = [
     path('reset-password/', ResetPasswordAPIView.as_view(), name='user-reset-password'),
 
 
-    path('token/refresh/', TokenRefreshView.as_view(), name='token-refresh'),
+    path('token/refresh/', AuthTokenRefreshAPIView.as_view(), name='token-refresh'),
 ]

@@ -7,7 +7,7 @@ from apps.users.serializers.auth.logout import LogoutSerializer
 from apps.users.services.auth.logout_service import logout_user
 
 
-@extend_schema(request=LogoutSerializer, responses=None)
+@extend_schema(tags=['Auth'], request=LogoutSerializer, responses=None)
 class LogoutAPIView(APIView):
     """
 

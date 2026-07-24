@@ -44,7 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'apps.users.apps.UsersConfig',
-    'apps.posts.apps.PostsConfig',
+    'apps.opportunities.apps.OpportunitiesConfig',
     'rest_framework',
     'django_redis',
     'anymail',
