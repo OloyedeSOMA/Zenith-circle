@@ -6,6 +6,7 @@ export default function Home() {
     <div >
       
   <AuthCard>
+    <h2>Deployment Testing</h2>
     <input type="input" placeholder="whats your name"/>
     <input type="input" placeholder="test"/>
 
