@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import Input from "../Input";
 import Button from "../Button";
+import AuthFormCard from "./AuthFormCard";
 
 interface ForgotPasswordValues {
   identifier: string;
@@ -33,18 +34,16 @@ const ForgotPasswordForm = () => {
   };
 
   return (
-    <div className="h-auto w-full max-w-[542px] rounded-lg border border-gray-300">
-      <div className="flex flex-col items-center gap-1 text-center mb-5">
-        <h1 className="text-lg font-bold text-gray-900">OpportunityHub NG</h1>
-        <p className="text-sm text-gray-500">Reset Password</p>
-        <p className="text-sm text-gray-500">
-          An OTP will be sent to your registered email or phone number
-        </p>
-      </div>
+    <AuthFormCard
+      title="OpportunityHub NG"
+      subtitle="Reset Password"
+      info_text= "An OTP will be sent to your registered email or phone number"
+    >
+    
 
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="flex flex-col items-center gap-6 px-4 pb-12 pt-8 sm:px-8"
+        className="mt-10 flex w-full max-w-[440px] flex-col gap-6"
       >
         <Input
           label="Email/Phone Number"
@@ -65,12 +64,12 @@ const ForgotPasswordForm = () => {
           type="submit"
           variant="danger"
           disabled={!isValid || isSubmitting}
-          className="mx-auto h-[49px] w-full max-w-[440px] font-medium"
+          className="h-[49px] w-full font-medium"
         >
           {isSubmitting ? "Sending..." : "Recover Password"}
         </Button>
       </form>
-    </div>
+    </AuthFormCard>
   );
 };
 

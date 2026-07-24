@@ -6,6 +6,7 @@ import { useState } from "react";
 import Input from "../Input";
 import Button from "../Button";
 import SuccessModal from "../SuccessModal";
+import AuthFormCard from "./AuthFormCard";
 
 interface ResetPasswordValues {
   identifier: string;
@@ -39,15 +40,13 @@ const ResetPasswordForm = () => {
   };
 
   return (
-    <div className="h-auto w-full max-w-[542px] rounded-lg border border-gray-300">
-      <div className="flex flex-col items-center gap-1 text-center mb-5">
-        <h1 className="text-lg font-bold text-gray-900">OpportunityHub NG</h1>
-        <p className="text-sm text-gray-500">Use a password you haven't used before</p>
-      </div>
-
-      <form
+    <AuthFormCard
+      title="OpportunityHub NG"
+      subtitle="Use a password you haven't used before"
+    >
+    <form
         onSubmit={handleSubmit(onSubmit)}
-        className="flex flex-col items-center gap-6 px-4 pb-12 pt-8 sm:px-8"
+        className="mt-10 flex w-full max-w-[440px] flex-col gap-6"
       >
         <Input
           label="Email/Phone Number"
@@ -84,7 +83,7 @@ const ResetPasswordForm = () => {
         <Button
           type="submit"
           variant="muted"
-          className="mx-auto h-[49px] w-full max-w-[440px] font-medium"
+          className="h-[49px] w-full font-medium"
         >
           Reset Password
         </Button>
@@ -97,7 +96,7 @@ const ResetPasswordForm = () => {
         onButtonClick={() => router.push("/login")}
         onClose={() => setShowSuccess(false)}
       />
-    </div>
+    </AuthFormCard>
   );
 };
 

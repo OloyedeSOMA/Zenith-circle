@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import Link from "next/link";
 import Input from "../Input";
 import Button from "../Button";
+import AuthFormCard from "./AuthFormCard";
 
 interface SignupFormValues {
   firstName: string;
@@ -25,15 +26,14 @@ const SignupForm = () => {
   };
 
   return (
-    <div className="h-auto w-full max-w-[542px] rounded-lg border border-gray-300">
-      <div className="flex flex-col items-center gap-1">
-        <h1 className="text-lg font-bold text-gray-900">OpportunityHub NG</h1>
-        <p className="text-sm text-gray-500">Create Admin Account</p>
-      </div>
+    <AuthFormCard
+      title="OpportunityHub NG"
+      subtitle="Create Account"
+    >
 
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="flex flex-col items-center gap-6 px-4 pb-12 pt-8 sm:px-8"
+        className="mt-10 flex w-full max-w-[440px] flex-col gap-6"
       >
         <Input
           label="First name"
@@ -72,19 +72,19 @@ const SignupForm = () => {
         <Button
           type="submit"
           variant="primary"
-          className="mx-auto h-[49px] w-full max-w-[440px] font-medium"
+          className="h-[49px] w-full font-medium"
         >
           Create Account
         </Button>
 
-        <p className="text-sm text-gray-600">
+        <p className="text-center text-sm text-gray-600">
           Already have an account?{" "}
           <Link href="/login" className="font-medium text-primary">
             Login
           </Link>
         </p>
 
-        <label className="mx-auto flex w-full max-w-[440px] items-start gap-2 text-xs text-gray-600">
+        <label className="flex w-full items-start gap-2 text-xs text-gray-600">
           <input
             type="checkbox"
             {...register("agreeToTerms", { required: true })}
@@ -102,7 +102,7 @@ const SignupForm = () => {
           </span>
         </label>
       </form>
-    </div>
+    </AuthFormCard>
   );
 };
 

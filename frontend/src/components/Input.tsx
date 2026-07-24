@@ -27,7 +27,7 @@ const Input = ({
   const inputType = isPassword ? (showPassword ? "text" : "password") : type;
 
   return (
-    <div className={`mx-auto flex w-full max-w-[440px] flex-col gap-2 ${className}`}>
+    <div className={`flex w-full flex-col gap-1.5 ${className}`}>
       <label className="text-sm font-medium text-gray-700">{label}</label>
 
       <div className="relative w-full">
@@ -35,7 +35,7 @@ const Input = ({
           {...register}
           {...props}
           type={inputType}
-          className={`w-full ${inputHeight} rounded-lg border border-gray-300 bg-white px-5 text-gray-900 placeholder:text-gray-400 ${
+          className={`w-full ${inputHeight} rounded-lg border border-gray-300 bg-white px-4 leading-normal text-gray-900 placeholder:text-gray-400 ${
             isPassword ? "pr-12" : ""
           } outline-none focus:border-primary`}
         />

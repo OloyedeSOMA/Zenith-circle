@@ -6,6 +6,7 @@ import Link from "next/link";
 import Input from "../Input";
 import Button from "../Button";
 import GoogleIcon from "../../../public/Social.png"
+import AuthFormCard from "./AuthFormCard";
 
 interface LoginFormValues {
   email: string;
@@ -24,21 +25,20 @@ const LoginForm = () => {
   };
 
   return (
-    <div className="h-auto w-full max-w-[542px] rounded-lg border border-gray-300">
-      <div className="flex flex-col items-center gap-1">
-        <h1 className="text-lg font-bold text-gray-900">OpportunityHub NG</h1>
-        <p className="text-sm text-gray-500">Create Account</p>
-      </div>
+    <AuthFormCard
+      title="OpportunityHub NG"
+      subtitle="Login"
+    >
 
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="flex flex-col items-center gap-6 px-4 pb-12 pt-8 sm:px-8"
+        className="mt-10 flex w-full max-w-[440px] flex-col gap-6"
       >
         <Input
-          label="Email/Phone Number"
-          placeholder="Email/Phone Number"
+          label="Email"
+          placeholder="Email"
           register={register("email", {
-            required: "Email or phone number is required",
+            required: "Email is required",
           })}
           error={errors.email?.message}
         />
@@ -58,12 +58,12 @@ const LoginForm = () => {
           type="submit"
           variant="primary"
           disabled={!isValid || isSubmitting}
-          className="mx-auto h-[49px] w-full max-w-[440px] font-medium"
+          className="h-[49px] w-full font-medium"
         >
           Log in
         </Button>
 
-        <div className="mx-auto flex w-full max-w-[440px] items-center gap-3">
+        <div className="my-1 flex w-full items-center gap-3">
           <span className="h-px flex-1 bg-gray-200" />
           <span className="text-sm text-gray-400">OR</span>
           <span className="h-px flex-1 bg-gray-200" />
@@ -72,26 +72,27 @@ const LoginForm = () => {
         <Button
           type="button"
           variant="secondary"
-          className="mx-auto flex h-[49px] w-full max-w-[440px] items-center justify-center gap-2 font-medium"
+          className="flex h-[49px] w-full items-center justify-center gap-2 font-medium"
         >
           <Image src={GoogleIcon} alt="google icon" priority/>
           Login with Google
         </Button>
-
-        <p className="text-sm text-gray-600">
+        
+        <p className="text-center text-sm text-gray-600">
           Don't have an account?{" "}
           <Link href="/signup" className="font-medium text-primary">
             Sign up
           </Link>
         </p>
-        <p className="text-sm text-gray-600">
+
+        <p className="text-center text-sm text-gray-600">
           Forgot Password?{" "}
           <Link href="/forgot-password" className="font-medium text-primary">
-             forgot password
+            Forgot password
           </Link>
         </p>
       </form>
-    </div>
+    </AuthFormCard>
   );
 };
 
