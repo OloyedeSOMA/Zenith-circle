@@ -9,8 +9,8 @@ class UserRole(models.TextChoices):
 
     """
     STUDENT = 'student', 'Student'
-    EDITOR = 'editor', 'Editor'
-    ADMIN = 'admin', 'Admin'
+    RECRUITER = 'recruiter', 'Recruiter'
+    #ADMIN = 'admin', 'Admin'
 
 
 

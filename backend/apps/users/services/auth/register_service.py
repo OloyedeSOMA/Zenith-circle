@@ -8,7 +8,7 @@ User = get_user_model()
 
 
 @transaction.atomic
-def register_user(*, first_name: str, last_name: str, email: str, password: str) -> User:
+def register_user(*, first_name: str, last_name: str, email: str, password: str, role: str) -> User:
     """
     creates a user
     """
@@ -20,6 +20,7 @@ def register_user(*, first_name: str, last_name: str, email: str, password: str)
         last_name=last_name,
         email=email,
         password=password,
+        role=role,
     )
 
     send_account_activation_email(user)
