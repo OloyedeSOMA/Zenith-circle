@@ -6,6 +6,6 @@ from apps.opportunities.views.public.opportunity_field_list_view import PublicOp
 
 urlpatterns = [
     path('', PublicOpportunityListAPIView.as_view(), name="public-opportunity-list"),
-    path('opportunities/<slug:slug>/', PublicOpportunityDetailAPIView.as_view(), name="public-opportunity-detail"),
-    path('opportunities/fields/', PublicOpportunityFieldListAPIView.as_view(), name="public-opportunity-field-list"),
+    path('<slug:slug>/', PublicOpportunityDetailAPIView.as_view(), name="public-opportunity-detail"),
+    path('fields/', PublicOpportunityFieldListAPIView.as_view(), name="public-opportunity-field-list"),
 ]
