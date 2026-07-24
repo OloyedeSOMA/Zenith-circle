@@ -1,0 +1,1 @@
+from .opportunity import OpportunityField, Opportunity, OpportunityStatus, OpportunityType

@@ -6,7 +6,7 @@ from apps.users.serializers.auth.forgot_password import ForgotPasswordSerializer
 from apps.common.email.email_service import send_reset_password_email
 
 
-@extend_schema(request=ForgotPasswordSerializer, responses=None)
+@extend_schema(tags=['Auth'], request=ForgotPasswordSerializer, responses=None)
 class ForgotPasswordAPIView(APIView):
     """
 

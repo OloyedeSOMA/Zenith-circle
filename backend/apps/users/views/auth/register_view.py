@@ -6,7 +6,7 @@ from apps.users.serializers.auth.register import RegisterSerializer
 from apps.users.services.auth.register_service import register_user
 
 
-@extend_schema(request=RegisterSerializer, responses=None)
+@extend_schema(tags=['Auth'], request=RegisterSerializer, responses=None)
 class RegisterAPIView(APIView):
     authentication_classes = []
     permission_classes = []
