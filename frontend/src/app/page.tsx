@@ -5,7 +5,11 @@ export default function Home() {
   return (
     <div >
       
-<AuthCard><input type="input" placeholder="whats your name"/></AuthCard>
+  <AuthCard>
+    <input type="input" placeholder="whats your name"/>
+    <input type="input" placeholder="test"/>
+
+  </AuthCard>
     </div>
   );
 }
