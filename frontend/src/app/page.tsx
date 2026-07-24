@@ -1,5 +1,5 @@
 import AuthCard from "@/components/AuthCard";
-import Button from "@/components/Button";
+
 
 export default function Home() {
   return (
