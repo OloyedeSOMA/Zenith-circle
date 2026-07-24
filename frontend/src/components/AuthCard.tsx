@@ -22,7 +22,7 @@ const AuthCard = ({ children }: AuthCardProps) => {
         />
       </div>
 
-      <div className="mx-auto flex w-full items-center justify-center bg-white px-6 py-12 pr-12 lg:w-[45%] md:p-5">
+      <div className="flex w-full items-center justify-center px-4 py-8 sm:px-6 lg:w-[45%] lg:px-10">
         {children}
       </div>
     </div>

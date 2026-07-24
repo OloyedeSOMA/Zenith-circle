@@ -23,7 +23,8 @@ const Button = ({
   const variants = {
     primary:
       "bg-primary text-white hover:opacity-90 disabled:bg-disabled disabled:text-gray-500 disabled:opacity-100 disabled:cursor-not-allowed disabled:hover:opacity-100",
-    secondary:
+    
+      secondary:
       "bg-secondary text-white hover:opacity-90 disabled:bg-disabled disabled:text-gray-500 disabled:opacity-100 disabled:cursor-not-allowed disabled:hover:opacity-100",
     accent:
       "bg-accent text-white hover:opacity-90 disabled:bg-disabled disabled:text-gray-500 disabled:opacity-100 disabled:cursor-not-allowed disabled:hover:opacity-100",

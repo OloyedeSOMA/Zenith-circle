@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import Button from "../Button";
 import OtpInput from "../OtpInput";
+import AuthFormCard from "./AuthFormCard";
 
 interface VerifyCodeValues {
   code: string;
@@ -58,22 +59,19 @@ const VerifyCodeForm = ({ email }: VerifyCodeFormProps) => {
   };
 
   return (
-    <div className="h-auto w-full max-w-[542px] rounded-lg border border-gray-300">
-      <div className="flex flex-col items-center gap-1 text-center">
-        <h1 className="text-lg font-bold text-gray-900">OpportunityHub NG</h1>
-        <p className="text-sm text-gray-500">Verify Code</p>
-        <p className="text-sm text-gray-500">Please enter the code sent to the email</p>
-        <p className="text-sm font-medium text-primary">{email}</p>
-      </div>
-
-      <form
+    <AuthFormCard
+      title="OpportunityHub NG"
+      subtitle="Verify Code"
+      info_text="Please enter the code sent to the email "
+    >
+    <form
         onSubmit={handleSubmit(onSubmit)}
-        className="flex flex-col items-center gap-6 px-4 pb-12 pt-8 sm:px-8"
+        className="mt-10 flex w-full max-w-[440px] flex-col gap-6"
       >
         <OtpInput name="code" control={control} length={6} error={serverError ?? undefined} />
 
         <p className="text-sm text-gray-500">
-          Didn&apos;t receive OTP?{" "}
+          Didn't receive OTP?{" "}
           <button
             type="button"
             onClick={handleResend}
@@ -88,12 +86,12 @@ const VerifyCodeForm = ({ email }: VerifyCodeFormProps) => {
           type="submit"
           variant="danger"
           disabled={!isValid || isSubmitting}
-          className="mx-auto h-[49px] w-full max-w-[440px] font-medium"
+          className="h-[49px] w-full font-medium"
         >
           {isSubmitting ? "Verifying..." : "Verify"}
         </Button>
       </form>
-    </div>
+    </AuthFormCard>
   );
 };
 
