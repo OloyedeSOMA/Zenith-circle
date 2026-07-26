@@ -1,13 +1,18 @@
 "use client";
 
 import { useForm } from "react-hook-form";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Input from "../Input";
 import Button from "../Button";
 import AuthFormCard from "./AuthFormCard";
+import SuccessModal from "../SuccessModal";
+import { useRegister } from "@/hooks/useAuth";
 
 interface SignupFormValues {
   firstName: string;
+  lastName: string;
   email: string;
   password: string;
   confirmPassword: string;
@@ -15,6 +20,9 @@ interface SignupFormValues {
 }
 
 const SignupForm = () => {
+  const router = useRouter();
+  const {mutate, isPending,} = useRegister();
+  const [showSuccess, setShowSuccess] = useState(false);
   const {
     register,
     handleSubmit,
@@ -22,8 +30,29 @@ const SignupForm = () => {
   } = useForm<SignupFormValues>();
 
   const onSubmit = (data: SignupFormValues) => {
-    console.log(data);
+    mutate(
+    {
+      email: data.email,
+      first_name: data.firstName,
+      last_name: data.lastName,
+      password: data.password,
+      role: "student",
+    },
+    {
+      onSuccess: (response) => {
+        console.log("Register response:", response);
+        setShowSuccess(true);
+      },
+
+      onError: (error) => {
+        console.error(error);
+        console.log(data);
+      },
+    }
+  );
   };
+
+  const policyLink = "https://docs.google.com/document/d/1Hobafy_YF06Isxz3KFYNMCsY3cc8UJTR/edit?usp=sharing&ouid=111787107402201421453&rtpof=true&sd=true";
 
   return (
     <AuthFormCard
@@ -40,6 +69,13 @@ const SignupForm = () => {
           placeholder="First name"
           register={register("firstName", { required: "First name is required" })}
           error={errors.firstName?.message}
+        />
+
+        <Input
+          label="Last name"
+          placeholder="Last name"
+          register={register("lastName", { required: "First name is required" })}
+          error={errors.lastName?.message}
         />
 
         <Input
@@ -73,16 +109,10 @@ const SignupForm = () => {
           type="submit"
           variant="primary"
           className="h-[49px] w-full font-medium"
+          disabled={isPending}
         >
-          Create Account
+          {isPending? "Creating Account.." : "Create Account"}
         </Button>
-
-        <p className="text-center text-sm text-gray-600">
-          Already have an account?{" "}
-          <Link href="/login" className="font-medium text-primary">
-            Login
-          </Link>
-        </p>
 
         <label className="flex w-full items-start gap-2 text-xs text-gray-600">
           <input
@@ -92,16 +122,32 @@ const SignupForm = () => {
           />
           <span>
             By continuing, you agree to our{" "}
-            <Link href="/terms" className="text-primary underline">
+            <Link href={policyLink} className="text-primary underline">
               Terms of Service
             </Link>{" "}
             and{" "}
-            <Link href="/privacy" className="text-primary underline">
+            <Link href={policyLink} className="text-primary underline">
               Privacy Policy
             </Link>
           </span>
         </label>
+
+        <p className="text-center text-sm text-gray-600">
+          Already have an account?{" "}
+          <Link href="/login" className="font-medium text-primary">
+            Login
+          </Link>
+        </p>
+
+        
       </form>
+      <SuccessModal
+        open={showSuccess}
+        message="Account created successfully. Check your mail to activate your account"
+        buttonText="Okay"
+        onButtonClick={() => router.push("/login")}
+        onClose={() => setShowSuccess(false)}
+      />
     </AuthFormCard>
   );
 };

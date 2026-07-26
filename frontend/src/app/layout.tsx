@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { inter, montserrat, poppins } from "@/theme";
 import "./globals.css";
+import QueryProvider from "@/providers/QueryProvider";
 
 
 export const metadata: Metadata = {
@@ -14,11 +15,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html
-      lang="en"
-      className={`${inter.variable} ${montserrat.variable} ${poppins.variable} h-full antialiased`}
-    >
-      <body className="min-h-full flex flex-col">{children}</body>
-    </html>
+    <QueryProvider>
+      <html
+        lang="en"
+        className={`${inter.variable} ${montserrat.variable} ${poppins.variable} h-full antialiased`}
+      >
+        <body className="min-h-full flex flex-col">{children}</body>
+      </html>
+    </QueryProvider>
   );
 }
