@@ -1,10 +1,13 @@
 "use client";
 
 import { useForm } from "react-hook-form";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Input from "../Input";
 import Button from "../Button";
 import AuthFormCard from "./AuthFormCard";
+import SuccessModal from "../SuccessModal";
 
 interface SignupFormValues {
   firstName: string;
@@ -15,6 +18,8 @@ interface SignupFormValues {
 }
 
 const SignupForm = () => {
+  const router = useRouter();
+  const [showSuccess, setShowSuccess] = useState(false);
   const {
     register,
     handleSubmit,
@@ -23,6 +28,7 @@ const SignupForm = () => {
 
   const onSubmit = (data: SignupFormValues) => {
     console.log(data);
+    setShowSuccess(true)
   };
 
   return (
@@ -102,6 +108,13 @@ const SignupForm = () => {
           </span>
         </label>
       </form>
+      <SuccessModal
+        open={showSuccess}
+        message="Account created successfully. Check your mail to activate your account"
+        buttonText="Okay"
+        onButtonClick={() => router.push("/login")}
+        onClose={() => setShowSuccess(false)}
+      />
     </AuthFormCard>
   );
 };

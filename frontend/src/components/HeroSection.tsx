@@ -10,9 +10,9 @@ import SaveTrackCard from "../../public/hero-image3.png";
 const HeroSection = () => {
   return (
     <section className="w-full bg-[#F5F6F7] max-w-[100%] flex justify-center">
-      <div className="mx-auto flex w-full max-w-[1200px] items-center justify-between gap-12 px-4 py-16 sm:px-6 lg:px-8 lg:py-20">
+      <div className="mx-auto flex w-full max-w-[90%] mt-5 items-center justify-between gap-12 px-4 py-16 sm:px-6 lg:px-8 lg:py-20">
         {/* Left */}
-        <div className="w-full lg:w-[55%]">
+        <div className="w-full lg:w-[60%]">
           <div className="inline-flex items-center gap-2 rounded-full bg-[#DDF4DD] px-4 py-2">
             <ShieldCheck
               size={18}
@@ -38,13 +38,13 @@ const HeroSection = () => {
           <div className="relative mt-10 w-full max-w-xl">
             <Search
               size={18}
-              className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"
+              className="absolute left-2 top-1/2 -translate-y-1/2 text-gray-400"
             />
 
             <input
               type="text"
-              placeholder="Search"
-              className="h-14 w-full rounded-xl border border-gray-200 bg-white pl-12 pr-5 text-sm outline-none transition focus:border-primary"
+              placeholder="search"
+              className="h-14 w-full text-gray-400 rounded-xl border border-gray-200 bg-white p-12 right-5 text-sm outline-none transition focus:border-primary"
             />
           </div>
         </div>
@@ -68,7 +68,7 @@ const HeroSection = () => {
                 src={VerifiedCard}
                 alt="Verified Opportunities"
                 priority
-                className="h-auto w-full"
+                className="h-auto w-auto"
                 />
             </div>
 
@@ -78,7 +78,7 @@ const HeroSection = () => {
                 src={SaveTrackCard}
                 alt="Save and Track"
                 priority
-                className="h-auto w-full"
+                className="h-auto w-auto"
                 />
             </div>
             </div>

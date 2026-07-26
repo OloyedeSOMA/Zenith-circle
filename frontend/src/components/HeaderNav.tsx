@@ -123,14 +123,14 @@ const HeaderNav = () => {
   return (
     <>
       <header className="mx-auto flex justify-center sticky top-0 z-50 w-full max-w-[100%] border-b border-gray-200 bg-white">
-        <div className=" flex h-20 w-full max-w-[90%] items-center justify-between px-4 sm:px-6 lg:px-8">
+        <div className=" flex h-15 w-full max-w-[90%] items-center justify-between px-4 sm:px-6 lg:px-8">
           {/* Logo */}
           <Link href="/">
             <Image
               src={Logo}
               alt="OpportunityHub NG"
               priority
-              className="h-auto w-36"
+              className="h-auto w-50"
             />
           </Link>
 
