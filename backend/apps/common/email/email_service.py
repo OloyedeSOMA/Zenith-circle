@@ -26,7 +26,7 @@ def send_account_activation_email(user: User):
     key = f'opphub:registertoken:{user_id}'
     cache.set(key, token, timeout=TOKEN_TTL)
     
-    activation_link = f'{settings.BACKEND_BASE_URL}/api/v1/auth/activate-account/?id={user_id}&token={token}'
+    activation_link = f'{settings.FRONTEND_BASE_URL}/activate-account/?id={user_id}&token={token}'
 
     subject = f'Activate your account - OpportunityHub NG'
 
@@ -78,7 +78,7 @@ def send_reset_password_email(*, email: str):
     key = f'opphub:passwordreset:{user.id}'
 
     cache.set(key, token, timeout=RESET_TOKEN_TTL)
-    reset_link = f'{settings.BACKEND_BASE_URL}/api/v1/auth/reset-password/?id={user.id}&token={token}'
+    reset_link = f'{settings.FRONTEND_BASE_URL}/reset-password/?id={user.id}&token={token}'
     subject = f'Password Reset - OpportunityHub NG'
     
     msg = f"""
