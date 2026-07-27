@@ -172,6 +172,7 @@ CSRF_COOKIE_SECURE = True
 AUTH_USER_MODEL = 'users.User'
 
 BACKEND_BASE_URL = os.environ.get('BACKEND_BASE_URL')
+FRONTEND_BASE_URL = os.environ.get('FRONTEND_BASE_URL')
 # EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 # EMAIL_BACKEND = "anymail.backends.resend.EmailBackend"
 # ANYMAIL = {
