@@ -14,9 +14,10 @@ export async function apiFetch<T>(
   });
 
   const data = await response.json();
+  console.log(data);
 
   if (!response.ok) {
-    throw new Error(data.message || "Something went wrong");
+    throw new Error(data.detail || "Something went wrong");
   }
 
   return data;

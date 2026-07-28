@@ -25,6 +25,7 @@ const SignupForm = () => {
   const [showSuccess, setShowSuccess] = useState(false);
   const {
     register,
+    reset,
     handleSubmit,
     formState: { errors },
   } = useForm<SignupFormValues>();
@@ -41,6 +42,7 @@ const SignupForm = () => {
     {
       onSuccess: (response) => {
         console.log("Register response:", response);
+        reset();
         setShowSuccess(true);
       },
 
@@ -82,7 +84,7 @@ const SignupForm = () => {
           label="Email/Phone"
           placeholder="Email/Phone"
           register={register("email", {
-            required: "Email or phone number is required",
+            required: "Email is required",
           })}
           error={errors.email?.message}
         />
@@ -91,7 +93,10 @@ const SignupForm = () => {
           label="Password"
           placeholder="Enter Password"
           type="password"
-          register={register("password", { required: "Password is required" })}
+          register={register("password", {
+            required: "Password is required",
+            minLength: { value: 8, message: "Password should contain at least 8 Characters" }
+          })}
           error={errors.password?.message}
         />
 

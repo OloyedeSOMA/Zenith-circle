@@ -1,6 +1,7 @@
 "use client";
-
 import { useForm } from "react-hook-form";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 import Input from "../Input";
@@ -8,22 +9,60 @@ import Button from "../Button";
 import GoogleIcon from "../../../public/Social.png"
 import AuthFormCard from "./AuthFormCard";
 
+import { useLogin } from "@/hooks/useAuth";
+import LoadingSplash from "../LoadingSplash";
+import StatusModal from "../StatusModal";
+
 interface LoginFormValues {
   email: string;
   password: string;
 }
 
 const LoginForm = () => {
+  const router = useRouter();
+  const [error, setError] = useState("");
+  const [redirecting, setRedirecting] = useState(false);
+
+  const { mutate, isPending } = useLogin();
   
   const {
     register,
+    reset,
     handleSubmit,
     formState: { errors, isValid, isSubmitting },
   } = useForm<LoginFormValues>({mode:"onChange"});
 
   const onSubmit = (data: LoginFormValues) => {
-    console.log(data);
+    setError("");
+
+    mutate(data, {
+      onSuccess: (response) => {
+        console.log("LOGIN RESPONSE");
+        console.log(response);
+
+        reset();
+
+        setRedirecting(true);
+
+        setTimeout(() => {
+          router.push("/");
+        }, 1000);
+      },
+
+      onError: (err: any) => {
+        console.error(err);
+
+        setError(
+          err?.message ||
+            "Invalid email or password."
+        );
+      },
+    });
   };
+
+  if (isPending || redirecting) {
+    return <LoadingSplash />;
+  }
 
   return (
     <AuthFormCard
@@ -93,6 +132,14 @@ const LoginForm = () => {
           </Link>
         </p>
       </form>
+      <StatusModal
+        open={!!error}
+        type="error"
+        message={error}
+        buttonText="Try Again"
+        onButtonClick={() => setError("")}
+        onClose={() => setError("")}
+      />
     </AuthFormCard>
   );
 };

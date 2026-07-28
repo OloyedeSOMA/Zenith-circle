@@ -6,38 +6,51 @@ import { useState } from "react";
 import Input from "../Input";
 import Button from "../Button";
 import AuthFormCard from "./AuthFormCard";
+import StatusModal from "../StatusModal";
+import { useForgotPassword } from "@/hooks/useAuth";
 
 interface ForgotPasswordValues {
-  identifier: string;
+  email: string;
 }
 
 const ForgotPasswordForm = () => {
-  const router = useRouter();
-  const [serverError, setServerError] = useState<string | null>(null);
+  const { mutate} = useForgotPassword();
+
+  const [success, setSuccess] = useState(false);
+  const [error, setError] = useState("");
 
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors, isValid, isSubmitting },
   } = useForm<ForgotPasswordValues>({ mode: "onChange" });
 
   const onSubmit = async (data: ForgotPasswordValues) => {
-    setServerError(null);
-    try {
-      // TODO: replace with the real endpoint once the backend is ready
-      // await api.post("/auth/forgot-password", data);
-      console.log(data);
-      router.push("/verify-code");
-    } catch {
-      setServerError("Something went wrong. Please try again.");
-    }
+    setError("");
+
+    mutate(data, {
+      onSuccess: (response) => {
+        console.log(response);
+
+        reset();
+
+        setSuccess(true);
+      },
+
+      onError: (err: any) => {
+        console.error(err);
+
+        setError(err.message || "Unable to send reset link.");
+      },
+    });
   };
 
   return (
     <AuthFormCard
       title="OpportunityHub NG"
       subtitle="Reset Password"
-      info_text= "An OTP will be sent to your registered email or phone number"
+      info_text= "A reset link will be sent to your email"
     >
     
 
@@ -46,19 +59,13 @@ const ForgotPasswordForm = () => {
         className="mt-10 flex w-full max-w-[440px] flex-col gap-6"
       >
         <Input
-          label="Email/Phone Number"
+          label="Email"
           placeholder="Enter Details"
-          register={register("identifier", {
-            required: "Email or phone number is required",
+          register={register("email", {
+            required: "Email is required",
           })}
-          error={errors.identifier?.message}
+          error={errors.email?.message}
         />
-
-        {serverError && (
-          <p className="text-sm text-error" role="alert">
-            {serverError}
-          </p>
-        )}
 
         <Button
           type="submit"
@@ -69,6 +76,23 @@ const ForgotPasswordForm = () => {
           {isSubmitting ? "Sending..." : "Recover Password"}
         </Button>
       </form>
+      <StatusModal
+        open={success}
+        type="success"
+        message="A reset link has been sent to your email."
+        buttonText="Okay"
+        onButtonClick={() => setSuccess(false)}
+        onClose={() => setSuccess(false)}
+      />
+
+      <StatusModal
+        open={!!error}
+        type="error"
+        message={error}
+        buttonText="Try Again"
+        onButtonClick={() => setError("")}
+        onClose={() => setError("")}
+      />
     </AuthFormCard>
   );
 };
