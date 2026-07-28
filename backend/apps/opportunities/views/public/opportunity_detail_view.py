@@ -6,7 +6,7 @@ from apps.opportunities.selectors.opportunity import get_public_opportunity_by_s
 from apps.opportunities.serializers.public.opportunity import PublicOpportunitySerializer
 
 
-@extend_schema(tags=["Public Opportunities"], responses=PublicOpportunitySerializer)
+@extend_schema(tags=["Opportunities"], responses=PublicOpportunitySerializer)
 class PublicOpportunityDetailAPIView(APIView):
     """
     Returns a single approved opportunity.

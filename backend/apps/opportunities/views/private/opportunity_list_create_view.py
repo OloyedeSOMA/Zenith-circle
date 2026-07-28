@@ -12,7 +12,7 @@ from apps.opportunities.services.create_opportunity_service import create_opport
 class PrivateOpportunityListCreateAPIView(APIView):
     permission_classes = [IsAuthenticated]
 
-    @extend_schema(tags=["Private Opportunities"], responses=PrivateOpportunitySerializer(many=True))
+    @extend_schema(tags=["Opportunities"], responses=PrivateOpportunitySerializer(many=True))
     def get(self, request):
         """
         Returns opportunities created by the authenticated user.
@@ -26,7 +26,7 @@ class PrivateOpportunityListCreateAPIView(APIView):
             status=status.HTTP_200_OK,
         )
 
-    @extend_schema(tags=["Private Opportunities"], request=CreateOpportunitySerializer, responses=PrivateOpportunitySerializer)
+    @extend_schema(tags=["Opportunities"], request=CreateOpportunitySerializer, responses=PrivateOpportunitySerializer)
     def post(self, request):
         """
         Creates a new opportunity.

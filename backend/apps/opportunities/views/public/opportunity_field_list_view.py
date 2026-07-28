@@ -6,7 +6,7 @@ from apps.opportunities.selectors.field import get_opportunity_fields
 from apps.opportunities.serializers.public.field import PublicOpportunityFieldSerializer
 
 
-@extend_schema(tags=["Public Opportunities"], responses=PublicOpportunityFieldSerializer(many=True))
+@extend_schema(tags=["Opportunities"], responses=PublicOpportunityFieldSerializer(many=True))
 class PublicOpportunityFieldListAPIView(APIView):
     """
     Returns all opportunity fields.

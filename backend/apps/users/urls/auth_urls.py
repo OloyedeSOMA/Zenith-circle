@@ -8,6 +8,8 @@ from apps.users.views.auth.resend_account_activation_view import ResendAccountAc
 from apps.users.views.auth.forgot_password_view import ForgotPasswordAPIView
 from apps.users.views.auth.reset_password_view import ResetPasswordAPIView
 from apps.users.views.auth.token_refresh_view import AuthTokenRefreshAPIView
+from apps.users.views.private.profile.student import PrivateStudentProfileAPIView
+from apps.users.views.private.profile.recruiter import PrivateRecruiterProfileAPIView
 
 
 urlpatterns = [

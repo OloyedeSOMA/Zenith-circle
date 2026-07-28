@@ -7,7 +7,7 @@ from apps.opportunities.serializers.public.opportunity import PublicOpportunityS
 
 
 
-@extend_schema(tags=["Public Opportunities"], responses=PublicOpportunitySerializer(many=True))
+@extend_schema(tags=["Opportunities"], responses=PublicOpportunitySerializer(many=True))
 class PublicOpportunityListAPIView(APIView):
     """
     Returns all approved opportunities.

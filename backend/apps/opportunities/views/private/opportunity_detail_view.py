@@ -12,7 +12,7 @@ from apps.opportunities.services.delete_opportunity_service import  delete_oppor
 class PrivateOpportunityDetailAPIView(APIView):
     permission_classes = [IsAuthenticated]
 
-    @extend_schema(tags=["Private Opportunities"], responses=PrivateOpportunitySerializer)
+    @extend_schema(tags=["Opportunities"], responses=PrivateOpportunitySerializer)
     def get(self, request, opportunity_id):
         """
         Returns a single opportunity created by
@@ -28,7 +28,7 @@ class PrivateOpportunityDetailAPIView(APIView):
         )
 
 
-    @extend_schema(tags=["Private Opportunities"], request=UpdateOpportunitySerializer, responses=PrivateOpportunitySerializer)
+    @extend_schema(tags=["Opportunities"], request=UpdateOpportunitySerializer, responses=PrivateOpportunitySerializer)
     def patch(self, request, opportunity_id):
         """
         Updates a pending opportunity created
@@ -52,7 +52,7 @@ class PrivateOpportunityDetailAPIView(APIView):
 
 
 
-    @extend_schema(tags=["Private Opportunities"], responses=None)
+    @extend_schema(tags=["Opportunities"], responses=None)
     def delete(self, request, opportunity_id):
         """
         Deletes a pending opportunity created
