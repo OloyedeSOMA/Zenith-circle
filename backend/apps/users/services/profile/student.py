@@ -44,12 +44,11 @@ def update_student_profile(*, student_profile, **data):
     """
 
     profile_photo = data.pop('profile_photo', None)
-    profile_photo_url = None
 
     if profile_photo:
-        profile_photo_url = upload_student_profile_photo(file=profile_photo)
-
-    student_profile.profile_photo = profile_photo_url
+        student_profile.profile_photo = upload_student_profile_photo(
+            file=profile_photo
+        )
 
     for field, value in data.items():
         setattr(student_profile, field, value)

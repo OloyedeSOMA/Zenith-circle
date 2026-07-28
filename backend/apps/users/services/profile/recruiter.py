@@ -42,12 +42,11 @@ def update_recruiter_profile(*, recruiter_profile, **data):
     """
 
     logo = data.pop('logo', None)
-    logo_url = None
-
+  
     if logo:
-        logo_url = upload_recruiter_logo(file=logo)
-
-    recruiter_profile.logo = logo_url
+        recruiter_profile.logo = upload_recruiter_logo(
+        file=logo
+    )
 
     for field, value in data.items():
         setattr(recruiter_profile, field, value)
