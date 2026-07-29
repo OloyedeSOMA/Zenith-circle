@@ -84,5 +84,5 @@ jobs:
           python ./backend/manage.py migrate
 
       - name: Run tests
-        run: |
-          python ./backend/manage.py test
+        working-directory: backend
+        run: python manage.py test -v 2
