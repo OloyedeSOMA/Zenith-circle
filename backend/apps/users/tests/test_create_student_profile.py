@@ -10,6 +10,8 @@ class StudentProfileCreateAPIViewTests(APITestCase):
 
     def setUp(self):
         self.user = User.objects.create_user(
+            first_name='John',
+            last_name='Doe',
             email="student@example.com",
             password="password123",
             role=UserRole.STUDENT,

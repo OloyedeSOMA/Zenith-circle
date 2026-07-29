@@ -11,7 +11,7 @@ class RecruiterProfileCreateAPIViewTests(APITestCase):
     def setUp(self):
         self.user = User.objects.create_user(
             first_name='Company',
-            last_name='Name'
+            last_name='Name',
             email="recruiter@example.com",
             password="password123",
             role=UserRole.RECRUITER,
