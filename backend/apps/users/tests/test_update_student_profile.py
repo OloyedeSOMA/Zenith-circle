@@ -24,8 +24,8 @@ class StudentProfileUpdateAPIViewTests(APITestCase):
             profile_photo="https://cloudinary.com/old-photo.webp",
             institution="Old University",
             course_of_study="Physics",
-            skills="["Python"]",
-            interests=["AI"],
+            skills='["Python"]',
+            interests='["AI"]',
         )
 
         self.client.force_authenticate(user=self.user)
