@@ -1,4 +1,5 @@
 from unittest.mock import patch
+from django.core.files.uploadedfile import SimpleUploadedFile
 from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import APITestCase
@@ -29,8 +30,17 @@ class RecruiterProfileCreateAPIViewTests(APITestCase):
             "https://res.cloudinary.com/test/recruiter-logo.webp"
         )
 
+        logo = SimpleUploadedFile(
+            name="logo.jpg",
+            content=(
+                b"\xff\xd8\xff\xe0"
+                b"\x00\x10JFIF\x00\x01\x01\x00\x00\x01\x00\x01\x00\x00"
+            ),
+            content_type="image/jpeg",
+        )
+
         data = {
-            "logo": "fake-image",
+            "logo": logo,
             "organisation": "Tech Nigeria Ltd",
             "description": "A technology company in Nigeria.",
             "website": "https://example.com",

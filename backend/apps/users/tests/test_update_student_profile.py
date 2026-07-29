@@ -1,5 +1,6 @@
 from unittest.mock import patch
 from django.urls import reverse
+from django.core.files.uploadedfile import SimpleUploadedFile
 from rest_framework import status
 from rest_framework.test import APITestCase
 from apps.users.models.user import User, UserRole
@@ -16,6 +17,7 @@ class StudentProfileUpdateAPIViewTests(APITestCase):
             password="password123",
             role=UserRole.STUDENT,
         )
+
 
         self.profile = StudentProfile.objects.create(
             user=self.user,
@@ -77,10 +79,19 @@ class StudentProfileUpdateAPIViewTests(APITestCase):
             "https://res.cloudinary.com/test/new-photo.webp"
         )
 
+        profile_photo = SimpleUploadedFile(
+            name="profile_photo.jpg",
+            content=(
+                b"\xff\xd8\xff\xe0"
+                b"\x00\x10JFIF\x00\x01\x01\x00\x00\x01\x00\x01\x00\x00"
+            ),
+            content_type="image/jpeg",
+        )
+
         response = self.client.patch(
             self.url,
             {
-                "profile_photo": "new-fake-image",
+                "profile_photo": profile_photo,
             },
             format="multipart",
         )
