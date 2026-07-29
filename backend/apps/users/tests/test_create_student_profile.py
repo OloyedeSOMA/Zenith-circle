@@ -46,8 +46,6 @@ class StudentProfileCreateAPIViewTests(APITestCase):
             format="multipart",
         )
 
-        print("STATUS:", response.status_code)
-        print("DATA:", response.data)
         
         self.assertEqual(
             response.status_code,
