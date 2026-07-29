@@ -23,31 +23,23 @@ class PrivateStudentProfileSerializer(serializers.ModelSerializer):
 
 
 
-class CreateStudentProfileSerializer(serializers.ModelSerializer):
+class CreateStudentProfileSerializer(serializers.Serializer):
     """
 
     """
-    class Meta:
-        model = StudentProfile
-        fields = (
-            'institution',
-            'course_of_study',
-            'skills',
-            'interests',
-            'profile_photo',
-        )
+    profile_photo = serializers.ImageField(required=False, allow_null=True)
+    institution = serializers.CharField(max_length=255)
+    course_of_study = serializers.CharField(max_length=255)
+    skills = serializers.JSONField()
+    interests = serializers.JSONField()
 
 
-class UpdateStudentProfileSerializer(serializers.ModelSerializer):
+class UpdateStudentProfileSerializer(serializers.Serializer):
     """
 
     """
-    class Meta:
-        model = StudentProfile
-        fields = (
-            'institution',
-            'course_of_study',
-            'skills',
-            'interests',
-            'profile_photo',
-        )
+    profile_photo = serializers.ImageField(required=False, allow_null=True)
+    institution = serializers.CharField(max_length=255, required=False)
+    course_of_study = serializers.CharField(max_length=255, required=False)
+    skills = serializers.JSONField(required=False)
+    interests = serializers.JSONField(required=False)

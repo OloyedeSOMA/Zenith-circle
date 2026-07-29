@@ -38,7 +38,7 @@ class StudentProfileUpdateAPIViewTests(APITestCase):
             {
                 "institution": "University of Lagos",
                 "course_of_study": "Computer Science",
-                "skills": ["Python", "Django"],
+                "skills": '["Python", "Django"]',
                 "interests": ["AI", "Software Engineering"],
             },
             format="json",

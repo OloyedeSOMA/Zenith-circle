@@ -22,32 +22,25 @@ class PrivateRecruiterProfileSerializer(serializers.ModelSerializer):
         read_only_fields = ['id', 'created_at', 'updated_at']
 
 
-class CreateRecruiterProfileSerializer(serializers.ModelSerializer):
+class CreateRecruiterProfileSerializer(serializers.Serializer):
     """
 
     """
-    class Meta:
-        model = RecruiterProfile
-        fields = (
-            'organisation',
-            'description',
-            'website',
-            'location',
-            'logo',
-        )
+    organisation = serializers.CharField(max_length=255)
+    description = serializers.CharField()
+    website = serializers.URLField(required=False, allow_blank=True)
+    location = serializers.CharField(max_length=255, required=False, allow_blank=True)
+    logo = serializers.ImageField(required=False, allow_null=True)
 
 
-class UpdateRecruiterProfileSerializer(serializers.ModelSerializer):
+
+class UpdateRecruiterProfileSerializer(serializers.Serializer):
     """
 
     """
 
-    class Meta:
-        model = RecruiterProfile
-        fields = (
-            'organisation',
-            'description',
-            'website',
-            'location',
-            'logo',
-        )
+    organisation = serializers.CharField(max_length=255, required=False)
+    description = serializers.CharField(required=False)
+    website = serializers.URLField(required=False, allow_blank=True)
+    location = serializers.CharField(max_length=255, required=False, allow_blank=True)
+    logo = serializers.ImageField(required=False, allow_null=True)

@@ -36,7 +36,7 @@ class StudentProfileCreateAPIViewTests(APITestCase):
             "profile_photo": profile_photo,
             "institution": "University of Lagos",
             "course_of_study": "Computer Science",
-            "skills": ["Python", "Django"],
+            "skills": '["Python", "Django"]',
             "interests": ["AI", "Software Engineering"],
         }
 
