@@ -84,7 +84,7 @@ class RecruiterProfileUpdateAPIViewTests(APITestCase):
             "https://res.cloudinary.com/test/new-logo.webp"
         )
 
-        logo = create_test_image(name='logo.jgp')
+        logo = create_test_image(name='logo.jpg')
         response = self.client.patch(
             self.url,
             {

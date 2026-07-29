@@ -37,7 +37,7 @@ class StudentProfileCreateAPIViewTests(APITestCase):
             "institution": "University of Lagos",
             "course_of_study": "Computer Science",
             "skills": '["Python", "Django"]',
-            "interests": ["AI", "Software Engineering"],
+            "interests": '["AI", "Software Engineering"]',
         }
 
         response = self.client.post(

@@ -24,7 +24,7 @@ class StudentProfileUpdateAPIViewTests(APITestCase):
             profile_photo="https://cloudinary.com/old-photo.webp",
             institution="Old University",
             course_of_study="Physics",
-            skills=["Python"],
+            skills="["Python"]",
             interests=["AI"],
         )
 
@@ -38,7 +38,7 @@ class StudentProfileUpdateAPIViewTests(APITestCase):
             {
                 "institution": "University of Lagos",
                 "course_of_study": "Computer Science",
-                "skills": '["Python", "Django"]',
+                "skills": ["Python", "Django"],
                 "interests": ["AI", "Software Engineering"],
             },
             format="json",
