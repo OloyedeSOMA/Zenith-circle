@@ -16,7 +16,7 @@ class RecruiterProfileDeleteAPIViewTests(APITestCase):
 
         self.profile = RecruiterProfile.objects.create(
             user=self.user,
-            company_name="Tech Nigeria Ltd",
+            organisation="Tech Nigeria Ltd",
             description="A technology company.",
             website="https://example.com",
             location="Lagos, Nigeria",

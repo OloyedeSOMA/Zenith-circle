@@ -21,7 +21,7 @@ class RecruiterProfileDetailAPIViewTests(APITestCase):
     def test_recruiter_can_get_own_profile(self):
         profile = RecruiterProfile.objects.create(
             user=self.user,
-            company_name="Tech Nigeria Ltd",
+            organisation="Tech Nigeria Ltd",
             description="A technology company.",
             website="https://example.com",
             location="Lagos, Nigeria",
@@ -40,7 +40,7 @@ class RecruiterProfileDetailAPIViewTests(APITestCase):
         )
 
         self.assertEqual(
-            response.data["company_name"],
+            response.data["organisation"],
             "Tech Nigeria Ltd",
         )
 
