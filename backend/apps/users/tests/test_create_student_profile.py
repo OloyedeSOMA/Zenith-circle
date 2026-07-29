@@ -20,7 +20,7 @@ class StudentProfileCreateAPIViewTests(APITestCase):
         self.url = reverse("student-profile")
 
     @patch(
-        "apps.users.services.profile.create_student_profile_service.upload_student_profile_photo"
+        "apps.users.services.profile.student.upload_student_profile_photo"
     )
     def test_student_can_create_profile(self, mock_upload):
         mock_upload.return_value = (

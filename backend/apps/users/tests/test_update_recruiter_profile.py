@@ -18,7 +18,7 @@ class RecruiterProfileUpdateAPIViewTests(APITestCase):
         self.profile = RecruiterProfile.objects.create(
             user=self.user,
             logo="https://cloudinary.com/old-logo.webp",
-            company_name="Old Company",
+            organisation="Old Company",
             description="Old company description.",
             website="https://old-company.com",
             location="Lagos, Nigeria",
@@ -32,7 +32,7 @@ class RecruiterProfileUpdateAPIViewTests(APITestCase):
         response = self.client.patch(
             self.url,
             {
-                "company_name": "Tech Nigeria Ltd",
+                "organisation": "Tech Nigeria Ltd",
                 "description": "Updated company description.",
                 "website": "https://tech-nigeria.com",
                 "location": "Abuja, Nigeria",
@@ -48,7 +48,7 @@ class RecruiterProfileUpdateAPIViewTests(APITestCase):
         self.profile.refresh_from_db()
 
         self.assertEqual(
-            self.profile.company_name,
+            self.profile.organisation,
             "Tech Nigeria Ltd",
         )
 
@@ -73,7 +73,7 @@ class RecruiterProfileUpdateAPIViewTests(APITestCase):
         )
 
     @patch(
-        "apps.users.services.profile.update_recruiter_profile_service.upload_recruiter_logo"
+        "apps.users.services.profile.recruiter.upload_recruiter_logo"
     )
     def test_recruiter_can_update_logo(self, mock_upload):
         mock_upload.return_value = (
@@ -108,7 +108,7 @@ class RecruiterProfileUpdateAPIViewTests(APITestCase):
         response = self.client.patch(
             self.url,
             {
-                "company_name": "Tech Nigeria Ltd",
+                "organisation": "Tech Nigeria Ltd",
             },
             format="json",
         )

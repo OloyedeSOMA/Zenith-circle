@@ -20,7 +20,7 @@ class RecruiterProfileCreateAPIViewTests(APITestCase):
         self.url = reverse("recruiter-profile")
 
     @patch(
-        "apps.users.services.profile.create_recruiter_profile_service.upload_recruiter_logo"
+        "apps.users.services.profile.recruiter.upload_recruiter_logo"
     )
     def test_recruiter_can_create_profile(self, mock_upload):
         mock_upload.return_value = (
@@ -29,7 +29,7 @@ class RecruiterProfileCreateAPIViewTests(APITestCase):
 
         data = {
             "logo": "fake-image",
-            "company_name": "Tech Nigeria Ltd",
+            "organisation": "Tech Nigeria Ltd",
             "description": "A technology company in Nigeria.",
             "website": "https://example.com",
             "location": "Lagos, Nigeria",
@@ -62,7 +62,7 @@ class RecruiterProfileCreateAPIViewTests(APITestCase):
         )
 
         self.assertEqual(
-            profile.company_name,
+            profile.organisation,
             "Tech Nigeria Ltd",
         )
 
@@ -71,7 +71,7 @@ class RecruiterProfileCreateAPIViewTests(APITestCase):
     def test_recruiter_cannot_create_duplicate_profile(self):
         RecruiterProfile.objects.create(
             user=self.user,
-            company_name="Tech Nigeria Ltd",
+            organisation="Tech Nigeria Ltd",
             description="A technology company.",
             website="https://example.com",
             location="Lagos, Nigeria",
@@ -80,7 +80,7 @@ class RecruiterProfileCreateAPIViewTests(APITestCase):
         response = self.client.post(
             self.url,
             {
-                "company_name": "Another Company",
+                "organisation": "Another Company",
                 "description": "Another company.",
                 "website": "https://another.com",
                 "location": "Abuja, Nigeria",
@@ -105,7 +105,7 @@ class RecruiterProfileCreateAPIViewTests(APITestCase):
         response = self.client.post(
             self.url,
             {
-                "company_name": "Tech Nigeria Ltd",
+                "organisation": "Tech Nigeria Ltd",
                 "description": "A technology company.",
                 "website": "https://example.com",
                 "location": "Lagos, Nigeria",

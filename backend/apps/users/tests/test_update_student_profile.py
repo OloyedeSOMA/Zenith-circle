@@ -68,7 +68,7 @@ class StudentProfileUpdateAPIViewTests(APITestCase):
         )
 
     @patch(
-        "apps.users.services.profile.update_student_profile_service.upload_student_profile_photo"
+        "apps.users.services.profile.student.upload_student_profile_photo"
     )
     def test_student_can_update_profile_photo(self, mock_upload):
         mock_upload.return_value = (
