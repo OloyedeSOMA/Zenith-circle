@@ -1,10 +1,10 @@
 from unittest.mock import patch
-from django.core.files.uploadedfile import SimpleUploadedFile
 from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import APITestCase
 from apps.users.models.user import User, UserRole
 from apps.users.models.profile import RecruiterProfile
+from apps.users.tests.utils import create_test_image
 
 
 class RecruiterProfileCreateAPIViewTests(APITestCase):
@@ -30,14 +30,7 @@ class RecruiterProfileCreateAPIViewTests(APITestCase):
             "https://res.cloudinary.com/test/recruiter-logo.webp"
         )
 
-        logo = SimpleUploadedFile(
-            name="logo.jpg",
-            content=(
-                b"\xff\xd8\xff\xe0"
-                b"\x00\x10JFIF\x00\x01\x01\x00\x00\x01\x00\x01\x00\x00"
-            ),
-            content_type="image/jpeg",
-        )
+        logo =create_test_image(name='logo.jpg')
 
         data = {
             "logo": logo,
