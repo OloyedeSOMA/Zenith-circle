@@ -82,6 +82,7 @@ jobs:
         run: |
           python ./backend/manage.py makemigrations
           python ./backend/manage.py migrate
+          python manage.py test apps.users.tests.test_create_student_profile.StudentProfileCreateAPIViewTests.test_student_can_create_profile -v 2
 
       - name: Run tests
         working-directory: backend
