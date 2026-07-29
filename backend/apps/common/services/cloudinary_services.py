@@ -3,7 +3,7 @@ import cloudinary.uploader
 
 def upload_recruiter_logo(*, file) -> str:
     """
-    uploads storefront logo to cloudinary
+    uploads recruiter logo to cloudinary
     optimizes image
     """
     upload_result = cloudinary.uploader.upload(
@@ -27,7 +27,7 @@ def upload_recruiter_logo(*, file) -> str:
 
 def upload_student_profile_photo(*, file) -> str:
     """
-    upload storefront banner to cloudinary
+    upload student profile photo to cloudinary
     optimizes image
     """
     upload_result = cloudinary.uploader.upload(
