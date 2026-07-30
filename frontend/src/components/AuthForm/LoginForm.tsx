@@ -12,13 +12,22 @@ import AuthFormCard from "./AuthFormCard";
 import { useLogin } from "@/hooks/useAuth";
 import LoadingSplash from "../LoadingSplash";
 import StatusModal from "../StatusModal";
+import {
+  setAccessToken,
+  setRefreshToken,
+  setUser,
+} from "@/lib/auth-storage";
+
+interface LoginFormProps {
+  onRedirecting: () => void;
+}
 
 interface LoginFormValues {
   email: string;
   password: string;
 }
 
-const LoginForm = () => {
+const LoginForm = ({ onRedirecting }: LoginFormProps) => {
   const router = useRouter();
   const [error, setError] = useState("");
   const [redirecting, setRedirecting] = useState(false);
@@ -37,12 +46,15 @@ const LoginForm = () => {
 
     mutate(data, {
       onSuccess: (response) => {
-        console.log("LOGIN RESPONSE");
-        console.log(response);
 
+        setAccessToken(response.tokens.access_token);
+
+        setRefreshToken(response.tokens.refresh_token);
+
+        setUser(response.user);
         reset();
 
-        setRedirecting(true);
+        onRedirecting();
 
         setTimeout(() => {
           router.push("/");
@@ -60,9 +72,9 @@ const LoginForm = () => {
     });
   };
 
-  if (isPending || redirecting) {
-    return <LoadingSplash />;
-  }
+  // if (isPending || redirecting) {
+  //   return <LoadingSplash />;
+  // }
 
   return (
     <AuthFormCard

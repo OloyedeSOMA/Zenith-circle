@@ -43,15 +43,11 @@ export default function ActivateAccountPage() {
       },
       {
         onSuccess: (response) => {
-          console.log(response);
 
           setSuccess(true);
         },
         
         onError: (err: any) => {
-          console.error(err);
-          console.error(err.response);
-
           setError(err.message || "Unable to activate account.");
         },
       }

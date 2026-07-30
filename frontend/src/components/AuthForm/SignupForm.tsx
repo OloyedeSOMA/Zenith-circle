@@ -7,7 +7,7 @@ import Link from "next/link";
 import Input from "../Input";
 import Button from "../Button";
 import AuthFormCard from "./AuthFormCard";
-import SuccessModal from "../SuccessModal";
+import StatusModal from "@/components/StatusModal";
 import { useRegister } from "@/hooks/useAuth";
 
 interface SignupFormValues {
@@ -22,7 +22,9 @@ interface SignupFormValues {
 const SignupForm = () => {
   const router = useRouter();
   const {mutate, isPending,} = useRegister();
-  const [showSuccess, setShowSuccess] = useState(false);
+  const [success, setSuccess] = useState(false);
+  const [error, setError] = useState("");
+
   const {
     register,
     reset,
@@ -43,12 +45,11 @@ const SignupForm = () => {
       onSuccess: (response) => {
         console.log("Register response:", response);
         reset();
-        setShowSuccess(true);
+        setSuccess(true);
       },
 
       onError: (error) => {
-        console.error(error);
-        console.log(data);
+        setError(error.message || "Unable to create account.");
       },
     }
   );
@@ -81,8 +82,8 @@ const SignupForm = () => {
         />
 
         <Input
-          label="Email/Phone"
-          placeholder="Email/Phone"
+          label="Email"
+          placeholder="Email"
           register={register("email", {
             required: "Email is required",
           })}
@@ -146,13 +147,23 @@ const SignupForm = () => {
 
         
       </form>
-      <SuccessModal
-        open={showSuccess}
+      <StatusModal
+        open={success}
+        type="success"
         message="Account created successfully. Check your mail to activate your account"
         buttonText="Okay"
         onButtonClick={() => router.push("/login")}
-        onClose={() => setShowSuccess(false)}
-      />
+        onClose={() => setSuccess(false)}
+    />
+
+    <StatusModal
+        open={!!error}
+        type="error"
+        message={error}
+        buttonText="Okay"
+        onButtonClick={() => router.push("/signup")}
+        onClose={() => setSuccess(false)}
+    />
     </AuthFormCard>
   );
 };

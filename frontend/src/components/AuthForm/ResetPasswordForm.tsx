@@ -31,6 +31,7 @@ const ResetPasswordForm = () => {
   const {
     register,
     handleSubmit,
+    reset,
     watch,
     formState: { errors},
   } = useForm<ResetPasswordValues>({
@@ -58,7 +59,7 @@ const ResetPasswordForm = () => {
           console.log(response);
 
           setRedirecting(true);
-
+          reset();
           setTimeout(() => {
             router.push("/login");
           }, 1000);
@@ -92,7 +93,7 @@ const ResetPasswordForm = () => {
           label="Email"
           placeholder="comfrot@gmail.com"
           register={register("identifier", {
-            required: "Email or phone number is required",
+            required: "Email is required",
           })}
           error={errors.identifier?.message}
         />

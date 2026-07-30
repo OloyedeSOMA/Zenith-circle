@@ -26,7 +26,22 @@ export interface LoginRequest{
     password: string;
 }
 export interface LoginResponse{
-    [key: string] : unknown;
+    tokens: {
+    access_token: string;
+    refresh_token: string;
+  };
+
+  user: {
+    id: string;
+    email: string;
+    first_name: string;
+    last_name: string;
+    role: string;
+    is_active: boolean;
+    is_verified: boolean;
+    created_at: string;
+    last_login: string;
+  };
 }
 export interface ForgotPasswordRequest {
   email: string;

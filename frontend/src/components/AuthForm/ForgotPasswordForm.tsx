@@ -39,7 +39,6 @@ const ForgotPasswordForm = () => {
       },
 
       onError: (err: any) => {
-        console.error(err);
 
         setError(err.message || "Unable to send reset link.");
       },
