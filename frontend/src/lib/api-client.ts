@@ -17,7 +17,34 @@ export async function apiFetch<T>(
   console.log(data);
 
   if (!response.ok) {
-    throw new Error(data.detail || "Something went wrong");
+    let message = "Something went wrong";
+
+    if (data.detail) {
+      message = data.detail;
+    } else if (data.message) {
+      message = data.message;
+    } else if (data.non_field_errors) {
+      message = Array.isArray(data.non_field_errors)
+        ? data.non_field_errors.join(", ")
+        : data.non_field_errors;
+    } else {
+      // Handles validation errors
+      const errors = Object.entries(data)
+        .map(([field, value]) => {
+          if (Array.isArray(value)) {
+            return `${field}: ${value.join(", ")}`;
+          }
+
+          return `${field}: ${value}`;
+        })
+        .join("\n");
+
+      if (errors) {
+        message = errors;
+      }
+    }
+
+  throw new Error(message);
   }
 
   return data;

@@ -30,7 +30,7 @@ const SignupForm = () => {
     reset,
     handleSubmit,
     formState: { errors },
-  } = useForm<SignupFormValues>();
+  } = useForm<SignupFormValues>({mode:"onChange"});
 
   const onSubmit = (data: SignupFormValues) => {
     mutate(
@@ -48,7 +48,7 @@ const SignupForm = () => {
         setSuccess(true);
       },
 
-      onError: (error) => {
+      onError: (error: any) => {
         setError(error.message || "Unable to create account.");
       },
     }

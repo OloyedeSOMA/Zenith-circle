@@ -68,9 +68,9 @@ const StatusModal = ({
 
                 <Button
                 type="button"
-                variant="primary"
+                variant={isSuccess ? "primary" : "error"}
                 onClick={onButtonClick}
-                className="h-[49px] w-full max-w-[240px]"
+                className={"h-[49px] w-full max-w-[240px] "}
                 >
                 {buttonText}
                 </Button>
