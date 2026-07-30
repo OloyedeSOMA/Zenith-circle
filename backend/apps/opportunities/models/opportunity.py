@@ -35,7 +35,7 @@ class Opportunity(BaseModel):
     slug = models.SlugField(max_length=280, unique=True)
     description = models.TextField()
     opportunity_type = models.CharField(max_length=20, choices=OpportunityType.choices)
-    organization = models.CharField(max_length=255)
+    organisation = models.CharField(max_length=255)
     application_url = models.URLField()
     location = models.CharField(max_length=255, blank=True)
     field = models.ForeignKey(OpportunityField, on_delete=models.PROTECT, related_name="opportunities")

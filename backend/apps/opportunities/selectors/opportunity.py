@@ -1,4 +1,6 @@
+from django.db.models import Q
 from django.shortcuts import get_object_or_404
+from django.utils import timezone
 from apps.opportunities.models import OpportunityField, Opportunity, OpportunityStatus
 
 
@@ -10,16 +12,25 @@ def get_opportunity_fields():
 
 
 
-def get_public_opportunities(*, opportunity_type=None, field=None, deadline=None):
+def get_public_opportunities(*, search=None, opportunity_type=None, field=None, location=None, is_remote=None):
     """
-    Returns approved opportunities filtered by
-    type, field, and deadline.
+    Returns approved and non-expired opportunities filtered by
+    type, field and location
     """
     queryset = Opportunity.objects.filter(
         status=OpportunityStatus.APPROVED,
+        deadline__gte=timezone.now(),
     ).select_related(
         "field",
     )
+
+    if search:
+        queryset = queryset.filter(
+            Q(title__icontains=search)
+            | Q(description__icontains=search)
+            | Q(organisation__icontains=search)
+            | Q(location__icontains=search)
+        )
 
     if opportunity_type:
         queryset = queryset.filter(
@@ -31,10 +42,17 @@ def get_public_opportunities(*, opportunity_type=None, field=None, deadline=None
             field__slug=field,
         )
 
-    if deadline:
+    if location:
         queryset = queryset.filter(
-            deadline__lte=deadline,
+            location__icontains=location
         )
+
+    if is_remote is not None:
+        is_remote = is_remote.lower() == "true"
+        queryset = queryset.filter(
+            is_remote=is_remote
+        )
+
 
     return queryset
 
