@@ -1,5 +1,5 @@
 import { Suspense } from "react";
-import ActivateAccount from "./ActivateAccount";
+import ActivateAccount from "../../components/ActivateAccount";
 
 import LoadingSplash from "@/components/LoadingSplash";
 

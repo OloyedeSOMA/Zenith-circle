@@ -24,7 +24,7 @@ const SignupForm = () => {
   const {mutate, isPending,} = useRegister();
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState("");
-
+  const closeErrorModal = () => setError("");
   const {
     register,
     reset,
@@ -157,12 +157,12 @@ const SignupForm = () => {
     />
 
     <StatusModal
-        open={!!error}
-        type="error"
-        message={error}
-        buttonText="Okay"
-        onButtonClick={() => router.push("/signup")}
-        onClose={() => setSuccess(false)}
+      open={!!error}
+      type="error"
+      message={error}
+      buttonText="Okay"
+      onButtonClick={closeErrorModal}
+      onClose={closeErrorModal}
     />
     </AuthFormCard>
   );

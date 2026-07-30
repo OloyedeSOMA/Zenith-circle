@@ -69,7 +69,10 @@ const StatusModal = ({
                 <Button
                 type="button"
                 variant={isSuccess ? "primary" : "error"}
-                onClick={onButtonClick}
+                onClick={() => {
+                  onButtonClick();
+                  onClose?.();
+                }}
                 className={"h-[49px] w-full max-w-[240px] "}
                 >
                 {buttonText}
