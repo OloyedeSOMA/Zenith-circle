@@ -9,6 +9,7 @@ import Button from "../Button";
 import AuthFormCard from "./AuthFormCard";
 import StatusModal from "@/components/StatusModal";
 import { useRegister } from "@/hooks/useAuth";
+import { trackEvent } from "@/lib/gtag";
 
 interface SignupFormValues {
   firstName: string;
@@ -43,6 +44,9 @@ const SignupForm = () => {
     },
     {
       onSuccess: (response) => {
+        trackEvent("sign_up", {
+          method: "email",
+        });
         console.log("Register response:", response);
         reset();
         setSuccess(true);

@@ -19,6 +19,7 @@ export const opportunities: Opportunity[] = [
     type: "Internship",
     commitment: "Full time",
     deadline: "31 July, 2026",
+    postedAt: "Posted 3 days ago",
     description:
       "Join Microsoft's engineering team in Lagos to build and ship real product features alongside senior engineers.",
   },
@@ -33,6 +34,7 @@ export const opportunities: Opportunity[] = [
     type: "Graduate program",
     commitment: "Full time",
     deadline: "21 Aug, 2026",
+    postedAt: "Posted 5 days ago",
     description:
       "A structured graduate track across PwC's advisory practice, with rotations and mentorship built in.",
   },
@@ -47,6 +49,7 @@ export const opportunities: Opportunity[] = [
     type: "Scholarship",
     commitment: "Full time",
     deadline: "21 Aug, 2026",
+    postedAt: "Posted 1 week ago",
     description:
       "Fully funded scholarship for postgraduate study in Germany, covering tuition and living costs.",
   },
@@ -61,6 +64,7 @@ export const opportunities: Opportunity[] = [
     type: "Scholarship",
     commitment: "Full time",
     deadline: "21 Aug, 2026",
+    postedAt: "Posted a week ago",
     description:
       "Work on product design for GetEquity's investment platform, from research through to shipped UI.",
   },
@@ -237,7 +241,7 @@ export function fetchOpportunities({
   });
 }
 
-/* GET /api/opportunities/:id*/
+/*Mimics GET /api/opportunities/:id*/
 export function fetchOpportunityById(
   id: number
 ): Promise<Opportunity | undefined> {

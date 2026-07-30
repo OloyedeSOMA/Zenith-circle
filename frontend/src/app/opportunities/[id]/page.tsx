@@ -1,9 +1,13 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { fetchOpportunityById } from "@/data/opportunities";
+import HeaderNav from "@/components/HeaderNav";
+import OpportunityDetailsHeader from "@/components/OpportunityDetailsHeader";
+import OpportunityDetailsTab from "@/components/OpportunityDetailsTab";
+import Footer from "@/components/Footer";
 
 interface OpportunityDetailsPageProps {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }
 
 const TAG_STYLES: Record<string, string> = {
@@ -15,7 +19,8 @@ const TAG_STYLES: Record<string, string> = {
 export default async function OpportunityDetailsPage({
   params,
 }: OpportunityDetailsPageProps) {
-  const opportunity = await fetchOpportunityById(Number(params.id));
+  const { id } = await params
+  const opportunity = await fetchOpportunityById(Number(id));
 
   if (!opportunity) {
     notFound();
@@ -34,15 +39,21 @@ export default async function OpportunityDetailsPage({
   } = opportunity;
 
   return (
-    <main className="mx-auto max-w-2xl px-4 py-10">
-      <Link
-        href="/opportunities"
-        className="mb-6 inline-block text-sm font-medium text-gray-600 hover:underline"
-      >
-        ← Back to opportunities
-      </Link>
+    <div className="min-h-screen mx-auto w-full max-w-[100%] bg-white gap-5">
+      <HeaderNav />
+      <div className="mx-auto w-full max-w-5xl px-4 py-6 sm:px-6 lg:px-8">
+        <Link
+          href="/opportunities"
+          className="mb-6 inline-block text-sm font-medium text-gray-600 hover:underline"
+        >
+          ← Back to opportunities
+        </Link>
 
-      <span className={`rounded-full px-2.5 py-1 text-xs font-medium ${TAG_STYLES[tag]}`}>
+        {/* <div className="rounded-xl border border-gray-200 p-5 sm:p-8">
+          <OpportunityDetailsHeader opportunity={opportunity} />
+          <OpportunityDetailsTab />
+        </div> */}
+        <span className={`rounded-full px-2.5 py-1 text-xs font-medium ${TAG_STYLES[tag]}`}>
         {tag}
       </span>
 
@@ -69,6 +80,12 @@ export default async function OpportunityDetailsPage({
       <p className="mt-6 text-sm text-gray-500">
         Deadline: <span className="text-gray-700">{deadline}</span>
       </p>
-    </main>
+      </div>
+
+      
+
+    <Footer />
+    </div>
+  
   );
 }

@@ -12,6 +12,7 @@ export interface Opportunity {
   commitment: string; // "Full time" | "Part time"
   deadline: string;
   description?: string;
+  postedAt?: string;
 }
 
 export interface PaginatedOpportunities {

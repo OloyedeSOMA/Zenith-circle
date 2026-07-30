@@ -1,12 +1,3 @@
-// import OpportunitiesSection from "@/components/OpportunitiesSection";
-
-// export default function OpportunitiesPage() {
-//   return (
-//     <main className="mx-auto max-w-6xl px-4 py-8">
-//       <OpportunitiesSection />
-//     </main>
-//   );
-// }
 import HeaderNav from "@/components/HeaderNav"
 import OpportunitiesSection from "@/components/OpportunitiesSection";
 import Footer from "@/components/Footer";

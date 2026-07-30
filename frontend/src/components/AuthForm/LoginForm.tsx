@@ -10,13 +10,13 @@ import GoogleIcon from "../../../public/Social.png"
 import AuthFormCard from "./AuthFormCard";
 
 import { useLogin } from "@/hooks/useAuth";
-import LoadingSplash from "../LoadingSplash";
 import StatusModal from "../StatusModal";
 import {
   setAccessToken,
   setRefreshToken,
   setUser,
 } from "@/lib/auth-storage";
+import { trackEvent } from "@/lib/gtag";
 
 interface LoginFormProps {
   onRedirecting: () => void;
@@ -30,7 +30,6 @@ interface LoginFormValues {
 const LoginForm = ({ onRedirecting }: LoginFormProps) => {
   const router = useRouter();
   const [error, setError] = useState("");
-  const [redirecting, setRedirecting] = useState(false);
 
   const { mutate, isPending } = useLogin();
   
@@ -46,7 +45,9 @@ const LoginForm = ({ onRedirecting }: LoginFormProps) => {
 
     mutate(data, {
       onSuccess: (response) => {
-
+        trackEvent("login", {
+          method: "email",
+        });
         setAccessToken(response.tokens.access_token);
 
         setRefreshToken(response.tokens.refresh_token);

@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 
 import { useActivateAccount } from "@/hooks/useAuth";
+import { trackEvent } from "@/lib/gtag";
 
 import LoadingSplash from "@/components/LoadingSplash";
 import StatusModal from "@/components/StatusModal";
@@ -31,6 +32,7 @@ export default function ActivateAccount() {
       { id, token },
       {
         onSuccess: () => {
+          trackEvent("activate_account");
           setSuccess(true);
         },
         onError: (err: any) => {
