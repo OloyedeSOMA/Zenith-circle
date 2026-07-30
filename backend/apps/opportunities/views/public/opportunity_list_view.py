@@ -28,7 +28,7 @@ class PublicOpportunityListAPIView(APIView):
     def get(self, request):
 
         search = request.query_params.get('search')
-        opportunity_type = request.query_params.get('type')
+        opportunity_type = request.query_params.get('opportunity_type')
         field = request.query_params.get('field')
         location = request.query_params.get('location')
         is_remote = request.query_params.get('is_remote')
