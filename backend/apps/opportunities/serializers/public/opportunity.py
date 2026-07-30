@@ -16,7 +16,7 @@ class PublicOpportunitySerializer(serializers.ModelSerializer):
             "slug",
             "description",
             "opportunity_type",
-            "organization",
+            "organisation",
             "application_url",
             "location",
             "field",
