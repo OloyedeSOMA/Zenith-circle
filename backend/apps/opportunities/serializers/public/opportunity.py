@@ -8,6 +8,8 @@ class PublicOpportunitySerializer(serializers.ModelSerializer):
         read_only=True,
     )
 
+    organisation_logo = serializers.SerializerMethodField()
+
     class Meta:
         model = Opportunity
         fields = [
@@ -17,6 +19,7 @@ class PublicOpportunitySerializer(serializers.ModelSerializer):
             "description",
             "opportunity_type",
             "organisation",
+            "organisation_logo",
             "application_url",
             "location",
             "field",
@@ -24,3 +27,9 @@ class PublicOpportunitySerializer(serializers.ModelSerializer):
             "is_remote",
             "created_at",
         ]
+
+    def get_organisation_logo(self, obj):
+        recruiter_profile = getattr(obj.posted_by, 'recruiter_profile', None)
+        if recruiter_profile:
+            return recruiter_profile.logo
+        return None
