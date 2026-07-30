@@ -1,12 +1,14 @@
 "use client";
 
 import { useForm } from "react-hook-form";
-import { useRouter } from "next/navigation";
+import { useSearchParams, useRouter } from "next/navigation";
 import { useState } from "react";
 import Input from "../Input";
 import Button from "../Button";
-import SuccessModal from "../SuccessModal";
 import AuthFormCard from "./AuthFormCard";
+import { useResetPassword } from "@/hooks/useAuth";
+import LoadingSplash from "../LoadingSplash";
+import StatusModal from "../StatusModal";
 
 interface ResetPasswordValues {
   identifier: string;
@@ -15,29 +17,68 @@ interface ResetPasswordValues {
 
 const ResetPasswordForm = () => {
   const router = useRouter();
-  const [serverError, setServerError] = useState<string | null>(null);
-  const [showSuccess, setShowSuccess] = useState(false);
+
+  const searchParams = useSearchParams();
+
+  const id = searchParams.get("id");
+  const token = searchParams.get("token");
+
+  const { mutate, isPending} = useResetPassword();
+
+  const [redirecting, setRedirecting] = useState(false);
+  const [error, setError] = useState("");
 
   const {
     register,
     handleSubmit,
+    reset,
     watch,
-    formState: { errors },
-  } = useForm<ResetPasswordValues>({ mode: "onChange" });
+    formState: { errors},
+  } = useForm<ResetPasswordValues>({
+    mode: "onChange",
+  });
 
   const password = watch("password") ?? "";
 
-  const onSubmit = async (data: ResetPasswordValues) => {
-    setServerError(null);
-    try {
-      // TODO: replace with the real endpoint once the backend is ready
-      // await api.post("/auth/reset-password", data);
-      console.log(data);
-      setShowSuccess(true);
-    } catch {
-      setServerError("Something went wrong. Please try again.");
+  const onSubmit = (data: ResetPasswordValues) => {
+    setError("");
+
+    if (!id || !token) {
+      setError("Invalid reset password link.");
+      return;
     }
+
+    mutate(
+      {
+        id,
+        token,
+        password: data.password,
+      },
+      {
+        onSuccess: (response) => {
+          console.log(response);
+
+          setRedirecting(true);
+          reset();
+          setTimeout(() => {
+            router.push("/login");
+          }, 1000);
+        },
+
+        onError: (err: any) => {
+          console.error(err);
+
+          setError(
+            err.message || "Unable to reset password."
+          );
+        },
+      }
+    );
   };
+
+  if (isPending || redirecting) {
+    return <LoadingSplash />;
+  }
 
   return (
     <AuthFormCard
@@ -49,10 +90,10 @@ const ResetPasswordForm = () => {
         className="mt-10 flex w-full max-w-[440px] flex-col gap-6"
       >
         <Input
-          label="Email/Phone Number"
+          label="Email"
           placeholder="comfrot@gmail.com"
           register={register("identifier", {
-            required: "Email or phone number is required",
+            required: "Email is required",
           })}
           error={errors.identifier?.message}
         />
@@ -73,13 +114,6 @@ const ResetPasswordForm = () => {
               : undefined)
           }
         />
-
-        {serverError && (
-          <p className="text-sm text-error" role="alert">
-            {serverError}
-          </p>
-        )}
-
         <Button
           type="submit"
           variant="muted"
@@ -89,12 +123,13 @@ const ResetPasswordForm = () => {
         </Button>
       </form>
 
-      <SuccessModal
-        open={showSuccess}
-        message="Password changed successfully"
-        buttonText="Log in"
-        onButtonClick={() => router.push("/login")}
-        onClose={() => setShowSuccess(false)}
+      <StatusModal
+        open={!!error}
+        type="error"
+        message={error}
+        buttonText="Okay"
+        onButtonClick={() => setError("")}
+        onClose={() => setError("")}
       />
     </AuthFormCard>
   );

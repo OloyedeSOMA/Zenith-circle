@@ -35,7 +35,7 @@ const HeroSection = () => {
           </p>
 
           {/* Search */}
-          <div className="relative mt-10 w-full max-w-xl">
+          <div className="relative mt-12 w-full max-w-xl">
             <Search
               size={18}
               className="absolute left-2 top-1/2 -translate-y-1/2 text-gray-400"
