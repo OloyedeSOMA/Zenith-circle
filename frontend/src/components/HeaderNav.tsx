@@ -243,7 +243,7 @@ const HeaderNav = () => {
         </nav>
 
         {mounted && (loggedIn ? (
-          <div className="mt-1 flex flex-col gap-1">
+          <div className="mt-4 flex flex-col gap-1">
 
             <Link
               href="/dashboard"
@@ -279,7 +279,7 @@ const HeaderNav = () => {
 
           </div>
         ) : (
-          <div className="mt-2 flex flex-col gap-3">
+          <div className="mt-4 flex flex-col gap-3">
 
             <Link
               href="/login"

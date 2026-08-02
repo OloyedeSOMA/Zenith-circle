@@ -110,10 +110,10 @@ const LoginForm = ({ onRedirecting }: LoginFormProps) => {
         <Button
           type="submit"
           variant="primary"
-          disabled={!isValid || isSubmitting}
+          disabled={!isValid || isPending}
           className="h-[49px] w-full font-medium"
         >
-          Log in
+          {isPending? "Logging In.." : "Log In"}
         </Button>
 
         <div className="my-1 flex w-full items-center gap-3">
