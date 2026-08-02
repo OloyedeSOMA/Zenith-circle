@@ -13,8 +13,11 @@ const TAG_STYLES: Record<OpportunityTag, string> = {
 const TYPE_STYLES: Record<string, string> = {
   Internship: "bg-[#5DCB7B] text-[#2B5A35]",
   Scholarship: "bg-[#5DCB7B] text-[#2B5A35]",
-  Job: "bg-[#FFD59D] text-[#D97500]",
+  job: "bg-[#FFD59D] text-[#D97500]",
   "Graduate Program": "bg-[#FFD59D] text-[#D97500]",
+  internship: "bg-[#5DCB7B] text-[#2B5A35]",
+  scholarship: "bg-[#5DCB7B] text-[#2B5A35]",
+  "graduate program": "bg-[#FFD59D] text-[#D97500]",
 };
 
 const MODE_STYLES: Record<string, string> = {
@@ -23,6 +26,25 @@ const MODE_STYLES: Record<string, string> = {
   "On-site": "bg-[#F2E5E5] text-[#7A6F6F]",
   "Full time": "bg-[#F2E5E5] text-[#7A6F6F]",
   "Part time": "bg-[#F2E5E5] text-[#7A6F6F]",
+  remote: "bg-[#F2E5E5] text-[#7A6F6F]",
+  hybrid: "bg-[#F2E5E5] text-[#7A6F6F]",
+  onsite: "bg-[#F2E5E5] text-[#7A6F6F]",
+};
+
+const formatDeadline = (value?: string) => {
+  if (!value) return "N/A";
+
+  const parsedDate = new Date(value);
+
+  if (Number.isNaN(parsedDate.getTime())) {
+    return value;
+  }
+
+  return new Intl.DateTimeFormat("en-GB", {
+    day: "numeric",
+    month: "short",
+    year: "numeric",
+  }).format(parsedDate);
 };
 
 interface OpportunityCardProps {
@@ -33,27 +55,34 @@ export default function OpportunityCard({
   opportunity,
 }: OpportunityCardProps) {
   const {
-    id,
-    tag,
-    logo,
+    slug,
     title,
-    company,
+    organisation,
+    organisation_logo,
     location,
-    workMode,
-    type,
-    commitment,
+    opportunity_type,
+    field,
     deadline,
+    is_remote,
   } = opportunity;
+
+  const tag = opportunity.tag ?? "New";
+  const logo = organisation_logo || "/jobimage1.png";
+  const company = organisation || "Unknown organisation";
+  const workMode = is_remote ? "Remote" : "On-site";
+  const type = opportunity_type || field || "Opportunity";
+  const commitment = field || "General";
+  const formattedDeadline = formatDeadline(deadline);
 
   return (
     <Link
-      href={`/opportunities/${id}`}
+      href={`/opportunities/${slug || ""}`}
       className="flex h-auto w-full max-w-[298px] flex-col items-center overflow-hidden border border-primary rounded-lg bg-white transition-all duration-300 hover:-translate-y-1 hover:shadow-lg "
     >
-      <div className="w-full w-full max-w-[260px] flex flex-col gap-3">
+      <div className="w-full flex flex-col">
       {/* Header */}
 
-      <div className="flex items-start justify-between px-5 pt-5">
+      <div className="flex items-start justify-between px-2 pt-5">
         <span
           className={`flex h-[35px] w-auto items-center rounded-lg p-5 text-sm font-medium ${TAG_STYLES[tag]}`}
         >
@@ -70,18 +99,19 @@ export default function OpportunityCard({
       </div>
 
       {/* Body */}
-      <div className="flex flex-1 flex-col px-5 pt-5 gap-1">
+      <div className="flex flex-1 flex-col px-2 pt-5 gap-1">
         <div className="h-10 w-10 overflow-hidden rounded-full">
           <Image
             src={logo}
             alt={company}
             width={40}
             height={40}
+            unoptimized
             className="h-full w-full object-contain"
           />
         </div>
 
-        <h3 className="mt-5 line-clamp-2 text-[15px] font-semibold leading-6 text-secondary">
+        <h3 className="mt-5 line-clamp-2 text-[14px] font-semibold leading-6 text-secondary">
           {title}
         </h3>
 
@@ -89,7 +119,11 @@ export default function OpportunityCard({
           {company}
         </p>
 
-        <div className="mt-3 flex items-center gap-2">
+        <p className="mt-1 text-xs text-gray-400">
+          {field}
+        </p>
+
+        <div className="mt-1 flex items-center gap-1">
           <MapPin
             size={18}
             className="shrink-0 text-secondary"
@@ -110,29 +144,29 @@ export default function OpportunityCard({
 
         <div className="mt-4 flex flex-wrap gap-2">
           <span
-            className={`flex h-[33px] items-center rounded-xl px-4 text-sm font-medium ${
-              TYPE_STYLES[type]
+            className={`flex h-[33px] items-center rounded-xl px-5 text-sm font-medium ${
+              TYPE_STYLES[type.toLowerCase()]
             }`}
           >
             {type}
           </span>
 
-          <span
-            className={`flex h-[33px] items-center rounded-xl px-4 text-sm ${
-              MODE_STYLES[commitment]
+          {/* <span
+            className={`flex h-[33px] items-center rounded-xl px-2 text-sm ${
+              MODE_STYLES[commitment.toLowerCase()]
             }`}
           >
             {commitment}
-          </span>
+          </span> */}
         </div>
 
-        <div className="mt-auto -mx-5 border-t w-full border-gray-200 px-5 py-4">
+        <div className="mt-auto border-t w-full border-gray-200 px-2 py-4">
           <p className="text-base">
             <span className="font-semibold text-secondary">
               Deadline:
             </span>{" "}
             <span className="text-secondary">
-              {deadline}
+              {formattedDeadline}
             </span>
           </p>
         </div>

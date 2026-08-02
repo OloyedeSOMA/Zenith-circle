@@ -1,0 +1,24 @@
+import HeaderNav from "@/components/HeaderNav";
+import Footer from "@/components/Footer";
+import OpportunitiesSection from "@/components/OpportunitiesSection";
+
+export default function ScholarshipsPage() {
+  return (
+    <div className="min-h-screen bg-white">
+      <HeaderNav />
+
+      <main className="mx-auto flex w-full max-w-[100%] flex-col justify-center gap-10">
+        <section className="mx-auto mt-6 w-[90%] max-w-[1276px]">
+          <h1 className="text-3xl font-semibold text-secondary">Scholarships</h1>
+          <p className="mt-2 text-sm text-gray-500">
+            See scholarship opportunities and funding announcements.
+          </p>
+          <OpportunitiesSection filters={{ opportunity_type: "scholarship" }} />
+        </section>
+
+        
+        <Footer />
+      </main>
+    </div>
+  );
+}

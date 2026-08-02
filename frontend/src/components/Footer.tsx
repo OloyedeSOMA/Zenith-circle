@@ -47,9 +47,9 @@ const footerLinks = [
 
 const Footer = () => {
   return (
-    <footer className="bg-primary text-white flex justify-center w-full max-w-[100%] gap-5">
-      <div className="mx-auto w-full max-w-[90%] px-4 py-14 sm:px-6 lg:px-8">
-        <div className="max-w-full">
+    <footer className="bg-primary text-white flex justify-center w-full max-w-[100%]">
+      <div className="mx-auto w-full max-w-[90%] px-4 sm:px-6 lg:px-4">
+        <div className="max-w-full pt-2">
             <Link href="/">
                 <Image
                 src={footerLogo}
@@ -65,8 +65,8 @@ const Footer = () => {
         </div>
 
         {/* Footer Links */}
-        <div className="mx-auto w-full max-w-[100%] flex justify-center px-4 py-14 sm:px-6 lg:px-8">
-            <div className="w-full max-w-[70%] mt-12 mb-10 grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mx-auto w-full max-w-[100%] flex justify-center px-4 sm:px-6 lg:px-8">
+            <div className="w-full max-w-[70%] mt-4 grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-4">
             {footerLinks.map((section) => (
                 <div key={section.title}>
                 <h3 className="mb-4 text-base font-semibold">
@@ -92,10 +92,10 @@ const Footer = () => {
         {/* </div> */}
 
         {/* Divider */}
-        <div className="my-10 h-px bg-white/20" />
+        <div className="my-3 h-px bg-white/20" />
 
         {/* Bottom */}
-        <div className="flex flex-col items-center justify-between gap-3 text-center text-sm text-white/70 sm:flex-row">
+        <div className="flex flex-col items-center justify-between text-center text-sm text-white/70 sm:flex-row">
           <p>
             © {new Date().getFullYear()} OpportunityHub NG. All rights reserved.
           </p>

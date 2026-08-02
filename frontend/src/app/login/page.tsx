@@ -11,7 +11,7 @@ export default function LoginPage() {
     return <LoadingSplash />;
   }
   return (
-    <main className="flex min-h-screen items-center justify-between bg-background">
+    <main className="flex min-h-screen items-center justify-center bg-background">
       <AuthCard>
         <LoginForm onRedirecting={()=> setRedirecting(true)}/>
       </AuthCard>

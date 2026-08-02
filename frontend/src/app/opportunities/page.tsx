@@ -9,10 +9,13 @@ export default function Home() {
       <HeaderNav />
 
     
-      <main className="w-full max-w-[100%] flex flex-col justify-center gap-10">
-        <OpportunitiesSection/>
-        <Footer />
-      </main>      
+      <main className="w-full max-w-[100%] flex flex-col justify-center">
+        <section className="mx-auto mt-6 w-[90%] max-w-[1276px]">
+          <OpportunitiesSection/>
+        </section>
+        
+      </main> 
+      <Footer />     
     </div>
   );
 }

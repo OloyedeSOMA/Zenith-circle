@@ -3,18 +3,18 @@ const BASE_URL = 'https://opportunityhubng.my.to/api/v1';
 
 export async function apiFetch<T>(
   endpoint: string,
-  options?: RequestInit
+  options: RequestInit = {}
 ): Promise<T> {
   const response = await fetch(`${BASE_URL}${endpoint}`, {
+    ...options,
     headers: {
       "Content-Type": "application/json",
-      ...options?.headers,
+      ...(options.headers ?? {}),
     },
-    ...options,
   });
+  const text = await response.text();
+  const data = text ? JSON.parse(text) : {};
 
-  const data = await response.json();
-  console.log(data);
 
   if (!response.ok) {
     let message = "Something went wrong";

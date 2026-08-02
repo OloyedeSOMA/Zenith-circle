@@ -3,7 +3,7 @@ import ForgotPasswordForm from "@/components/AuthForm/ForgotPasswordForm";
 
 export default function ForgotPasswordPage() {
   return (
-    <main className="flex min-h-screen items-center justify-between bg-background">
+    <main className="flex min-h-screen items-center justify-center bg-background">
       <AuthCard>
         <ForgotPasswordForm />
       </AuthCard>

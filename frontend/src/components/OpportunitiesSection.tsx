@@ -1,27 +1,93 @@
 "use client";
 
-import { useState } from "react";
-import { useQuery, keepPreviousData } from "@tanstack/react-query";
+import { useEffect, useMemo, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
-import { fetchOpportunities } from "@/data/opportunities";
+import { fetchOpportunities } from "@/lib/opportunity-api";
 import OpportunityCard, {
   OpportunityCardSkeleton,
 } from "./OpportunityCard";
 import Pagination from "./Pagination";
+import NoOpportunitiesFound from "./NoOpportunitiesFound";
 
 const PER_PAGE = 8;
 
-export default function OpportunitiesSection() {
+interface OpportunitiesSectionProps {
+  search?: string;
+  filters?: {
+    opportunity_type?: string;
+    field?: string;
+    organisation?: string;
+    location?: string;
+    is_remote?: boolean;
+  };
+}
+
+export default function OpportunitiesSection({
+  search = "",
+  filters = {},
+}: OpportunitiesSectionProps) {
   const [page, setPage] = useState(1);
 
+  useEffect(() => {
+    setPage(1);
+  }, [search, filters]);
+
+  const queryParams = useMemo(() => ({
+    page: 1,
+    page_size: 200,
+    search: search.trim() || undefined,
+  }), [search]);
+
   const { data, isLoading, isFetching } = useQuery({
-    queryKey: ["opportunities", page],
-    queryFn: () => fetchOpportunities({ page, perPage: PER_PAGE }),
-    placeholderData: keepPreviousData,
+    queryKey: ["opportunities", queryParams],
+    queryFn: () => fetchOpportunities(queryParams),
   });
 
-  const opportunities = data?.data ?? [];
-  const totalPages = data?.meta?.totalPages ?? 1;
+  const opportunities = data?.results ?? [];
+
+  const filteredOpportunities = useMemo(() => {
+    return opportunities.filter((opportunity) => {
+      const matchesType =
+        !filters.opportunity_type ||
+        opportunity.opportunity_type?.toLowerCase() ===
+          filters.opportunity_type.toLowerCase();
+
+      const matchesField =
+        !filters.field ||
+        opportunity.field?.toLowerCase() === filters.field.toLowerCase();
+
+      const matchesOrganisation =
+        !filters.organisation ||
+        opportunity.organisation?.toLowerCase() ===
+          filters.organisation.toLowerCase();
+
+      const matchesLocation =
+        !filters.location ||
+        (filters.location === "Remote"
+          ? opportunity.is_remote === true
+          : opportunity.location?.toLowerCase() ===
+            filters.location.toLowerCase());
+
+      const matchesRemote =
+        typeof filters.is_remote !== "boolean" ||
+        filters.is_remote === opportunity.is_remote;
+
+      return (
+        matchesType &&
+        matchesField &&
+        matchesOrganisation &&
+        matchesLocation &&
+        matchesRemote
+      );
+    });
+  }, [opportunities, filters]);
+
+  const totalPages = Math.max(1, Math.ceil(filteredOpportunities.length / PER_PAGE));
+  const paginatedOpportunities = filteredOpportunities.slice(
+    (page - 1) * PER_PAGE,
+    page * PER_PAGE
+  );
 
   const handlePageChange = (newPage: number) => {
     if (newPage < 1 || newPage > totalPages) return;
@@ -30,41 +96,29 @@ export default function OpportunitiesSection() {
   };
 
   return (
-    <section className="w-full max-w-[100%] flex justify-center mb-40">
-      <div className="mx-auto w-[90%] max-w-[1276px] flex flex-col gap-2">
-        <div className="mb-6 flex items-center justify-between">
-          <div>
-            <h2 className="text-2xl font-semibold text-gray-900">
-              Recommended for you
-            </h2>
-            <p className="text-sm text-gray-500">
-              Opportunities handpicked based on your profile and interests
-            </p>
-          </div>
-          <Link
-            href="/opportunities"
-            className="hidden text-sm font-medium text-gray-700 hover:underline sm:block"
-          >
-            View all
-          </Link>
-        </div>
+    <div className="my-8">
+    <div className="grid grid-cols-1 place-items-center gap-2 sm:grid-cols-2 sm:place-items-stretch lg:grid-cols-4">
+      {isLoading || isFetching
+        ? Array.from({ length: PER_PAGE }).map((_, i) => (
+            <OpportunityCardSkeleton key={i} />
+          ))
+        : paginatedOpportunities.length > 0
+          ? paginatedOpportunities.map((opportunity) => (
+              <OpportunityCard
+                key={opportunity.id}
+                opportunity={opportunity}
+              />
+            ))
+          : (
+              <NoOpportunitiesFound />
+            )}
+    </div>
 
-        <div className="grid grid-cols-1 place-items-center gap-4 sm:grid-cols-2 sm:place-items-stretch lg:grid-cols-4">
-          {isLoading || isFetching
-            ? Array.from({ length: PER_PAGE }).map((_, i) => (
-                <OpportunityCardSkeleton key={i} />
-              ))
-            : opportunities.map((opportunity) => (
-                <OpportunityCard key={opportunity.id} opportunity={opportunity} />
-              ))}
-        </div>
-
-        <Pagination
-          page={page}
-          totalPages={totalPages}
-          onPageChange={handlePageChange}
-        />
-      </div>
-    </section>
+    <Pagination
+      page={page}
+      totalPages={totalPages}
+      onPageChange={handlePageChange}
+    />
+    </div>
   );
 }

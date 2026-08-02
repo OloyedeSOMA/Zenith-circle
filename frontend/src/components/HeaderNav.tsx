@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import {
   Bell,
   Menu,
@@ -16,9 +17,11 @@ import {
 import Logo from "../../public/logo.png";
 import Button from "./Button";
 import ProfileDropdown from "./ProfileDropdown";
-import { getUser, isAuthenticated } from "@/lib/auth-storage";
+import { clearAuth, getRefreshToken, getUser, isAuthenticated } from "@/lib/auth-storage";
+import { logOut } from "@/lib/auth-api";
 
 const navLinks = [
+  { name: "Home", href: "/" },
   { name: "Jobs", href: "/jobs" },
   { name: "Internships", href: "/internships" },
   { name: "Scholarships", href: "/scholarships" },
@@ -26,14 +29,18 @@ const navLinks = [
 
 const HeaderNav = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const pathname = usePathname();
 
-  const loggedIn = isAuthenticated();
-
-  const user = getUser();
+  const [mounted, setMounted] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(false);
+  const [user, setUser] = useState(getUser());
 
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    setLoggedIn(isAuthenticated());
+    setUser(getUser());
+    setMounted(true);
     const handleClickOutside = (e: MouseEvent) => {
       if (
         dropdownRef.current &&
@@ -49,11 +56,26 @@ const HeaderNav = () => {
       document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  const handleLogout = () => {
-    console.log("logout");
-    // setProfileOpen(false);
+  const handleLogout = async () => {
+    const refreshToken = getRefreshToken();
+
+    if (refreshToken) {
+      try {
+        await logOut({ refresh_token: refreshToken });
+      } catch (error) {
+        console.error("Logout request failed:", error);
+      }
+    }
+
+    clearAuth();
+    setLoggedIn(false);
+    setUser(null);
     setIsOpen(false);
+
+    window.location.href = "/";
   };
+    
+
 
   return (
     <>
@@ -73,15 +95,23 @@ const HeaderNav = () => {
           {/* Desktop Nav */}
 
           <nav className="hidden items-center gap-10 md:flex">
-            {navLinks.map((link) => (
-              <Link
-                key={link.name}
-                href={link.href}
-                className="text-sm font-medium text-gray-600 transition hover:text-primary"
-              >
-                {link.name}
-              </Link>
-            ))}
+            {navLinks.map((link) => {
+              const isActive = pathname === link.href || pathname.startsWith(`${link.href}/`);
+
+              return (
+                <Link
+                  key={link.name}
+                  href={link.href}
+                  className={`text-sm font-medium transition ${
+                    isActive
+                      ? "text-primary"
+                      : "text-gray-600 hover:text-primary"
+                  }`}
+                >
+                  {link.name}
+                </Link>
+              );
+            })}
           </nav>
 
           {/* Desktop Right */}
@@ -94,7 +124,7 @@ const HeaderNav = () => {
             <Bell size={20} />
           </button>
 
-          {loggedIn ? (
+          {mounted && (loggedIn ? (
             <ProfileDropdown
               email={user?.email}
               role={user?.role}
@@ -120,7 +150,7 @@ const HeaderNav = () => {
                 </Button>
               </Link>
             </>
-          )}
+          ))}
         </div>
 
           {/* Mobile */}
@@ -154,7 +184,7 @@ const HeaderNav = () => {
       {/* Sidebar */}
 
       <aside
-        className={`fixed right-0 top-0 z-50 flex h-screen w-80 flex-col bg-white p-6 transition-transform duration-300 ${
+        className={`fixed right-0 top-0 z-50 flex h-screen w-80 flex-col overflow-y-auto bg-white p-6 transition-transform duration-300 ${
           isOpen ? "translate-x-0" : "translate-x-full"
         }`}
       >
@@ -174,8 +204,8 @@ const HeaderNav = () => {
           </button>
         </div>
 
-        {loggedIn && (
-          <div className="mt-8 rounded-xl bg-gray-50 p-5">
+        {mounted && (loggedIn ? (
+          <div className="mt-4 rounded-xl bg-gray-50 p-5">
 
             {/* <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary text-white">
               <User size={24} />
@@ -189,23 +219,31 @@ const HeaderNav = () => {
               {user?.role}
             </p>
           </div>
-        )}
+        ): (<></>))}
 
-        <nav className="mt-8 flex flex-col gap-1">
-          {navLinks.map((link) => (
-            <Link
-              key={link.name}
-              href={link.href}
-              onClick={() => setIsOpen(false)}
-              className="rounded-lg px-4 py-3 transition hover:bg-gray-100 hover:text-primary"
-            >
-              {link.name}
-            </Link>
-          ))}
+        <nav className="mt-3 flex flex-col gap-1">
+          {navLinks.map((link) => {
+            const isActive = pathname === link.href || pathname.startsWith(`${link.href}/`);
+
+            return (
+              <Link
+                key={link.name}
+                href={link.href}
+                onClick={() => setIsOpen(false)}
+                className={`rounded-lg px-4 py-3 transition ${
+                  isActive
+                    ? "bg-primary-light font-semibold text-primary"
+                    : "hover:bg-gray-100 hover:text-primary"
+                }`}
+              >
+                {link.name}
+              </Link>
+            );
+          })}
         </nav>
 
-        {loggedIn ? (
-          <div className="mt-6 flex flex-col gap-1">
+        {mounted && (loggedIn ? (
+          <div className="mt-1 flex flex-col gap-1">
 
             <Link
               href="/dashboard"
@@ -233,7 +271,7 @@ const HeaderNav = () => {
 
             <button
               onClick={handleLogout}
-              className="mt-2 flex items-center gap-3 rounded-lg px-4 py-3 text-red-600 hover:bg-red-50"
+              className="mt-1 flex items-center gap-3 rounded-lg px-4 py-3 text-red-600 hover:bg-red-50"
             >
               <LogOut size={18} />
               Logout
@@ -241,7 +279,7 @@ const HeaderNav = () => {
 
           </div>
         ) : (
-          <div className="mt-3 flex flex-col gap-3">
+          <div className="mt-2 flex flex-col gap-3">
 
             <Link
               href="/login"
@@ -268,7 +306,7 @@ const HeaderNav = () => {
             </Link>
 
           </div>
-        )}
+        ))}
       </aside>
     </>
   );

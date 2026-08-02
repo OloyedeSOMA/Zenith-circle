@@ -1,10 +1,12 @@
 import { apiFetch } from "./api-client";
 import { RegisterRequest, RegisterResponse,
-    ActivateAccountRequest,ActivateAccountResponse,
-    ResendActivationRequest, ResendActivationResponse,
-    LoginRequest, LoginResponse, ForgotPasswordRequest, ForgotPasswordResponse,
-    ResetPasswordRequest, ResetPasswordResponse} from "@/types/auth";
-
+  ActivateAccountRequest,ActivateAccountResponse,
+  ResendActivationRequest, ResendActivationResponse,
+  LoginRequest, LoginResponse, ForgotPasswordRequest, ForgotPasswordResponse,
+  ResetPasswordRequest, ResetPasswordResponse,
+  LogOutRequest,
+  LogOutResponse} from "@/types/auth";
+import { getAccessToken } from "./auth-storage";
 
 export const register = (
   payload: RegisterRequest
@@ -36,8 +38,8 @@ export const resendActivation =(payload: ResendActivationRequest): Promise<Resen
 export const login =(payload: LoginRequest): Promise<LoginResponse> =>{
     return apiFetch("/auth/login/",
         {
-            method: "POST",
-            body: JSON.stringify(payload),
+          method: "POST",
+          body: JSON.stringify(payload),
         }
     )
 }
@@ -50,15 +52,27 @@ export const forgotPassword = (payload: ForgotPasswordRequest): Promise<ForgotPa
 };
 
 export const resetPassword = (payload:ResetPasswordRequest):Promise<ResetPasswordResponse>=>{
-    return apiFetch(
-        `/auth/reset-password/?id=${payload.id}&token=${payload.token}`,
-        {
-            method:"POST",
-            body:JSON.stringify({
-                id: payload.id,
-                token: payload.token,
-                password:payload.password,
-            }),
-        }
-    );
+  return apiFetch(
+      `/auth/reset-password/?id=${payload.id}&token=${payload.token}`,
+      {
+          method:"POST",
+          body:JSON.stringify({
+              id: payload.id,
+              token: payload.token,
+              password:payload.password,
+          }),
+      }
+  );
 }
+
+export const logOut = (payload: LogOutRequest): Promise<LogOutResponse> => {
+  return apiFetch("/auth/logout/", {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${getAccessToken()}`,
+    },
+    body: JSON.stringify({
+      refresh_token: payload.refresh_token
+    }),
+  });
+};

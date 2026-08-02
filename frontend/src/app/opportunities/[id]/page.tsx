@@ -1,91 +1,63 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { fetchOpportunityById } from "@/data/opportunities";
+
 import HeaderNav from "@/components/HeaderNav";
-import OpportunityDetailsHeader from "@/components/OpportunityDetailsHeader";
-import OpportunityDetailsTab from "@/components/OpportunityDetailsTab";
+// import OpportunityDetailsHeader from "@/components/OpportunityDetailsHeader";
+// import OpportunityOverviewPanel from "@/components/OpportunityOverviewPanel";
+// import OpportunityTimeline from "@/components/OpportunityTimeline";
 import Footer from "@/components/Footer";
+import { fetchOpportunityBySlug } from "@/lib/opportunity-api";
 
 interface OpportunityDetailsPageProps {
   params: Promise<{ id: string }>;
 }
 
-const TAG_STYLES: Record<string, string> = {
-  New: "bg-blue-100 text-blue-600",
-  Featured: "bg-orange-100 text-orange-600",
-  "Closing soon": "bg-red-100 text-red-600",
-};
-
 export default async function OpportunityDetailsPage({
   params,
 }: OpportunityDetailsPageProps) {
-  const { id } = await params
-  const opportunity = await fetchOpportunityById(Number(id));
+  const { id } = await params;
+
+  let opportunity;
+
+  try {
+    opportunity = await fetchOpportunityBySlug(id);
+  } catch {
+    notFound();
+  }
 
   if (!opportunity) {
     notFound();
   }
 
-  const {
-    tag,
-    title,
-    company,
-    location,
-    workMode,
-    type,
-    commitment,
-    deadline,
-    description,
-  } = opportunity;
-
   return (
-    <div className="min-h-screen mx-auto w-full max-w-[100%] bg-white gap-5">
+    <div className="min-h-screen w-full bg-white">
       <HeaderNav />
-      <div className="mx-auto w-full max-w-5xl px-4 py-6 sm:px-6 lg:px-8">
-        <Link
-          href="/opportunities"
-          className="mb-6 inline-block text-sm font-medium text-gray-600 hover:underline"
-        >
-          ← Back to opportunities
-        </Link>
 
-        {/* <div className="rounded-xl border border-gray-200 p-5 sm:p-8">
-          <OpportunityDetailsHeader opportunity={opportunity} />
-          <OpportunityDetailsTab />
-        </div> */}
-        <span className={`rounded-full px-2.5 py-1 text-xs font-medium ${TAG_STYLES[tag]}`}>
-        {tag}
-      </span>
+      <main className="mx-auto w-full max-w-[1200px] px-4 py-6 sm:px-6 lg:px-8">
+        <div className="mb-5 flex items-center gap-2 text-sm text-gray-500">
+          <Link href="/" className="hover:text-primary">
+            Opportunities
+          </Link>
+          <span>/</span>
+          <span className="text-gray-700">Details</span>
+        </div>
 
-      <h1 className="mt-3 text-2xl font-bold text-gray-900">{title}</h1>
-      <p className="mt-1 text-gray-500">
-        {company} · {location} · {workMode}
-      </p>
+        {/* <section className="overflow-hidden rounded-[24px] border border-[#D6E2D0] bg-white shadow-[0_4px_18px_rgba(16,24,40,0.06)]">
+          <div className="p-4 sm:p-6 lg:p-8">
+            <OpportunityDetailsHeader opportunity={opportunity} />
 
-      <div className="mt-4 flex flex-wrap gap-2">
-        <span className="rounded-full bg-emerald-100 px-2.5 py-1 text-xs font-medium text-emerald-700">
-          {type}
-        </span>
-        <span className="rounded-full bg-rose-100 px-2.5 py-1 text-xs font-medium text-rose-600">
-          {commitment}
-        </span>
-      </div>
+            <div className="mt-6 border-t border-gray-200 pt-6">
+              <OpportunityOverviewPanel description={opportunity.description} />
+            </div>
 
-      <div className="my-6 border-t border-gray-200" />
+            <div className="mt-6">
+              <OpportunityTimeline />
+            </div>
+          </div>
+        </section> */}
+      </main>
 
-      <p className="text-sm text-gray-700">
-        {description ?? "No further details available for this opportunity yet."}
-      </p>
-
-      <p className="mt-6 text-sm text-gray-500">
-        Deadline: <span className="text-gray-700">{deadline}</span>
-      </p>
-      </div>
-
-      
-
-    <Footer />
+      <Footer />
     </div>
-  
   );
 }

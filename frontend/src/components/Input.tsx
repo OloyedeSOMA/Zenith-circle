@@ -35,7 +35,7 @@ const Input = ({
           {...register}
           {...props}
           type={inputType}
-          className={`w-full ${inputHeight} rounded-lg border border-gray-300 bg-white px-4 leading-normal text-gray-900 placeholder:text-gray-400 ${
+          className={`w-full ${inputHeight} rounded-lg border border-gray-300 bg-white px-4 gap-x-2 leading-normal text-gray-900 placeholder:text-gray-400 ${
             isPassword ? "pr-12" : ""
           } outline-none focus:border-primary`}
         />

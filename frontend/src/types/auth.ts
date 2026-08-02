@@ -60,3 +60,9 @@ export interface ResetPasswordResponse{
     [key:string]:unknown;
 }
 
+export interface LogOutRequest{
+    refresh_token: string;
+}
+export interface LogOutResponse{
+    [key:string]: unknown;
+}

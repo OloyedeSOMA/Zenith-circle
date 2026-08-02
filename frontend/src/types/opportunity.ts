@@ -1,18 +1,44 @@
 export type OpportunityTag = "New" | "Featured" | "Closing soon";
 
 export interface Opportunity {
-  id: number;
-  tag: OpportunityTag;
-  logo: string; 
+  id: string;
   title: string;
-  company: string;
+  slug: string;
+  description: string;
+  opportunity_type: string;
+  organisation: string;
+  organisation_logo: string;
+  application_url: string;
   location: string;
-  workMode: string; // "on-site" | "Hybrid" | "Remote"
-  type: string; // "Internship" | "Scholarship" | "Graduate program"
-  commitment: string; // "Full time" | "Part time"
+  field: string;
   deadline: string;
-  description?: string;
+  is_remote: boolean;
+  created_at: string;
+  tag?: OpportunityTag;
+  logo?: string;
+  company?: string;
+  workMode?: string;
+  type?: string;
+  commitment?: string;
   postedAt?: string;
+}
+
+export interface OpportunityQueryParams {
+  page?: number;
+  page_size?: number;
+  search?: string;
+  opportunity_type?: string;
+  field?: string;
+  organisation?: string;
+  location?: string;
+  is_remote?: boolean;
+}
+
+export interface PaginatedOpportunityResponse {
+  count: number;
+  next: string | null;
+  previous: string | null;
+  results: Opportunity[];
 }
 
 export interface PaginatedOpportunities {
