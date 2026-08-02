@@ -102,9 +102,16 @@ def get_user_opportunities(*, user):
 
 def get_user_opportunity_by_id(*, user, opportunity_id):
     """
-    get an opportunity posted by a user by id
+    returns an opportunity posted by a user by id
     """
     return get_object_or_404(Opportunity, id=opportunity_id, posted_by=user)
+
+
+def get_opportunity_by_id(*, opportunity_id):
+    """
+    returns an opportunity by its id
+    """ 
+    return get_object_or_404(Opportunity, id=opportunity_id)
 
 
 def get_pending_opportunities():

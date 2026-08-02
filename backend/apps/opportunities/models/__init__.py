@@ -1,1 +1,1 @@
-from .opportunity import OpportunityField, Opportunity, OpportunityStatus, OpportunityType
+from .opportunity import OpportunityField, Opportunity, OpportunityStatus, OpportunityType, SavedOpportunity

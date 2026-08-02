@@ -57,3 +57,21 @@ class Opportunity(BaseModel):
 
     def __str__(self):
         return self.title
+
+
+
+class SavedOpportunity(BaseModel):
+    student = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='saved_opportunities')
+    opportunity = models.ForeignKey(Opportunity, on_delete=models.CASCADE, related_name='saved_by')
+
+    class Meta:
+        ordering = ['-created_at']
+        constraints = [
+            models.UniqueConstraint(
+                fields=['student', 'opportunity'],
+                name='unique_student_saved_opportunity',
+            )
+        ]
+
+    def __str__(self):
+        return f'{self.student.email} saved {self.opportunity.title}'
