@@ -48,7 +48,7 @@ class PublicOpportunityListAPIView(APIView):
             request,
             view=self,
         )
-        serializer = PublicOpportunitySerializer(paginated_opportunities, many=True)
+        serializer = PublicOpportunitySerializer(paginated_opportunities, many=True, context={'request': request})
 
         return paginator.get_paginated_response(
             serializer.data,

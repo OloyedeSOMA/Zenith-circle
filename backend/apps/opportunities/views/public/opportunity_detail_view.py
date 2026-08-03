@@ -18,7 +18,7 @@ class PublicOpportunityDetailAPIView(APIView):
     def get(self, request, slug):
 
         opportunity = get_public_opportunity_by_slug(slug=slug)
-        serializer = PublicOpportunitySerializer(opportunity)
+        serializer = PublicOpportunitySerializer(opportunity, context={'request': request})
 
         return Response(
             serializer.data,
