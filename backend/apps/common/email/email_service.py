@@ -3,9 +3,10 @@ from django.core.cache import cache
 from django.contrib.auth import get_user_model
 from django.conf import settings
 from apps.users.selectors.user import get_user_by_email
+from apps.opportunities.models import SavedOpportunity
+from celery import shared_task
 import secrets
 import resend
-import os
 
 
 
@@ -109,3 +110,5 @@ def send_reset_password_email(*, email: str):
     #     recipient_list=[user.email],
     #     fail_silently=False
     # )
+
+

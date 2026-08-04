@@ -1,10 +1,9 @@
+import random
 from datetime import timedelta
-
 from django.core.management.base import BaseCommand
 from django.db import transaction
 from django.utils import timezone
 from django.utils.text import slugify
-
 from apps.users.models.user import User, UserRole
 from apps.users.models.profile import RecruiterProfile
 
@@ -149,6 +148,150 @@ class Command(BaseCommand):
             "website": "https://www.metacareers.com",
             "location": "Multiple Locations",
             "logo": "https://logos.hunter.io/meta.com",
+        },
+        {
+            "email": "scholarships@dfat.gov.au",
+            "first_name": "Australian",
+            "last_name": "Government",
+            "organisation": "Australian Government",
+            "description": (
+                "The Australian Government provides international education and "
+                "scholarship opportunities for students from around the world."
+            ),
+            "website": "https://www.dfat.gov.au",
+            "location": "Canberra, Australia",
+            "logo": "https://logos.hunter.io/dfat.gov.au",
+        },
+        {
+            "email": "scholarships@si.se",
+            "first_name": "Swedish",
+            "last_name": "Institute",
+            "organisation": "Swedish Institute",
+            "description": (
+                "The Swedish Institute promotes international cooperation and "
+                "provides scholarship opportunities for students and professionals."
+            ),
+            "website": "https://si.se",
+            "location": "Stockholm, Sweden",
+            "logo": "https://logos.hunter.io/si.se",
+        },
+        {
+            "email": "fulbright@state.gov",
+            "first_name": "U.S.",
+            "last_name": "Department of State",
+            "organisation": "U.S. Department of State",
+            "description": (
+                "The U.S. Department of State supports international education, "
+                "cultural exchange, and scholarship opportunities through programs "
+                "such as the Fulbright Program."
+            ),
+            "website": "https://www.state.gov",
+            "location": "Washington, D.C., United States",
+            "logo": "https://logos.hunter.io/state.gov",
+        },
+        {
+            "email": "scholarships@mext.go.jp",
+            "first_name": "Government",
+            "last_name": "of Japan",
+            "organisation": "Government of Japan",
+            "description": (
+                "The Government of Japan provides international scholarship "
+                "opportunities through its education and cultural exchange programs."
+            ),
+            "website": "https://www.mext.go.jp",
+            "location": "Tokyo, Japan",
+            "logo": "https://logos.hunter.io/mext.go.jp",
+        },
+        {
+            "email": "financialaid@stanford.edu",
+            "first_name": "Stanford",
+            "last_name": "University",
+            "organisation": "Stanford University",
+            "description": (
+                "Stanford University is a leading research university offering "
+                "academic programs and financial aid opportunities to students."
+            ),
+            "website": "https://www.stanford.edu",
+            "location": "Stanford, California, United States",
+            "logo": "https://logos.hunter.io/stanford.edu",
+        },
+        {
+            "email": "scholarships@dfa.ie",
+            "first_name": "Government",
+            "last_name": "of Ireland",
+            "organisation": "Government of Ireland",
+            "description": (
+                "The Government of Ireland provides international education and "
+                "scholarship opportunities for students from eligible countries."
+            ),
+            "website": "https://www.gov.ie",
+            "location": "Dublin, Ireland",
+            "logo": "https://logos.hunter.io/dfa.ie",
+        },
+        {
+            "email": "scholarships@ethz.ch",
+            "first_name": "ETH",
+            "last_name": "Zurich",
+            "organisation": "ETH Zurich",
+            "description": (
+                "ETH Zurich is a leading university specializing in science, "
+                "technology, engineering, mathematics, and research."
+            ),
+            "website": "https://ethz.ch",
+            "location": "Zurich, Switzerland",
+            "logo": "https://logos.hunter.io/ethz.ch",
+        },
+        {
+            "email": "scholarships@turkiyeburslari.gov.tr",
+            "first_name": "Government",
+            "last_name": "of Türkiye",
+            "organisation": "Government of Türkiye",
+            "description": (
+                "The Government of Türkiye provides international scholarship "
+                "opportunities to students through the Türkiye Scholarships program."
+            ),
+            "website": "https://www.turkiyeburslari.gov.tr",
+            "location": "Ankara, Türkiye",
+            "logo": "https://logos.hunter.io/turkiyeburslari.gov.tr",
+        },
+        {
+            "email": "scholarships@akdn.org",
+            "first_name": "Aga Khan",
+            "last_name": "Foundation",
+            "organisation": "Aga Khan Foundation",
+            "description": (
+                "The Aga Khan Foundation supports education and development through "
+                "scholarship and academic opportunities for students in selected countries."
+            ),
+            "website": "https://www.akdn.org",
+            "location": "Geneva, Switzerland",
+            "logo": "https://logos.hunter.io/akdn.org",
+        },
+        {
+            "email": "scholarships@nexteinstein.org",
+            "first_name": "African Institute",
+            "last_name": "for Mathematical Sciences",
+            "organisation": "African Institute for Mathematical Sciences",
+            "description": (
+                "The African Institute for Mathematical Sciences provides postgraduate "
+                "education, research, and scholarship opportunities across Africa."
+            ),
+            "website": "https://www.nexteinstein.org",
+            "location": "Cape Town, South Africa",
+            "logo": "https://logos.hunter.io/nexteinstein.org",
+        },
+        {
+            "email": "scholarships@alxafrica.com",
+            "first_name": "ALX",
+            "last_name": "Africa",
+            "organisation": "ALX",
+            "description": (
+                "ALX provides technology-focused education and scholarship opportunities "
+                "to help young Africans develop practical skills for the digital economy."
+            ),
+            "website": "https://www.alxafrica.com",
+            "location": "Africa",
+            "logo": "https://logos.hunter.io/alxafrica.com",
         },
         {
             "email": "careers@shell.com",
@@ -1881,6 +2024,356 @@ class Command(BaseCommand):
             "location": "Lagos, Nigeria",
             "remote": False,
         },
+        # ---------------------------------------------------------
+        # SCHOLARSHIPS - 24
+        # ---------------------------------------------------------
+    {
+        "field": "Software Engineering",
+        "title": "Mastercard Foundation Scholars Program",
+        "organisation": "Mastercard",
+        "type": OpportunityType.SCHOLARSHIP,
+        "description": (
+            "The Mastercard Foundation Scholars Program provides academically "
+            "talented young people with opportunities to pursue higher education "
+            "and develop leadership skills, with a focus on young people facing "
+            "economic and social barriers to education."
+        ),
+        "url": "https://mastercardfdn.org/all/scholars/",
+        "location": "Africa",
+        "remote": False,
+    },
+    {
+        "field": "Data Science",
+        "title": "Erasmus Mundus Joint Masters Scholarships",
+        "organisation": "European Commission",
+        "type": OpportunityType.SCHOLARSHIP,
+        "description": (
+            "Fully funded scholarships are available for selected Erasmus Mundus "
+            "Joint Master programmes, supporting international students pursuing "
+            "advanced study across participating European universities."
+        ),
+        "url": "https://education.ec.europa.eu/study-in-europe/programmes-and-fields/programmes/erasmus-mundus-joint-masters",
+        "location": "Europe",
+        "remote": False,
+    },
+    {
+        "field": "Cybersecurity",
+        "title": "Chevening Scholarships",
+        "organisation": "UK Government",
+        "type": OpportunityType.SCHOLARSHIP,
+        "description": (
+            "Chevening Scholarships support outstanding emerging leaders from "
+            "around the world to pursue a fully funded one-year master's degree "
+            "in the United Kingdom."
+        ),
+        "url": "https://www.chevening.org/scholarships/",
+        "location": "United Kingdom",
+        "remote": False,
+    },
+    {
+        "field": "Cloud Computing",
+        "title": "DAAD Development-Related Postgraduate Courses Scholarship",
+        "organisation": "DAAD",
+        "type": OpportunityType.SCHOLARSHIP,
+        "description": (
+            "The DAAD EPOS programme supports qualified professionals from "
+            "developing countries who wish to pursue selected postgraduate "
+            "courses at universities in Germany."
+        ),
+        "url": "https://www.daad.de/en/studying-in-germany/scholarships/daad-scholarships/",
+        "location": "Germany",
+        "remote": False,
+    },
+    {
+        "field": "Artificial Intelligence",
+        "title": "Google PhD Fellowship",
+        "organisation": "Google",
+        "type": OpportunityType.SCHOLARSHIP,
+        "description": (
+            "The Google PhD Fellowship recognizes outstanding graduate students "
+            "doing exceptional research in computer science and related fields."
+        ),
+        "url": "https://research.google/programs-and-events/phd-fellowship/",
+        "location": "Global",
+        "remote": False,
+    },
+    {
+        "field": "Product Management",
+        "title": "Gates Cambridge Scholarship",
+        "organisation": "University of Cambridge",
+        "type": OpportunityType.SCHOLARSHIP,
+        "description": (
+            "The Gates Cambridge Scholarship supports outstanding postgraduate "
+            "students from outside the United Kingdom to study at the University "
+            "of Cambridge."
+        ),
+        "url": "https://www.gatescambridge.org/",
+        "location": "United Kingdom",
+        "remote": False,
+    },
+    {
+        "field": "UI/UX Design",
+        "title": "Rhodes Scholarship",
+        "organisation": "Rhodes Trust",
+        "type": OpportunityType.SCHOLARSHIP,
+        "description": (
+            "The Rhodes Scholarship supports exceptional young people to pursue "
+            "postgraduate study at the University of Oxford while developing "
+            "leadership and public service capabilities."
+        ),
+        "url": "https://www.rhodeshouse.ox.ac.uk/scholarships/",
+        "location": "United Kingdom",
+        "remote": False,
+    },
+    {
+        "field": "Digital Marketing",
+        "title": "University of Oxford Clarendon Scholarship",
+        "organisation": "University of Oxford",
+        "type": OpportunityType.SCHOLARSHIP,
+        "description": (
+            "Clarendon Scholarships provide fully funded graduate scholarships "
+            "to academically outstanding students applying for eligible graduate "
+            "programmes at the University of Oxford."
+        ),
+        "url": "https://www.ox.ac.uk/clarendon",
+        "location": "United Kingdom",
+        "remote": False,
+    },
+    {
+        "field": "Marketing",
+        "title": "Lester B. Pearson International Scholarship",
+        "organisation": "University of Toronto",
+        "type": OpportunityType.SCHOLARSHIP,
+        "description": (
+            "The Lester B. Pearson International Scholarship recognizes outstanding "
+            "international students who demonstrate exceptional academic achievement, "
+            "creativity, and leadership potential."
+        ),
+        "url": "https://future.utoronto.ca/pearson/",
+        "location": "Canada",
+        "remote": False,
+    },
+    {
+        "field": "Accounting and Finance",
+        "title": "Mastercard Foundation Scholars Program at University of Edinburgh",
+        "organisation": "University of Edinburgh",
+        "type": OpportunityType.SCHOLARSHIP,
+        "description": (
+            "The programme provides educational opportunities for talented young "
+            "people from Africa through postgraduate study and leadership development."
+        ),
+        "url": "https://www.ed.ac.uk/student-funding/postgraduate/international/mastercard-foundation-scholars-programme",
+        "location": "United Kingdom",
+        "remote": False,
+    },
+    {
+        "field": "Business Administration",
+        "title": "Stanford Africa MBA Fellowship",
+        "organisation": "Stanford University",
+        "type": OpportunityType.SCHOLARSHIP,
+        "description": (
+            "The Stanford Africa MBA Fellowship provides financial support to "
+            "eligible citizens of African countries pursuing an MBA at Stanford "
+            "Graduate School of Business."
+        ),
+        "url": "https://www.gsb.stanford.edu/programs/mba/financial-aid",
+        "location": "United States",
+        "remote": False,
+    },
+    {
+        "field": "Human Resources",
+        "title": "Commonwealth Master's Scholarships",
+        "organisation": "Commonwealth Scholarship Commission",
+        "type": OpportunityType.SCHOLARSHIP,
+        "description": (
+            "Commonwealth Master's Scholarships support talented candidates from "
+            "eligible low and middle income Commonwealth countries to pursue "
+            "master's study in the United Kingdom."
+        ),
+        "url": "https://cscuk.fcdo.gov.uk/scholarships/commonwealth-masters-scholarships/",
+        "location": "United Kingdom",
+        "remote": False,
+    },
+    {
+        "field": "Law",
+        "title": "Yale Young Global Scholars",
+        "organisation": "Yale University",
+        "type": OpportunityType.SCHOLARSHIP,
+        "description": (
+            "Yale Young Global Scholars is an international academic enrichment "
+            "programme bringing high-achieving secondary school students together "
+            "for interdisciplinary study and leadership development."
+        ),
+        "url": "https://globalscholars.yale.edu/",
+        "location": "United States",
+        "remote": False,
+    },
+    {
+        "field": "Medicine and Healthcare",
+        "title": "Wellcome Early-Career Awards",
+        "organisation": "Wellcome",
+        "type": OpportunityType.SCHOLARSHIP,
+        "description": (
+            "Wellcome supports early-career researchers with funding to develop "
+            "innovative research programmes addressing important health challenges."
+        ),
+        "url": "https://wellcome.org/grant-funding/schemes/wellcome-early-career-awards",
+        "location": "United Kingdom",
+        "remote": False,
+    },
+    {
+        "field": "Engineering",
+        "title": "Australia Awards Scholarships",
+        "organisation": "Australian Government",
+        "type": OpportunityType.SCHOLARSHIP,
+        "description": (
+            "Australia Awards Scholarships provide opportunities for people from "
+            "eligible developing countries to undertake full-time undergraduate "
+            "or postgraduate study in Australia."
+        ),
+        "url": "https://www.dfat.gov.au/people-to-people/australia-awards",
+        "location": "Australia",
+        "remote": False,
+    },
+    {
+        "field": "Environmental Science",
+        "title": "Swedish Institute Scholarship for Global Professionals",
+        "organisation": "Swedish Institute",
+        "type": OpportunityType.SCHOLARSHIP,
+        "description": (
+            "The Swedish Institute Scholarship for Global Professionals supports "
+            "professionals from eligible countries pursuing master's studies in Sweden."
+        ),
+        "url": "https://si.se/en/apply/scholarships/sisgp/",
+        "location": "Sweden",
+        "remote": False,
+    },
+    {
+        "field": "Research",
+        "title": "Fulbright Foreign Student Program",
+        "organisation": "U.S. Department of State",
+        "type": OpportunityType.SCHOLARSHIP,
+        "description": (
+            "The Fulbright Foreign Student Program provides opportunities for "
+            "graduate students, young professionals, and artists from abroad to "
+            "study and conduct research in the United States."
+        ),
+        "url": "https://foreign.fulbrightonline.org/",
+        "location": "United States",
+        "remote": False,
+    },
+    {
+        "field": "Education",
+        "title": "MEXT Research Students Scholarship",
+        "organisation": "Government of Japan",
+        "type": OpportunityType.SCHOLARSHIP,
+        "description": (
+            "The Japanese Government MEXT scholarship supports international "
+            "students seeking graduate-level study and research opportunities "
+            "at Japanese universities."
+        ),
+        "url": "https://www.studyinjapan.go.jp/en/",
+        "location": "Japan",
+        "remote": False,
+    },
+    {
+        "field": "Media and Communications",
+        "title": "Knight-Hennessy Scholars",
+        "organisation": "Stanford University",
+        "type": OpportunityType.SCHOLARSHIP,
+        "description": (
+            "The Knight-Hennessy Scholars programme develops a diverse community "
+            "of graduate students at Stanford through funding, leadership education, "
+            "and collaborative experiences."
+        ),
+        "url": "https://knight-hennessy.stanford.edu/",
+        "location": "United States",
+        "remote": False,
+    },
+    {
+        "field": "Public Policy",
+        "title": "Ireland Fellows Programme",
+        "organisation": "Government of Ireland",
+        "type": OpportunityType.SCHOLARSHIP,
+        "description": (
+            "The Ireland Fellows Programme offers fully funded master's-level "
+            "study opportunities to talented professionals from eligible countries "
+            "who aim to contribute to development in their home countries."
+        ),
+        "url": "https://www.irishaidfellowships.ie/",
+        "location": "Ireland",
+        "remote": False,
+    },
+    {
+        "field": "Engineering",
+        "title": "ETH Zurich Excellence Scholarship and Opportunity Programme",
+        "organisation": "ETH Zurich",
+        "type": OpportunityType.SCHOLARSHIP,
+        "description": (
+            "The ETH Zurich Excellence Scholarship and Opportunity Programme "
+            "supports outstanding master's students with funding and mentorship "
+            "during their studies at ETH Zurich."
+        ),
+        "url": "https://ethz.ch/en/studies/master/financial/scholarships/excellencescholarship.html",
+        "location": "Switzerland",
+        "remote": False,
+    },
+    {
+        "field": "Public Policy",
+        "title": "Türkiye Scholarships",
+        "organisation": "Government of Türkiye",
+        "type": OpportunityType.SCHOLARSHIP,
+        "description": (
+            "Türkiye Scholarships provide international students with opportunities "
+            "to pursue undergraduate, master's, doctoral, and research programmes "
+            "at universities in Türkiye."
+        ),
+        "url": "https://www.turkiyeburslari.gov.tr/",
+        "location": "Türkiye",
+        "remote": False,
+    },
+    {
+        "field": "Research",
+        "title": "Aga Khan Foundation International Scholarship Programme",
+        "organisation": "Aga Khan Foundation",
+        "type": OpportunityType.SCHOLARSHIP,
+        "description": (
+            "The Aga Khan Foundation International Scholarship Programme supports "
+            "outstanding students from selected countries who have limited financial "
+            "resources and wish to pursue postgraduate study."
+        ),
+        "url": "https://www.akdn.org/our-agencies/aga-khan-foundation/international-scholarship-programme",
+        "location": "Global",
+        "remote": False,
+    },
+    {
+        "field": "Data Science",
+        "title": "African Institute for Mathematical Sciences Scholarship",
+        "organisation": "African Institute for Mathematical Sciences",
+        "type": OpportunityType.SCHOLARSHIP,
+        "description": (
+            "AIMS provides postgraduate education and research opportunities in "
+            "mathematical sciences for talented students from Africa and beyond."
+        ),
+        "url": "https://www.nexteinstein.org/",
+        "location": "Africa",
+        "remote": False,
+    },
+    {
+        "field": "Software Engineering",
+        "title": "ALX Software Engineering Scholarship",
+        "organisation": "ALX",
+        "type": OpportunityType.SCHOLARSHIP,
+        "description": (
+            "ALX provides technology-focused training opportunities designed to "
+            "help young Africans develop practical software engineering and "
+            "technology skills for the digital economy."
+        ),
+        "url": "https://www.alxafrica.com/",
+        "location": "Africa",
+        "remote": True,
+    },
+
     ]
 
     @transaction.atomic
@@ -1994,8 +2487,9 @@ class Command(BaseCommand):
 
             field = fields[opportunity_data["field"]]
 
+
             deadline = now + timedelta(
-                days=60 + created_opportunities
+                days=random.randint(7, 14)
             )
 
             base_slug = slugify(
