@@ -18,6 +18,10 @@ const HeroSection = ({ onSearch }: HeroSectionProps) => {
 
   const handleSearch = () => {
     onSearch?.(searchValue);
+    trackEvent("search_opportunity", {
+      keyword: searchValue,
+    });
+  }
   };
 
   return (
@@ -62,10 +66,7 @@ const HeroSection = ({ onSearch }: HeroSectionProps) => {
                 if (event.key === "Enter") {
                   event.preventDefault();
                   handleSearch();
-                  trackEvent("search_opportunity", {
-                    keyword: searchValue,
-                  });
-                }
+                  
               }}
               className="h-8 w-full text-black rounded-xl border border-gray-200 bg-white p-5 px-8 right-5 text-sm outline-none transition focus:border-primary"
             />
