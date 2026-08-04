@@ -21,7 +21,6 @@ const HeroSection = ({ onSearch }: HeroSectionProps) => {
     trackEvent("search_opportunity", {
       keyword: searchValue,
     });
-  }
   };
 
   return (
