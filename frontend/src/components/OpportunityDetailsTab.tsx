@@ -10,7 +10,7 @@ import {
   Clock,
 } from "lucide-react";
 
-const TABS = ["Overview", "About Category", "Similar Opportunities"] as const;
+const TABS = ["Overview"] as const;
 type Tab = (typeof TABS)[number];
 
 const RESPONSIBILITIES = [
@@ -56,8 +56,8 @@ export default function OpportunityDetailsTabs() {
             onClick={() => setActiveTab(tab)}
             className={`-mb-px border-b-2 pb-3 text-sm font-medium transition-colors ${
               activeTab === tab
-                ? "border-gray-900 text-gray-900"
-                : "border-transparent text-gray-500 hover:text-gray-700"
+                ? "border-gray-900 text-black"
+                : "text-black-500 hover:text-gray-700"
             }`}
           >
             {tab}
@@ -68,12 +68,6 @@ export default function OpportunityDetailsTabs() {
       {/* Tab content */}
       <div className="mt-6">
         {activeTab === "Overview" && <OverviewContent />}
-        {activeTab === "About Category" && (
-          <p className="py-8 text-sm text-gray-500">Coming soon.</p>
-        )}
-        {activeTab === "Similar Opportunities" && (
-          <p className="py-8 text-sm text-gray-500">Coming soon.</p>
-        )}
       </div>
     </div>
   );
@@ -110,49 +104,51 @@ function OverviewContent() {
         />
       </div>
 
-      {/* Skills Required */}
-      <section className="rounded-xl border border-gray-200 p-5 sm:p-6">
-        <h2 className="flex items-center gap-2 text-base font-semibold text-gray-900">
-          <Sparkles size={18} />
-          Skills Required
-        </h2>
-        <div className="mt-4 flex flex-wrap gap-2">
-          {SKILLS.map((skill) => (
-            <span
-              key={skill}
-              className="rounded-md bg-emerald-50 px-3 py-1.5 text-xs font-medium text-emerald-700"
-            >
-              {skill}
-            </span>
-          ))}
-        </div>
-      </section>
+      <div className="grid grid-cols-1 border border-b border-gray-200 gap-6 lg:grid-cols-2">
+        {/* Skills Required */}
+        <section className="p-5 sm:p-6">
+          <h2 className="flex items-center gap-2 text-base font-semibold text-gray-900">
+            <Sparkles size={18} />
+            Skills Required
+          </h2>
+          <div className="mt-4 flex flex-wrap gap-2">
+            {SKILLS.map((skill) => (
+              <span
+                key={skill}
+                className="rounded-md bg-primary-light text-primary px-3 py-1.5 text-xs font-medium"
+              >
+                {skill}
+              </span>
+            ))}
+          </div>
+        </section>
 
-      {/* Benefits */}
-      <section className="rounded-xl border border-gray-200 p-5 sm:p-6">
-        <h2 className="flex items-center gap-2 text-base font-semibold text-gray-900">
-          <Gift size={18} />
-          Benefits
-        </h2>
-        <div className="mt-4 flex flex-wrap gap-2">
-          {BENEFITS.map((benefit) => (
-            <span
-              key={benefit}
-              className="flex items-center gap-1.5 rounded-md bg-orange-50 px-3 py-1.5 text-xs font-medium text-orange-700"
-            >
-              <Gift size={14} />
-              {benefit}
-            </span>
-          ))}
-        </div>
-      </section>
+        {/* Benefits */}
+        <section className="p-5 sm:p-6">
+          <h2 className="flex items-center gap-2 text-base font-semibold text-gray-900">
+            <Gift size={18} />
+            Benefits
+          </h2>
+          <div className="mt-4 flex flex-wrap gap-2">
+            {BENEFITS.map((benefit) => (
+              <span
+                key={benefit}
+                className="flex items-center gap-1.5 rounded-md bg-orange-50 px-3 py-1.5 text-xs font-medium text-orange-700"
+              >
+                <Gift size={14} />
+                {benefit}
+              </span>
+            ))}
+          </div>
+        </section>
+      </div>
 
       {/* Application Timeline */}
-      <section className="rounded-xl border border-gray-200 p-5 sm:p-6">
+      <section className="rounded-xl  p-5 sm:p-6">
         <h2 className="text-base font-semibold text-gray-900">
           Application Timeline
         </h2>
-        <div className="mt-6 overflow-x-auto">
+        <div className="mt-6 border border-gray-200 overflow-x-auto">
           <div className="flex min-w-max items-start sm:min-w-0 sm:flex-wrap">
             {TIMELINE.map((step, i) => (
               <div

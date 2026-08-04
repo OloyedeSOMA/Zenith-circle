@@ -14,7 +14,7 @@ interface OpportunityDetailsHeaderProps {
   opportunity: Opportunity;
 }
 
-const formatDeadline = (value?: string) => {
+export const formatDeadline = (value?: string) => {
   if (!value) return "N/A";
 
   const parsedDate = new Date(value);
@@ -39,9 +39,11 @@ export default function OpportunityDetailsHeader({
     title,
     location,
     opportunity_type,
+    application_url,
     field,
     deadline,
     is_remote,
+    created_at,
   } = opportunity;
 
   const company = organisation || "Unknown organisation";
@@ -51,82 +53,98 @@ export default function OpportunityDetailsHeader({
   const commitment = field || "General";
 
   return (
-    <div className="flex flex-col gap-6 border-b border-gray-200 pb-6 lg:flex-row lg:items-start lg:justify-between">
-      <div className="min-w-0 flex-1">
-        <div className="flex flex-wrap items-center gap-3">
-          <div className="flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-full border border-gray-100 bg-white">
+    <div className="flex flex-col gap-6 border-b border-primary pb-6 lg:flex-row lg:items-start lg:justify-between">
+      {/* Left section */}
+      <div className="flex-1">
+        <div className="grid grid-cols-[80px_1fr] gap-5">
+          {/* Logo */}
+          <div className="flex h-20 w-20 items-center justify-center rounded-xl border border-gray-200 bg-white p-3">
             <Image
               src={logo}
               alt={`${company} logo`}
-              width={48}
-              height={48}
+              width={56}
+              height={56}
               unoptimized
-              className="h-full w-full object-contain"
+              className="h-14 w-14 object-contain"
             />
           </div>
 
-          <div>
+          {/* Job Info */}
+          <div className="flex flex-col gap-3">
             <h1 className="text-2xl font-bold text-gray-900 sm:text-[28px]">
               {title}
             </h1>
-            <p className="mt-1 text-sm text-gray-500 sm:text-base">
+
+            <p className="text-base text-gray-600">
               {company}
             </p>
+
+            <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-gray-600">
+              <span className="flex items-center gap-1.5">
+                <MapPin size={16} />
+                {location}
+              </span>
+
+              <span className="flex items-center gap-1.5">
+                <Building2 size={16} />
+                {workMode}
+              </span>
+
+              <span className="rounded-full bg-emerald-100 px-3 py-1 text-xs font-semibold text-emerald-700">
+                {type}
+              </span>
+            </div>
+
+            <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-gray-600">
+              <span className="rounded-full bg-amber-100 px-3 py-1 text-xs font-semibold text-amber-700">
+                {commitment}
+              </span>
+
+              <span className="flex items-center gap-1.5">
+                <FileText size={16} />
+                Posted at:
+                <span className="font-semibold ">
+                  {formatDeadline(created_at)}
+                </span>
+              </span>
+
+              <span className="flex items-center gap-1.5">
+                Deadline:
+                <span className="font-semibold text-red-600">
+                  {formatDeadline(deadline)}
+                </span>
+              </span>
+            </div>
           </div>
-        </div>
-
-        <div className="mt-5 flex flex-wrap items-center gap-2">
-          <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-100 px-3 py-1 text-xs font-semibold text-emerald-700">
-            {type}
-          </span>
-          <span className="inline-flex items-center gap-1.5 rounded-full bg-amber-100 px-3 py-1 text-xs font-semibold text-amber-700">
-            {commitment}
-          </span>
-        </div>
-
-        <div className="mt-5 flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-gray-600">
-          <span className="flex items-center gap-1.5">
-            <MapPin size={16} className="shrink-0" />
-            {location}
-          </span>
-          <span className="flex items-center gap-1.5">
-            <Building2 size={16} className="shrink-0" />
-            {workMode}
-          </span>
-          <span className="flex items-center gap-1.5">
-            <FileText size={16} className="shrink-0" />
-            Deadline: <span className="font-semibold text-red-600">{formatDeadline(deadline)}</span>
-          </span>
         </div>
       </div>
 
-      <div className="flex flex-col gap-3 sm:flex-row lg:flex-col lg:items-end">
+      {/* Right section */}
+      <div className="flex w-full flex-col items-center gap-3 lg:w-[190px]">
         <button
           type="button"
-          className="inline-flex items-center justify-center gap-2 rounded-xl bg-emerald-800 px-4 py-3 text-sm font-semibold text-white transition hover:bg-emerald-900"
+          className="inline-flex items-center justify-center gap-1 w-full rounded-xl bg-primary px-4 py-3 text-sm cursor-pointer font-semibold text-white transition hover:bg-primary-900"
         >
           Apply Now
           <ExternalLink size={16} />
         </button>
 
-        <div className="flex flex-wrap gap-3">
-          <button
-            type="button"
-            className="inline-flex items-center gap-2 rounded-xl border border-gray-300 px-4 py-3 text-sm font-medium text-gray-700 transition hover:bg-gray-50"
-          >
-            Saved Opportunity
-            <Bookmark size={16} />
-          </button>
+        <button
+          type="button"
+          className="inline-flex w-full rounded-xl items-center justify-center gap-1  cursor-pointer border border-gray-300 px-4 py-3 text-sm font-medium text-gray-700 transition hover:bg-gray-50"
+        >
+          Saved Opportunity
+          <Bookmark size={16} />
+        </button>
 
-          <button
-            type="button"
-            className="inline-flex items-center gap-2 rounded-xl border border-gray-300 px-4 py-3 text-sm font-medium text-gray-700 transition hover:bg-gray-50"
-          >
-            Share
-            <Share2 size={16} />
-          </button>
-        </div>
+        <button
+          type="button"
+          className="inline-flex items-center cursor-pointer justify-center gap-2 text-sm font-medium text-gray-700"
+        >
+          Share
+          <Share2 size={16} />
+        </button>
       </div>
-    </div>
+  </div>
   );
 }

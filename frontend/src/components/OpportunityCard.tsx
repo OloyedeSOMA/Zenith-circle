@@ -3,6 +3,7 @@ import Image from "next/image";
 import { Bookmark, MapPin } from "lucide-react";
 
 import { Opportunity, OpportunityTag } from "@/types/opportunity";
+import { trackEvent } from "@/lib/gtag";
 
 const TAG_STYLES: Record<OpportunityTag, string> = {
   New: "bg-[#D8F0D4] text-[#2F6D37]",
@@ -77,7 +78,14 @@ export default function OpportunityCard({
   return (
     <Link
       href={`/opportunities/${slug || ""}`}
-      className="flex h-auto w-full max-w-[298px] flex-col items-center overflow-hidden border border-primary rounded-lg bg-white transition-all duration-300 hover:-translate-y-1 hover:shadow-lg "
+      onClick={() =>
+        trackEvent("select_opportunity", {
+          opportunity_id: slug,
+          opportunity_title: title,
+          company_name: company,
+        })
+      }
+      className="flex h-auto w-full max-w-[310px] flex-col items-center overflow-hidden rounded-lg border border-primary bg-white transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
     >
       <div className="w-full flex flex-col">
       {/* Header */}
@@ -150,14 +158,6 @@ export default function OpportunityCard({
           >
             {type}
           </span>
-
-          {/* <span
-            className={`flex h-[33px] items-center rounded-xl px-2 text-sm ${
-              MODE_STYLES[commitment.toLowerCase()]
-            }`}
-          >
-            {commitment}
-          </span> */}
         </div>
 
         <div className="mt-auto border-t w-full border-gray-200 px-2 py-4">

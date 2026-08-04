@@ -10,7 +10,7 @@ import OpportunityCard, {
 import Pagination from "./Pagination";
 import NoOpportunitiesFound from "./NoOpportunitiesFound";
 
-const PER_PAGE = 8;
+const PER_PAGE = 16;
 
 interface OpportunitiesSectionProps {
   search?: string;
@@ -97,7 +97,7 @@ export default function OpportunitiesSection({
 
   return (
     <div className="my-8">
-    <div className="grid grid-cols-1 place-items-center gap-2 sm:grid-cols-2 sm:place-items-stretch lg:grid-cols-4">
+    <div className="grid grid-cols-1 place-items-center gap-1 sm:grid-cols-2 sm:place-items-stretch lg:grid-cols-4">
       {isLoading || isFetching
         ? Array.from({ length: PER_PAGE }).map((_, i) => (
             <OpportunityCardSkeleton key={i} />
