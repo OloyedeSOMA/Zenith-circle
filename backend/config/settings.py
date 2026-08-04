@@ -239,6 +239,6 @@ CELERY_RESULT_SERIALIZER = 'json'
 CELERY_BEAT_SCHEDULE = {
     'send_deadline_reminders_daily': {
         'task': 'apps.opportunities.tasks.send_deadline_reminder',
-        'schedule': 60.0
+        'schedule': crontab(hour=8, minute=0)
     }
 }
