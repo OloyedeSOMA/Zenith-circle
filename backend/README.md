@@ -172,6 +172,7 @@ The core entities are:
 - Deadline Reminder
 
 
+![OpportunityHub NG Data Model](docs/images/OpportunityHubNG_ERDiagram.png)
 
 ```
 docs/images/OpportunityHubNG_ERDiagram.png
