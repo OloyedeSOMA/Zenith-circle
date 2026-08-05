@@ -10,8 +10,8 @@ class StudentProfile(BaseModel):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='student_profile')
     institution = models.CharField(max_length=255, blank=True)
     course_of_study = models.CharField(max_length=255, blank=True)
-    skills = models.JSONField(blank=True)
-    interests = models.JSONField(blank=True)
+    skills = models.JSONField(default=list, blank=True)
+    interests = models.JSONField(default=list, blank=True)
     profile_photo = models.URLField(blank=True, null=True)
 
 

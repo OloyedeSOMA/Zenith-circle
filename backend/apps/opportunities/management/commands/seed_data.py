@@ -18,6 +18,371 @@ from apps.opportunities.models import (
 class Command(BaseCommand):
     help = "Clears and seeds recruiter, opportunity field, and opportunity data."
 
+    RESPONSIBILITY_TEMPLATES = {
+        "internship": [
+            [
+                "Assist with day-to-day tasks assigned by the team.",
+                "Participate in team meetings and project discussions.",
+                "Support ongoing projects under the guidance of senior staff.",
+                "Prepare reports and documentation when required.",
+            ],
+            [
+                "Work with mentors on real business projects.",
+                "Conduct research and present findings to the team.",
+                "Collaborate with cross-functional teams.",
+                "Complete assigned learning objectives throughout the internship.",
+            ],
+        ],
+
+        "job": [
+            [
+                "Design, develop and maintain high-quality solutions.",
+                "Collaborate with cross-functional teams to deliver projects.",
+                "Monitor performance and resolve operational issues.",
+                "Document processes and best practices.",
+            ],
+            [
+                "Deliver assigned work within agreed timelines.",
+                "Participate in planning and review meetings.",
+                "Ensure compliance with company policies and standards.",
+                "Contribute ideas for continuous improvement.",
+            ],
+        ],
+
+        "scholarship": [
+            [
+                "Maintain satisfactory academic performance throughout the programme.",
+                "Comply with the scholarship terms and conditions.",
+                "Submit required academic progress reports.",
+                "Represent the scholarship programme positively when required.",
+            ],
+            [
+                "Attend programme activities and networking events.",
+                "Complete all required documentation before deadlines.",
+                "Participate in mentorship or leadership activities.",
+                "Serve as an ambassador for the scholarship community.",
+            ],
+        ],
+    }
+
+
+    REQUIREMENT_TEMPLATES = {
+        "internship": [
+            [
+                "Currently enrolled in a recognised university.",
+                "Strong communication skills.",
+                "Ability to work in a team environment.",
+                "Willingness to learn.",
+            ],
+            [
+                "Recent graduate or final-year student.",
+                "Basic understanding of the relevant field.",
+                "Excellent problem-solving skills.",
+                "Good written and verbal English.",
+            ],
+        ],
+
+        "job": [
+            [
+                "Bachelor's degree in a relevant discipline.",
+                "Relevant professional experience.",
+                "Strong communication and teamwork skills.",
+                "Ability to work independently.",
+            ],
+            [
+                "Experience using industry-standard tools.",
+                "Strong analytical and problem-solving skills.",
+                "Attention to detail.",
+                "Excellent organisational skills.",
+            ],
+        ],
+
+        "scholarship": [
+            [
+                "Excellent academic record.",
+                "Must meet the programme eligibility criteria.",
+                "Strong leadership potential.",
+                "Proof of admission or current enrolment where applicable.",
+            ],
+            [
+                "Demonstrated community involvement.",
+                "Good academic standing.",
+                "Complete scholarship application before the deadline.",
+                "Provide all required supporting documents.",
+            ],
+        ],
+    }
+
+
+    SKILL_TEMPLATES = {
+        "Software Engineering": [
+            "Python",
+            "Java",
+            "JavaScript",
+            "Git",
+            "REST APIs",
+            "SQL",
+            "Data Structures & Algorithms",
+            "Object-Oriented Programming",
+        ],
+
+        "Data Science": [
+            "Python",
+            "Pandas",
+            "NumPy",
+            "SQL",
+            "Machine Learning",
+            "Data Visualization",
+            "Statistics",
+            "Scikit-learn",
+        ],
+
+        "Cybersecurity": [
+            "Network Security",
+            "Linux",
+            "Penetration Testing",
+            "SIEM",
+            "Python",
+            "OWASP",
+            "Incident Response",
+            "Risk Assessment",
+        ],
+
+        "Cloud Computing": [
+            "AWS",
+            "Microsoft Azure",
+            "Google Cloud Platform",
+            "Docker",
+            "Kubernetes",
+            "Terraform",
+            "Linux",
+            "CI/CD",
+        ],
+
+        "Artificial Intelligence": [
+            "Python",
+            "TensorFlow",
+            "PyTorch",
+            "Machine Learning",
+            "Deep Learning",
+            "Natural Language Processing",
+            "Computer Vision",
+            "Data Preprocessing",
+        ],
+
+        "Product Management": [
+            "Product Strategy",
+            "Roadmapping",
+            "Agile",
+            "Scrum",
+            "Market Research",
+            "User Stories",
+            "Product Analytics",
+            "Stakeholder Management",
+        ],
+
+        "UI/UX Design": [
+            "Figma",
+            "Adobe XD",
+            "Wireframing",
+            "Prototyping",
+            "User Research",
+            "Design Systems",
+            "Interaction Design",
+            "Usability Testing",
+        ],
+
+        "Digital Marketing": [
+            "SEO",
+            "Google Analytics",
+            "Google Ads",
+            "Meta Ads",
+            "Content Marketing",
+            "Email Marketing",
+            "Social Media Marketing",
+            "Marketing Analytics",
+        ],
+
+        "Marketing": [
+            "Brand Management",
+            "Market Research",
+            "Sales Strategy",
+            "Customer Relationship Management",
+            "Campaign Planning",
+            "Communication",
+            "Presentation Skills",
+            "Business Development",
+        ],
+
+        "Accounting and Finance": [
+            "Financial Reporting",
+            "Microsoft Excel",
+            "Budgeting",
+            "Financial Analysis",
+            "QuickBooks",
+            "IFRS",
+            "Bookkeeping",
+            "Risk Management",
+        ],
+
+        "Business Administration": [
+            "Business Analysis",
+            "Project Management",
+            "Strategic Planning",
+            "Microsoft Excel",
+            "Operations Management",
+            "Process Improvement",
+            "Business Communication",
+            "Decision Making",
+        ],
+
+        "Human Resources": [
+            "Recruitment",
+            "Employee Relations",
+            "Performance Management",
+            "HRIS",
+            "Talent Acquisition",
+            "Labour Law",
+            "Onboarding",
+            "Conflict Resolution",
+        ],
+
+        "Law": [
+            "Legal Research",
+            "Legal Drafting",
+            "Contract Law",
+            "Corporate Law",
+            "Compliance",
+            "Litigation",
+            "Negotiation",
+            "Legal Writing",
+        ],
+
+        "Medicine and Healthcare": [
+            "Patient Care",
+            "Clinical Research",
+            "Medical Ethics",
+            "Electronic Health Records",
+            "Diagnosis",
+            "Healthcare Management",
+            "Public Health",
+            "Medical Documentation",
+        ],
+
+        "Engineering": [
+            "AutoCAD",
+            "Project Planning",
+            "Technical Drawing",
+            "Quality Assurance",
+            "Problem Solving",
+            "Engineering Design",
+            "MATLAB",
+            "Safety Standards",
+        ],
+
+        "Environmental Science": [
+            "Environmental Impact Assessment",
+            "GIS",
+            "Sustainability",
+            "Climate Change Analysis",
+            "Field Research",
+            "Data Collection",
+            "Environmental Policy",
+            "Ecology",
+        ],
+
+        "Research": [
+            "Research Methodology",
+            "Academic Writing",
+            "Data Analysis",
+            "Literature Review",
+            "SPSS",
+            "Qualitative Research",
+            "Quantitative Research",
+            "Report Writing",
+        ],
+
+        "Education": [
+            "Lesson Planning",
+            "Curriculum Development",
+            "Classroom Management",
+            "Assessment",
+            "Teaching",
+            "Educational Technology",
+            "Student Engagement",
+            "Communication",
+        ],
+
+        "Media and Communications": [
+            "Content Writing",
+            "Public Relations",
+            "Journalism",
+            "Video Editing",
+            "Adobe Premiere Pro",
+            "Social Media Management",
+            "Storytelling",
+            "Copywriting",
+        ],
+
+        "Public Policy": [
+            "Policy Analysis",
+            "Public Administration",
+            "Legislative Research",
+            "Stakeholder Engagement",
+            "Government Relations",
+            "Programme Evaluation",
+            "Data Analysis",
+            "Policy Writing",
+        ],
+    }
+
+    BENEFIT_TEMPLATES = {
+        "internship": [
+            [
+                "Hands-on industry experience.",
+                "Professional mentorship.",
+                "Networking opportunities.",
+                "Certificate of completion.",
+            ],
+            [
+                "Exposure to real-world projects.",
+                "Career development opportunities.",
+                "Training sessions.",
+                "Potential full-time employment.",
+            ],
+        ],
+
+        "job": [
+            [
+                "Competitive salary.",
+                "Health insurance.",
+                "Annual leave.",
+                "Professional development support.",
+            ],
+            [
+                "Flexible working arrangements.",
+                "Performance bonuses.",
+                "Learning and development budget.",
+                "Career progression opportunities.",
+            ],
+        ],
+
+        "scholarship": [
+            [
+                "Full or partial tuition funding.",
+                "Monthly living allowance.",
+                "Research funding where applicable.",
+                "Access to global alumni networks.",
+            ],
+            [
+                "Travel support.",
+                "Accommodation support.",
+                "Leadership development programmes.",
+                "Professional networking opportunities.",
+            ],
+        ],
+    }
+
     RECRUITERS = [
         {
             "email": "recruitment@flutterwave.com",
@@ -2504,12 +2869,18 @@ class Command(BaseCommand):
             ).exists():
                 slug = f"{base_slug}-{counter}"
                 counter += 1
+            opportunity_type = opportunity_data["type"]
+            field_name = opportunity_data["field"]
 
             Opportunity.objects.create(
                 title=opportunity_data["title"],
                 slug=slug,
                 description=opportunity_data["description"],
-                opportunity_type=opportunity_data["type"],
+                responsibilities=random.choice(self.RESPONSIBILITY_TEMPLATES[opportunity_type]),
+                requirements=random.choice(self.REQUIREMENT_TEMPLATES[opportunity_type]),
+                skills_required=random.sample(self.SKILL_TEMPLATES[field_name], k=min(5, len(self.SKILL_TEMPLATES[field_name])),),
+                benefits=random.choice(self.BENEFIT_TEMPLATES[opportunity_type]),
+                opportunity_type=opportunity_type,
                 organisation=organisation,
                 application_url=opportunity_data["url"],
                 location=opportunity_data["location"],
@@ -2521,7 +2892,7 @@ class Command(BaseCommand):
                 approved_by=posted_by,
                 approved_at=now,
             )
-
+            
             created_opportunities += 1
 
         self.stdout.write(

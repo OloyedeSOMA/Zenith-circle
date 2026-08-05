@@ -20,6 +20,10 @@ class PublicOpportunitySerializer(serializers.ModelSerializer):
             "title",
             "slug",
             "description",
+            "responsibilities",
+            "requirements",
+            "skills_required",
+            "benefits",
             "opportunity_type",
             "organisation",
             "organisation_logo",
@@ -51,4 +55,4 @@ class PublicOpportunitySerializer(serializers.ModelSerializer):
         return SavedOpportunity.objects.filter(
             student=request.user,
             opportunity=obj,
-        ).exist()
+        ).exists()
