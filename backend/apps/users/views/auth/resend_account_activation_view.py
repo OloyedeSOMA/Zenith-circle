@@ -8,7 +8,7 @@ from apps.common.email.email_service import send_account_activation_email
 
 
 
-@extend_schema(tags=['Auth'], request=ResendAccountActivationSerializer, responses=None)
+@extend_schema(tags=['Authentication'], request=ResendAccountActivationSerializer, responses=None)
 class ResendAccountActivationAPIView(APIView):
     """
 

@@ -14,7 +14,7 @@ from apps.opportunities.services.unsave_opportunity_service import unsave_opport
 class PrivateSavedOpportunityCreateDeleteAPIView(APIView):
     permission_classes = [IsAuthenticated]
 
-    @extend_schema(tags=['Saved Opportunities'], request=None, responses=PrivateSavedOpportunitySerializer)
+    @extend_schema(tags=['Opportunities'], request=None, responses=PrivateSavedOpportunitySerializer)
     def post(self, request, opportunity_id):
         """
         saves an opportunity for the authenticated student
@@ -33,7 +33,7 @@ class PrivateSavedOpportunityCreateDeleteAPIView(APIView):
             status=status.HTTP_201_CREATED
         )
 
-    @extend_schema(tags=['Saved Opportunities'], request=None, responses=None)
+    @extend_schema(tags=['Opportunities'], request=None, responses=None)
     def delete(self, request, opportunity_id):
         """
         unsaves a saved or bookmarked opportunity

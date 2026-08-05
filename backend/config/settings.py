@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'apps.users.apps.UsersConfig',
     'apps.opportunities.apps.OpportunitiesConfig',
+    'apps.health.apps.HealthConfig',
     'rest_framework',
     'django_redis',
     'anymail',

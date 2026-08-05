@@ -12,7 +12,7 @@ from apps.users.services.profile.recruiter import create_recruiter_profile, upda
 class PrivateRecruiterProfileAPIView(APIView):
     permission_classes = [IsAuthenticated]
 
-    @extend_schema(tags=['Recruiter Profile'], request=None, responses=PrivateRecruiterProfileSerializer)
+    @extend_schema(tags=['Profiles'], request=None, responses=PrivateRecruiterProfileSerializer)
     def get(self, request):
         """
         returns the authenticated recruiter's profile
@@ -32,7 +32,7 @@ class PrivateRecruiterProfileAPIView(APIView):
         )
 
 
-    @extend_schema(tags=['Recruiter Profile'], request=CreateRecruiterProfileSerializer, responses=PrivateRecruiterProfileSerializer)
+    @extend_schema(tags=['Profiles'], request=CreateRecruiterProfileSerializer, responses=PrivateRecruiterProfileSerializer)
     def post(self, request):
         """
         creates a recruiter profile for an authenticated recruiter
@@ -51,7 +51,7 @@ class PrivateRecruiterProfileAPIView(APIView):
         )
 
 
-    @extend_schema(tags=['Recruiter Profile'], request=UpdateRecruiterProfileSerializer, responses=PrivateRecruiterProfileSerializer)
+    @extend_schema(tags=['Profiles'], request=UpdateRecruiterProfileSerializer, responses=PrivateRecruiterProfileSerializer)
     def patch(self, request):
         """
         updates the recruiter profile of an authenticated recruiter user
@@ -76,7 +76,7 @@ class PrivateRecruiterProfileAPIView(APIView):
         )
 
     
-    @extend_schema(tags=['Recruiter Profile'], request=None, responses=None)
+    @extend_schema(tags=['Profiles'], request=None, responses=None)
     def delete(self, request):
         """
         deletes a recruiter profile

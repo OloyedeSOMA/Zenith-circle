@@ -8,7 +8,7 @@ from apps.users.services.auth.login_service import login_user
 
 
 
-@extend_schema(tags=['Auth'], request=LoginSerializer, responses=PrivateUserSerializer)
+@extend_schema(tags=['Authentication'], request=LoginSerializer, responses=PrivateUserSerializer)
 class LoginAPIView(APIView):
     authentication_classes = []
     permission_classes = []

@@ -8,7 +8,7 @@ from apps.opportunities.selectors.saved_opportunity import get_student_saved_opp
 
 
 
-@extend_schema(tags=['Saved Opportunities'], request=None, responses=PrivateSavedOpportunitySerializer)
+@extend_schema(tags=['Opportunities'], request=None, responses=PrivateSavedOpportunitySerializer)
 class PrivateSavedOpportunityListAPIView(APIView):
     permission_classes = [IsAuthenticated]
 
