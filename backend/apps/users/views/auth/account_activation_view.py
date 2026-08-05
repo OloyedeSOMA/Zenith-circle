@@ -7,7 +7,7 @@ from apps.users.serializers.private.user import PrivateUserSerializer
 from apps.users.services.auth.account_activation_service import activate_account
 
 
-@extend_schema(tags=['Auth'], request=AccountActivationSerializer, responses=PrivateUserSerializer)
+@extend_schema(tags=['Authentication'], request=AccountActivationSerializer, responses=PrivateUserSerializer)
 class AccountActivationAPIView(APIView):
     """
 

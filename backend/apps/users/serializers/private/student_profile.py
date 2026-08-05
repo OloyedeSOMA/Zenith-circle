@@ -1,4 +1,6 @@
 from rest_framework import serializers
+from drf_spectacular.utils import extend_schema_field
+from drf_spectacular.types import OpenApiTypes
 from apps.users.models.profile import StudentProfile
 
 
@@ -28,6 +30,7 @@ class PrivateStudentProfileSerializer(serializers.ModelSerializer):
 
         read_only_fields = ['id', 'display_name', 'email', 'created_at', 'updated_at']
 
+    @extend_schema_field(OpenApiTypes.URI)
     def get_display_name(self,obj):
         return f'{obj.user.first_name} {obj.user.last_name}'.strip()
 

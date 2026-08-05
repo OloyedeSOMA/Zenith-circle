@@ -12,7 +12,7 @@ from apps.users.services.profile.student import create_student_profile, update_s
 class PrivateStudentProfileAPIView(APIView):
     permission_classes = [IsAuthenticated]
 
-    @extend_schema(tags=['Student Profile'], request=None, responses=PrivateStudentProfileSerializer)
+    @extend_schema(tags=['Profiles'], request=None, responses=PrivateStudentProfileSerializer)
     def get(self, request):
         """
         returns the authenticated student's profile
@@ -32,7 +32,7 @@ class PrivateStudentProfileAPIView(APIView):
         )
 
 
-    @extend_schema(tags=['Student Profile'], request=CreateStudentProfileSerializer, responses=PrivateStudentProfileSerializer)
+    @extend_schema(tags=['Profiles'], request=CreateStudentProfileSerializer, responses=PrivateStudentProfileSerializer)
     def post(self, request):
         """
         creates a student profile for an authenticated student
@@ -51,7 +51,7 @@ class PrivateStudentProfileAPIView(APIView):
         )
 
 
-    @extend_schema(tags=['Student Profile'], request=UpdateStudentProfileSerializer, responses=PrivateStudentProfileSerializer)
+    @extend_schema(tags=['Profiles'], request=UpdateStudentProfileSerializer, responses=PrivateStudentProfileSerializer)
     def patch(self, request):
         """
         updates the student profile of an authenticated student user
@@ -76,7 +76,7 @@ class PrivateStudentProfileAPIView(APIView):
         )
 
     
-    @extend_schema(tags=['Student Profile'], request=None, responses=None)
+    @extend_schema(tags=['Profiles'], request=None, responses=None)
     def delete(self, request):
         """
         deletes a student profile
