@@ -36,6 +36,8 @@ class StudentProfileCreateAPIViewTests(APITestCase):
             "profile_photo": profile_photo,
             "institution": "University of Lagos",
             "course_of_study": "Computer Science",
+            'current_level': 400,
+            'expected_graduation': '2027-11-30',
             "skills": '["Python", "Django"]',
             "interests": '["AI", "Software Engineering"]',
         }
@@ -74,6 +76,8 @@ class StudentProfileCreateAPIViewTests(APITestCase):
             user=self.user,
             institution="University of Lagos",
             course_of_study="Computer Science",
+            current_level=400,
+            expected_graduation='2027-11-30',
             skills=["Python"],
             interests=["AI"],
         )
@@ -83,6 +87,8 @@ class StudentProfileCreateAPIViewTests(APITestCase):
             {
                 "institution": "University of Ibadan",
                 "course_of_study": "Physics",
+                'current_level': 400,
+                'expected_graduation': '2027-11-30',
                 "skills": ["Python"],
                 "interests": ["AI"],
             },
