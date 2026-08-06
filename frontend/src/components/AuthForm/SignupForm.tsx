@@ -5,6 +5,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Input from "../Input";
+import Select from "../Select";
 import Button from "../Button";
 import AuthFormCard from "./AuthFormCard";
 import StatusModal from "@/components/StatusModal";
@@ -17,6 +18,7 @@ interface SignupFormValues {
   email: string;
   password: string;
   confirmPassword: string;
+  role: string;
   agreeToTerms: boolean;
 }
 
@@ -30,8 +32,14 @@ const SignupForm = () => {
     register,
     reset,
     handleSubmit,
+    watch,
     formState: { errors },
-  } = useForm<SignupFormValues>({mode:"onChange"});
+  } = useForm<SignupFormValues>({
+    mode: "onChange",
+    defaultValues: {
+      role: "student",
+    },
+  });
 
   const onSubmit = (data: SignupFormValues) => {
     mutate(
@@ -40,7 +48,7 @@ const SignupForm = () => {
       first_name: data.firstName,
       last_name: data.lastName,
       password: data.password,
-      role: "student",
+      role: data.role,
     },
     {
       onSuccess: (response) => {
@@ -94,6 +102,18 @@ const SignupForm = () => {
           error={errors.email?.message}
         />
 
+        <Select
+          label="Role"
+          register={register("role", {
+            required: "Please select a role",
+          })}
+          error={errors.role?.message}
+          options={[
+            { label: "Student", value: "student" },
+            { label: "Recruiter", value: "recruiter" },
+          ]}
+        />
+
         <Input
           label="Password"
           placeholder="Enter Password"
@@ -111,6 +131,7 @@ const SignupForm = () => {
           type="password"
           register={register("confirmPassword", {
             required: "Please confirm your password",
+            validate: (value) => value === watch("password") || "Passwords do not match",
           })}
           error={errors.confirmPassword?.message}
         />

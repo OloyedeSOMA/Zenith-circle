@@ -6,7 +6,7 @@ import { Eye, EyeOff } from "lucide-react";
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   label: string;
-  register: UseFormRegisterReturn;
+  register?: UseFormRegisterReturn;
   error?: string;
   hint?: string;
   inputHeight?: string;
@@ -32,7 +32,7 @@ const Input = ({
 
       <div className="relative w-full">
         <input
-          {...register}
+          {...(register ?? {})}
           {...props}
           type={inputType}
           className={`w-full ${inputHeight} rounded-lg border border-gray-300 bg-white px-4 gap-x-2 leading-normal text-gray-900 placeholder:text-gray-400 ${

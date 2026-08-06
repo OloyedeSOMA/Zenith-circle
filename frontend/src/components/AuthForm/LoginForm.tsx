@@ -57,8 +57,10 @@ const LoginForm = ({ onRedirecting }: LoginFormProps) => {
 
         onRedirecting();
 
+        const nextPath = response.user.role === "recruiter" ? "/setup-profile" : "/";
+
         setTimeout(() => {
-          router.push("/");
+          router.push(nextPath);
         }, 1000);
       },
 
