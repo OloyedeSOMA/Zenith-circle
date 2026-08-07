@@ -119,7 +119,7 @@ export default function OpportunityCard({
           />
         </div>
 
-        <h3 className="mt-5 line-clamp-2 text-[14px] font-semibold leading-6 text-secondary">
+        <h3 className="mt-5 min-h-[48px] line-clamp-2 text-[14px] font-semibold leading-6 text-secondary">
           {title}
         </h3>
 
