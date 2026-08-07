@@ -1,65 +1,6 @@
 // const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
 const BASE_URL = 'https://opportunityhubng.my.to/api/v1';
 
-// import { getAccessToken } from "@/lib/auth-storage"; // adjust path to wherever getAccessToken lives
-
-// interface ApiFetchOptions extends RequestInit {
-//   skipAuth?: boolean;
-// }
-
-// export async function apiFetch<T>(
-//   endpoint: string,
-//   options: ApiFetchOptions = {}
-// ): Promise<T> {
-//   const { skipAuth = false, ...fetchOptions } = options;
-
-//   const isFormData = fetchOptions.body instanceof FormData;
-//   const token = skipAuth ? null : getAccessToken();
-
-//   const response = await fetch(`${BASE_URL}${endpoint}`, {
-//     ...fetchOptions,
-//     headers: {
-//       ...(isFormData ? {} : { "Content-Type": "application/json" }),
-//       ...(token ? { Authorization: `Bearer ${token}` } : {}),
-//       ...(fetchOptions.headers ?? {}),
-//     },
-//   });
-
-//   const text = await response.text();
-//   const data = text ? JSON.parse(text) : {};
-
-//   if (!response.ok) {
-//     let message = "Something went wrong";
-
-//     if (data.detail) {
-//       message = data.detail;
-//     } else if (data.message) {
-//       message = data.message;
-//     } else if (data.non_field_errors) {
-//       message = Array.isArray(data.non_field_errors)
-//         ? data.non_field_errors.join(", ")
-//         : data.non_field_errors;
-//     } else {
-//       const errors = Object.entries(data)
-//         .map(([field, value]) => {
-//           if (Array.isArray(value)) {
-//             return `${field}: ${value.join(", ")}`;
-//           }
-//           return `${field}: ${value}`;
-//         })
-//         .join("\n");
-
-//       if (errors) {
-//         message = errors;
-//       }
-//     }
-
-//     throw new Error(message);
-//   }
-
-//   return data;
-// }
-
 import {
   getAccessToken,
   getRefreshToken,
