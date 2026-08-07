@@ -341,7 +341,7 @@ const StudentProfile = () => {
 
           {step === 2 && (
             <>
-              <div className="flex flex-col gap-2 rounded-[18px] bg-[#f6e9eb] px-4 py-3">
+              <div className="flex flex-col gap-2 rounded-[18px] bg-[#E6E6E6] px-4 py-3">
                 <label className="text-[11px] font-bold uppercase tracking-[0.15em] text-[#1f4c33]">
                   Your skills
                 </label>
@@ -359,7 +359,7 @@ const StudentProfile = () => {
                 </div>
               </div>
 
-              <div className="flex flex-col gap-2 rounded-[18px] bg-[#f6e9eb] px-4 py-3">
+              <div className="flex flex-col gap-2 rounded-[18px] bg-[#E6E6E6] px-4 py-3">
                 <label className="text-[11px] font-bold uppercase tracking-[0.15em] text-[#1f4c33]">
                   Career interest
                 </label>
@@ -391,7 +391,7 @@ const StudentProfile = () => {
               ].map((item) => (
                 <div
                   key={item.key}
-                  className="flex items-center justify-between rounded-[16px] bg-[#f6e9eb] px-4 py-3"
+                  className="flex items-center justify-between rounded-[16px] bg-[#E6E6E6] px-4 py-3"
                 >
                   <span className="text-[14px] text-[#2b2d33]">{item.label}</span>
                   <button
