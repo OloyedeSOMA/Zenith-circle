@@ -34,12 +34,19 @@ const BENEFITS = [
 ];
 
 interface OpportunityOverviewPanelProps {
-  description?: string;
+  opportunity: string;
 }
 
 export default function OpportunityOverviewPanel({
-  description,
-}: OpportunityOverviewPanelProps) {
+  opportunity,
+}:OpportunityOverviewPanelProps) {
+  const {
+    description,
+    responsibilities,
+    requirements,
+    skills_required,
+    benefits,
+} = opportunity;
   return (
     <div className="flex flex-col gap-6">
       <section className="border-b border-primary p-5 sm:p-6">
@@ -56,12 +63,12 @@ export default function OpportunityOverviewPanel({
         <ChecklistCard
           icon={<SquarePen size={18} className="text-primary" />}
           title="Responsibilities"
-          items={RESPONSIBILITIES}
+          items={responsibilities}
         />
         <ChecklistCard
           icon={<FileText size={18} className="text-primary" />}
           title="Requirements"
-          items={REQUIREMENTS}
+          items={requirements}
         />
       </div>
         <div className="grid grid-cols-1 border-b border-primary gap-6 lg:grid-cols-2">
@@ -71,7 +78,7 @@ export default function OpportunityOverviewPanel({
             Skills Required
             </h2>
             <div className="mt-4 flex flex-wrap gap-2">
-            {SKILLS.map((skill) => (
+            {skills_required.map((skill) => (
                 <span
                 key={skill}
                 className="rounded-md bg-primary-light px-3 py-1.5 text-xs font-medium text-primary-700"
@@ -88,7 +95,7 @@ export default function OpportunityOverviewPanel({
             Benefits
             </h2>
             <div className="mt-4 flex flex-wrap gap-2">
-            {BENEFITS.map((benefit) => (
+            {benefits.map((benefit) => (
                 <span
                 key={benefit}
                 className="flex items-center gap-1.5 rounded-md bg-orange-50 px-3 py-1.5 text-xs font-medium text-orange-700"

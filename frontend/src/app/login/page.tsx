@@ -1,5 +1,5 @@
 "use client"
-import { useState } from "react";
+import { useState, Suspense } from "react";
 import AuthCard from "@/components/AuthCard"
 import LoginForm from "@/components/AuthForm/LoginForm";
 import LoadingSplash from "@/components/LoadingSplash";
@@ -11,10 +11,12 @@ export default function LoginPage() {
     return <LoadingSplash />;
   }
   return (
-    <main className="flex min-h-screen items-center justify-center bg-background">
-      <AuthCard>
-        <LoginForm onRedirecting={()=> setRedirecting(true)}/>
-      </AuthCard>
-    </main>
+    <Suspense fallback={null}>
+      <main className="flex min-h-screen items-center justify-center bg-background">
+        <AuthCard>
+          <LoginForm onRedirecting={()=> setRedirecting(true)}/>
+        </AuthCard>
+      </main>
+    </Suspense>
   );
 }

@@ -1,21 +1,18 @@
 "use client";
 
-import { ReactNode, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-
-import LoadingSplash from "./LoadingSplash";
-import { isAuthenticated } from "@/lib/auth-storage";
+import LoadingSplash from "./LoadingSplash"
+import { getUser, isAuthenticated } from "@/lib/auth-storage";
 
 interface ProtectedRouteProps {
-  children: ReactNode;
+  children: React.ReactNode;
+  requiredRole?: "student" | "recruiter";
 }
 
-const ProtectedRoute = ({
-  children,
-}: ProtectedRouteProps) => {
+const ProtectedRoute = ({ children, requiredRole }: ProtectedRouteProps) => {
   const router = useRouter();
-
-  const [checking, setChecking] = useState(true);
+  const [isChecking, setIsChecking] = useState(true);
 
   useEffect(() => {
     if (!isAuthenticated()) {
@@ -23,11 +20,21 @@ const ProtectedRoute = ({
       return;
     }
 
-    setChecking(false);
-  }, [router]);
+    if (requiredRole) {
+      const user = getUser();
+      if (user?.role !== requiredRole) {
+        router.replace("/");
+        return;
+      }
+    }
 
-  if (checking) {
-    return <LoadingSplash />;
+    setIsChecking(false);
+  }, [router, requiredRole]);
+
+  if (isChecking) {
+    return (
+      <LoadingSplash/>
+    );
   }
 
   return <>{children}</>;

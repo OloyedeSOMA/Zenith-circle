@@ -77,7 +77,7 @@ const SignupForm = () => {
 
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="mt-10 flex w-full max-w-[440px] flex-col gap-6"
+        className="mt-0 flex w-full max-w-[440px] flex-col gap-2"
       >
         <Input
           label="First name"

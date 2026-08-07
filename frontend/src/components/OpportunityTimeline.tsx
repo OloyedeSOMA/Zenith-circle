@@ -1,3 +1,4 @@
+"use client";
 import { CheckCircle2, Clock } from "lucide-react";
 import { formatDeadline } from "./OpportunityDetailsHeader";
 import {

@@ -14,7 +14,7 @@ const AuthFormCard = ({
   children,
 }: AuthFormCardProps) => {
   return (
-    <div className="mx-auto flex w-full max-w-[542px] flex-col items-center rounded-xl border border-gray-300 bg-white px-6 py-8 sm:px-8 sm:py-10">
+    <div className="mx-auto flex w-full max-w-[542px] flex-col items-center rounded-xl border border-gray-300 bg-white px-5 py-5 sm:px-8 sm:py-10">
       <div className="text-center">
         <h1 className="text-2xl font-bold text-gray-900">
           {title}

@@ -51,7 +51,7 @@ export default async function OpportunityDetailsPage({
               </h2>
             </div>
             <div className="mt-6 border-t border-gray-200 pt-6">
-              <OpportunityOverviewPanel description={opportunity.description} />
+              <OpportunityOverviewPanel opportunity={opportunity} />
             </div>
 
             <div className="mt-6">

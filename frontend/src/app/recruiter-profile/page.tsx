@@ -1,5 +1,9 @@
-import RecruiterProfileWizard from "@/components/setup-profile/RecruiterProfileWizard";
-
+import RecruiterProfile from "@/components/setup-profile/RecruiterProfile";
+import ProtectedRoute from "@/components/ProtectedRoute"
 export default function SetupProfilePage() {
-  return <RecruiterProfileWizard />;
+  return (
+    <ProtectedRoute requiredRole="student">
+      <RecruiterProfile />
+    </ProtectedRoute>
+  );
 }

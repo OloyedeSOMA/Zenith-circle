@@ -5,6 +5,10 @@ export interface Opportunity {
   title: string;
   slug: string;
   description: string;
+  responsibilities: string[];
+  requirements: string[];
+  skills_required: string[];
+  benefits: string[]
   opportunity_type: string;
   organisation: string;
   organisation_logo: string;
@@ -13,6 +17,7 @@ export interface Opportunity {
   field: string;
   deadline: string;
   is_remote: boolean;
+  is_saved: boolean;
   created_at: string;
   tag?: OpportunityTag;
   logo?: string;
@@ -20,7 +25,6 @@ export interface Opportunity {
   workMode?: string;
   type?: string;
   commitment?: string;
-  postedAt?: string;
 }
 
 export interface OpportunityQueryParams {
