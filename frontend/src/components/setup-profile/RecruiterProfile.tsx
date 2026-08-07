@@ -9,7 +9,7 @@ import ProfileFieldInput from "@/components/ProfileFieldInput";
 import StatusModal from "@/components/StatusModal";
 import { useCreateRecruiterProfile } from "@/hooks/useProfile";
 import { RecruiterProfileRequest } from "@/types/profile";
-
+import { trackEvent } from "@/lib/gtag";
 const MAX_FILE_SIZE_MB = 5;
 const ACCEPTED_TYPES = ["image/png", "image/jpeg", "image/webp"];
 
@@ -49,6 +49,11 @@ const RecruiterProfile = () => {
     mutate(data, {
       onSuccess: (response) => {
         console.log(" profile response:", response);
+        trackEvent("recruiterProfile_completed ", {
+          organisation: organisation, 
+          organisation_website: website,
+          
+        })
         reset();
         if (preview) URL.revokeObjectURL(preview);
         setPreview(null);
