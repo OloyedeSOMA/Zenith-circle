@@ -172,13 +172,7 @@ const StudentProfile = () => {
     mutate(data, {
       onSuccess: (response) => {
         console.log("Student profile response:", response);
-        trackEvent("studentProfile_completed ", {
-          username: display_name, 
-          email: email,
-          institution: institution,
-          course: course_of_study,
-          current_level: current_level,
-        })
+        
         reset();
         if (preview) URL.revokeObjectURL(preview);
         setPreview(null);
