@@ -123,7 +123,7 @@ export default function OpportunityCard({
           {title}
         </h3>
 
-        <p className="mt-1 text-base text-gray-500">
+        <p className="mt-1 min-h-[30px] line-clamp-2 text-base text-gray-500">
           {company}
         </p>
 
