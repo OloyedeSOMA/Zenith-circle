@@ -59,7 +59,7 @@ const LoginForm = ({ onRedirecting }: LoginFormProps) => {
         const nextPath = searchParams.get("next");
 
         const destination =
-          response.user.role === "recruiter"
+          response.user.role === "Recruiter"
             ? "/recruiter-profile"
             : nextPath || "/";
 
