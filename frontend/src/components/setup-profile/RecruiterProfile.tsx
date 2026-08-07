@@ -49,11 +49,6 @@ const RecruiterProfile = () => {
     mutate(data, {
       onSuccess: (response) => {
         console.log(" profile response:", response);
-        trackEvent("recruiterProfile_completed ", {
-          organisation: organisation, 
-          organisation_website: website,
-          
-        })
         reset();
         if (preview) URL.revokeObjectURL(preview);
         setPreview(null);
