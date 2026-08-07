@@ -1,5 +1,5 @@
 import { CheckCircle2, ClipboardList, Box, SquarePen, FileText, SquareDot, ListChecks, Tag } from "lucide-react";
-
+import { Opportunity } from "@/types/opportunity";
 const RESPONSIBILITIES = [
   "Conduct user research and analyze user needs",
   "Create wireframes, prototypes and mockups",
@@ -34,7 +34,7 @@ const BENEFITS = [
 ];
 
 interface OpportunityOverviewPanelProps {
-  opportunity: string;
+  opportunity: Opportunity;
 }
 
 export default function OpportunityOverviewPanel({
