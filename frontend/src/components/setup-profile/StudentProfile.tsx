@@ -10,7 +10,7 @@ import StepProgress from "@/components/StepProgress";
 import StatusModal from "@/components/StatusModal";
 import { useCreateStudentProfile } from "@/hooks/useProfile";
 import { StudentProfileRequest } from "@/types/profile";
-
+import { trackEvent } from "@/lib/gtag";
 const MAX_FILE_SIZE_MB = 5;
 const ACCEPTED_TYPES = ["image/png", "image/jpeg", "image/webp"];
 
@@ -172,6 +172,7 @@ const StudentProfile = () => {
     mutate(data, {
       onSuccess: (response) => {
         console.log("Student profile response:", response);
+        
         reset();
         if (preview) URL.revokeObjectURL(preview);
         setPreview(null);

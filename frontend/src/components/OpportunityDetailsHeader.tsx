@@ -15,7 +15,7 @@ import {
 import { Opportunity } from "@/types/opportunity";
 import { requireStudentAccess } from "@/lib/access-guard";
 import StatusModal from "@/components/StatusModal";
-
+import { trackEvent } from "@/lib/gtag";
 interface OpportunityDetailsHeaderProps {
   opportunity: Opportunity;
 }
@@ -43,6 +43,7 @@ export default function OpportunityDetailsHeader({
   const [roleMismatchMessage, setRoleMismatchMessage] = useState("");
 
   const {
+    id,
     organisation,
     organisation_logo,
     title,
@@ -64,9 +65,16 @@ export default function OpportunityDetailsHeader({
   const handleApply = () => {
     requireStudentAccess(router, {
       onSuccess: () => {
+        trackEvent("apply_opportunity ", {
+          opportunity_id: id, 
+          opportunity_title: title,
+          company_name: organisation,
+          application_link: application_url,
+        })
         if (application_url) {
           window.open(application_url, "_blank", "noopener,noreferrer");
         }
+        
       },
       onRoleMismatch: () =>
         setRoleMismatchMessage("Only student accounts can apply for opportunities."),

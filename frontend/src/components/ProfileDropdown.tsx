@@ -78,20 +78,20 @@ const ProfileDropdown = ({
             </Link>
 
             <Link
-              href="/profile"
+              href={role === "student" ? "/student-profile" : "/recruiter-profile"}
               className="flex items-center gap-3 px-5 py-3 hover:bg-gray-50"
             >
               <User size={18} />
               Profile
             </Link>
 
-            <Link
+            {/* <Link
               href="/settings"
               className="flex items-center gap-3 px-5 py-3 hover:bg-gray-50"
             >
               <Settings size={18} />
               Settings
-            </Link>
+            </Link> */}
 
             <button
               onClick={onLogout}
