@@ -1,37 +1,6 @@
-import { CheckCircle2, ClipboardList, Box, SquarePen, FileText, SquareDot, ListChecks, Tag } from "lucide-react";
+import { Box, SquarePen, FileText, SquareDot, Tag } from "lucide-react";
 import { Opportunity } from "@/types/opportunity";
-const RESPONSIBILITIES = [
-  "Conduct user research and analyze user needs",
-  "Create wireframes, prototypes and mockups",
-  "Design responsive and accessible interfaces",
-  "Collaborate with developers and product teams",
-  "Participate in design reviews and feedback sessions",
-  "Improve existing user experiences",
-];
 
-const REQUIREMENTS = [
-  "Final-year student or recent graduate",
-  "Familiarity with Figma or Adobe XD",
-  "Portfolio of UI/UX design projects",
-  "Understanding of design principles",
-  "Good communication and teamwork skills",
-];
-
-const SKILLS = [
-  "Figma",
-  "UI Design",
-  "UX Research",
-  "Wireframing",
-  "Prototyping",
-  "Design System",
-];
-
-const BENEFITS = [
-  "Hybrid",
-  "Monthly Stipend",
-  "Mentorship & Training",
-  "Career Growth",
-];
 
 interface OpportunityOverviewPanelProps {
   opportunity: Opportunity;

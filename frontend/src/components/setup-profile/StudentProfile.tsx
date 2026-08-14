@@ -171,7 +171,10 @@ const StudentProfile = () => {
   const onSubmit = (data: StudentProfileRequest) => {
     mutate(data, {
       onSuccess: (response) => {
-        console.log("Student profile response:", response);
+        trackEvent("profile_complete", {
+          id: response.id,
+          role: "student",
+        });
         
         reset();
         if (preview) URL.revokeObjectURL(preview);

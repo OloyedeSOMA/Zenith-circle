@@ -1,51 +1,91 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Search, Bell } from "lucide-react";
-import { getUser, type AuthUser } from "@/lib/auth-storage";
+import Image from "next/image";
+import { Search } from "lucide-react";
 
-const getInitials = (user: AuthUser | null) => {
-  if (!user) return "?";
-  const first = user.first_name?.[0] ?? "";
-  const last = user.last_name?.[0] ?? "";
-  return (first + last).toUpperCase() || user.email[0].toUpperCase();
+import { getStudentProfile } from "@/lib/profile-api";
+import { getUser } from "@/lib/auth-storage";
+
+const getInitials = (
+  firstName?: string,
+  lastName?: string
+) => {
+  return `${firstName?.[0] ?? ""}${lastName?.[0] ?? ""}`.toUpperCase();
 };
 
-const DashboardHeader = () => {
-  // read from localStorage only after mount to avoid SSR/client mismatch
-  const [user, setUser] = useState<AuthUser | null>(null);
+export default function DashboardHeader() {
+  const user = getUser();
+
+  const [profilePhoto, setProfilePhoto] = useState<string | null>(null);
 
   useEffect(() => {
-    setUser(getUser());
+    const loadProfile = async () => {
+      try {
+        const profile = await getStudentProfile();
+
+         const photo =
+          typeof profile?.profile_photo === "string"
+            ? profile.profile_photo
+            : null;
+
+        setProfilePhoto(photo);
+      } catch (error) {
+        console.error("Failed to load student profile:", error);
+      }
+    };
+
+    loadProfile();
   }, []);
 
+  const initials = getInitials(
+    user?.first_name,
+    user?.last_name
+  );
+
   return (
-    <div className="flex items-center gap-4">
-      <div className="relative flex-1">
+    <header className="flex items-center justify-between gap-4">
+      {/* Search */}
+      <div className="relative w-full max-w-[420px]">
         <Search
           size={18}
-          className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"
+          className="absolute left-3 top-1/2 -translate-y-1/2 text-primary"
         />
+
         <input
           type="text"
-          placeholder="Search jobs, internships and scholarships"
-          className="h-[44px] w-full rounded-full border border-gray-200 bg-white pl-11 pr-4 text-sm text-gray-700 outline-none placeholder:text-gray-400 focus:border-[#2b6b41]"
+          placeholder="Search opportunities"
+          className="h-11 w-full rounded-lg border border-primary bg-white pl-10 pr-4 text-sm text-gray-700 outline-none placeholder:text-gray-400 focus:ring-1 focus:ring-primary"
         />
       </div>
 
-      <button
-        type="button"
-        aria-label="Notifications"
-        className="flex h-[40px] w-[40px] shrink-0 items-center justify-center rounded-full border border-gray-200 bg-white text-gray-600 transition hover:bg-gray-50"
-      >
-        <Bell size={18} />
-      </button>
+      {/* Profile */}
+      <div className="flex shrink-0 items-center gap-3">
+        {profilePhoto ? (
+          <Image
+            src={profilePhoto}
+            alt={`${user?.first_name ?? "User"} profile`}
+            width={42}
+            height={42}
+            unoptimized
+            className="h-[42px] w-[42px] rounded-full object-cover"
+          />
+        ) : (
+          <div className="flex h-[42px] w-[42px] items-center justify-center rounded-full bg-primary text-sm font-semibold text-white">
+            {initials || "U"}
+          </div>
+        )}
 
-      <div className="flex h-[40px] w-[40px] shrink-0 items-center justify-center overflow-hidden rounded-full border border-gray-200 bg-[#f6e9eb] text-xs font-semibold text-[#1f4c33]">
-        {getInitials(user)}
+        <div className="hidden sm:block">
+          <p className="text-sm font-semibold text-gray-900">
+            {user?.first_name} {user?.last_name}
+          </p>
+
+          <p className="text-xs text-gray-400">
+            Student
+          </p>
+        </div>
       </div>
-    </div>
+    </header>
   );
-};
-
-export default DashboardHeader;
+}

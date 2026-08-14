@@ -16,6 +16,7 @@ export interface Opportunity {
   location: string;
   field: string;
   deadline: string;
+  status?: "pending" | "approved" | "rejected" | string;
   is_remote: boolean;
   is_saved: boolean;
   created_at: string;
@@ -53,4 +54,9 @@ export interface PaginatedOpportunities {
     total: number;
     totalPages: number;
   };
+}
+export interface OpportunityField {
+  id: string;
+  name: string;
+  slug: string;
 }

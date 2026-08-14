@@ -48,7 +48,10 @@ const RecruiterProfile = () => {
   const onSubmit = (data: RecruiterProfileRequest) => {
     mutate(data, {
       onSuccess: (response) => {
-        console.log(" profile response:", response);
+        trackEvent("profile_complete", {
+          id: response.id,
+          role: "recruiter",
+        });
         reset();
         if (preview) URL.revokeObjectURL(preview);
         setPreview(null);

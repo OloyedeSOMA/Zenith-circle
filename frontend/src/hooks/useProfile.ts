@@ -1,4 +1,9 @@
-import { useMutation, useQuery } from "@tanstack/react-query";
+import {
+  useMutation,
+  useQuery,
+  useQueryClient,
+} from "@tanstack/react-query";
+
 import {
   createRecruiterProfile,
   getRecruiterProfile,
@@ -10,28 +15,86 @@ import {
   deleteStudentProfile,
 } from "@/lib/profile-api";
 
-// recruiter
+// RECRUITER
+
 export const useCreateRecruiterProfile = () =>
-  useMutation({ mutationFn: createRecruiterProfile });
+  useMutation({
+    mutationFn: createRecruiterProfile,
+  });
 
-export const useRecruiterProfile = () =>
-  useQuery({ queryKey: ["recruiter-profile"], queryFn: getRecruiterProfile });
+export const useRecruiterProfile = (enabled = true) =>
+  useQuery({
+    queryKey: ["recruiter-profile"],
+    queryFn: getRecruiterProfile,
+    enabled,
+  });
 
-export const useUpdateRecruiterProfile = () =>
-  useMutation({ mutationFn: updateRecruiterProfile });
+export const useUpdateRecruiterProfile = () => {
+  const queryClient = useQueryClient();
 
-export const useDeleteRecruiterProfile = () =>
-  useMutation({ mutationFn: deleteRecruiterProfile });
+  return useMutation({
+    mutationFn: updateRecruiterProfile,
 
-// student
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ["recruiter-profile"],
+      });
+    },
+  });
+};
+
+export const useDeleteRecruiterProfile = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: deleteRecruiterProfile,
+
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ["recruiter-profile"],
+      });
+    },
+  });
+};
+
+// STUDENT
+
 export const useCreateStudentProfile = () =>
-  useMutation({ mutationFn: createStudentProfile });
+  useMutation({
+    mutationFn: createStudentProfile,
+  });
 
-export const useStudentProfile = () =>
-  useQuery({ queryKey: ["student-profile"], queryFn: getStudentProfile });
+export const useStudentProfile = (enabled = true) =>
+  useQuery({
+    queryKey: ["student-profile"],
+    queryFn: getStudentProfile,
+    enabled,
+  });
 
-export const useUpdateStudentProfile = () =>
-  useMutation({ mutationFn: updateStudentProfile });
+export const useUpdateStudentProfile = () => {
+  const queryClient = useQueryClient();
 
-export const useDeleteStudentProfile = () =>
-  useMutation({ mutationFn: deleteStudentProfile });
+  return useMutation({
+    mutationFn: updateStudentProfile,
+
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ["student-profile"],
+      });
+    },
+  });
+};
+
+export const useDeleteStudentProfile = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: deleteStudentProfile,
+
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ["student-profile"],
+      });
+    },
+  });
+};

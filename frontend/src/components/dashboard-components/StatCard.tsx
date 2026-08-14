@@ -16,7 +16,7 @@ const colorClasses: Record<StatCardProps["color"], string> = {
 const StatCard = ({ value, label, sublabel, color, highlighted }: StatCardProps) => (
   <div
     className={`flex flex-1 flex-col gap-3 rounded-[16px] border bg-white px-5 py-4 ${
-      highlighted ? "border-[#6172e8]" : "border-gray-100"
+      highlighted ? "border-[#6172e8]" : "border-primary"
     }`}
   >
     <div

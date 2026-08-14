@@ -2,8 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Settings, LogOut, type LucideIcon } from "lucide-react";
-import { clearAuth } from "@/lib/auth-storage";
+import { LogOut, X, type LucideIcon } from "lucide-react";
 
 export interface SidebarNavLink {
   label: string;
@@ -13,64 +12,103 @@ export interface SidebarNavLink {
 
 interface SidebarProps {
   navLinks: SidebarNavLink[];
+  isOpen?: boolean;
+  onClose?: () => void;
+  onLogout?: () => void;
 }
 
-const Sidebar = ({ navLinks }: SidebarProps) => {
+export default function Sidebar({
+  navLinks,
+  isOpen = false,
+  onClose,
+  onLogout,
+}: SidebarProps) {
   const pathname = usePathname();
 
   return (
-    <aside className="flex h-screen w-[220px] shrink-0 flex-col justify-between border-r border-gray-100 bg-white px-4 py-6">
-      <div className="flex flex-col gap-8">
-        <div className="flex items-center gap-1.5 px-2">
-          <span className="text-[14px] font-extrabold tracking-tight text-[#1f4c33]">
-            OPPORTUNITYHUB
-          </span>
-          <span className="rounded-[6px] bg-[#2b6b41] px-1.5 py-0.5 text-[10px] font-bold text-white">
-            NG
-          </span>
+    <>
+      {/* Mobile backdrop */}
+      {isOpen && (
+        <button
+          type="button"
+          aria-label="Close sidebar"
+          onClick={onClose}
+          className="fixed inset-0 z-40 bg-black/40 lg:hidden"
+        />
+      )}
+
+      <aside
+        className={`
+          fixed inset-y-0 left-0 z-50 flex w-[250px] flex-col
+          border-r border-gray-200 bg-white
+          transition-transform duration-300
+          lg:translate-x-0
+          ${isOpen ? "translate-x-0" : "-translate-x-full"}
+        `}
+      >
+        {/* Mobile header */}
+        <div className="flex items-center justify-between px-5 py-5 lg:hidden">
+          <h2 className="text-lg font-bold text-primary">
+            OpportunityHub
+          </h2>
+
+          <button
+            type="button"
+            onClick={onClose}
+            aria-label="Close sidebar"
+            className="rounded-lg p-2 text-gray-600 hover:bg-gray-100"
+          >
+            <X size={22} />
+          </button>
         </div>
 
-        <nav className="flex flex-col gap-1">
-          {navLinks.map((link) => {
-            const isActive = pathname === link.href;
-            const Icon = link.icon;
+        {/* Desktop logo */}
+        <div className="hidden px-6 py-6 lg:block">
+          <h2 className="text-xl font-bold text-primary">
+            OpportunityHub
+          </h2>
+        </div>
+
+        {/* Navigation */}
+        <nav className="flex flex-1 flex-col gap-2 px-4 py-4">
+          {navLinks.map((item) => {
+            const Icon = item.icon;
+
+            const isActive =
+              item.href === "/"
+                ? pathname === "/"
+                : pathname === item.href;
+
             return (
               <Link
-                key={link.href}
-                href={link.href}
-                className={`flex items-center gap-3 rounded-[10px] px-3 py-2.5 text-sm font-medium transition ${
+                key={item.href}
+                href={item.href}
+                onClick={onClose}
+                className={`flex items-center gap-3 rounded-lg px-4 py-3 text-sm font-medium transition ${
                   isActive
-                    ? "bg-[#2b6b41] text-white"
-                    : "text-[#5c5457] hover:bg-[#f6e9eb]"
+                    ? "bg-primary text-white"
+                    : "text-gray-600 hover:bg-gray-100 hover:text-primary"
                 }`}
               >
-                <Icon size={18} strokeWidth={2} />
-                {link.label}
+                <Icon size={19} />
+                {item.label}
               </Link>
             );
           })}
         </nav>
-      </div>
 
-      <div className="flex flex-col gap-1">
-        <Link
-          href="/settings"
-          className="flex items-center gap-3 rounded-[10px] px-3 py-2.5 text-sm font-medium text-[#5c5457] transition hover:bg-[#f6e9eb]"
-        >
-          <Settings size={18} />
-          Settings
-        </Link>
-        <button
-          type="button"
-          onClick={clearAuth}
-          className="flex items-center gap-3 rounded-[10px] px-3 py-2.5 text-left text-sm font-medium text-[#5c5457] transition hover:bg-[#f6e9eb]"
-        >
-          <LogOut size={18} />
-          Logout
-        </button>
-      </div>
-    </aside>
+        {/* Logout */}
+        <div className="border-t border-gray-200 px-4 py-4">
+          <button
+            type="button"
+            onClick={onLogout}
+            className="flex w-full items-center gap-3 rounded-lg px-4 py-3 text-sm font-medium text-gray-600 transition hover:bg-red-50 hover:text-red-600"
+          >
+            <LogOut size={19} />
+            Logout
+          </button>
+        </div>
+      </aside>
+    </>
   );
-};
-
-export default Sidebar;
+}

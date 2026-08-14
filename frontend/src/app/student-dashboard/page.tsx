@@ -1,16 +1,39 @@
+"use client";
 
+import { useEffect, useState } from "react";
 import StudentDashboard from "@/components/dashboard-components/StudentDashboard";
-import ProtectedRoute from "@/components/ProtectedRoute";
+import { getAppliedOpportunityIds } from "@/lib/opportunity-storage";
 
 export default function StudentDashboardPage() {
-    return (
-    <ProtectedRoute requiredRole="student">
-      <StudentDashboard stats={{
-          newOpportunities: 0,
-          saved: 0,
-          applicationsInProgress: 0,
-          reminders: 0,
-        }}/>
-    </ProtectedRoute>
+  const [applicationCount, setApplicationCount] = useState(0);
+
+  useEffect(() => {
+    const updateApplicationCount = () => {
+      setApplicationCount(getAppliedOpportunityIds().length);
+    };
+
+    updateApplicationCount();
+
+    window.addEventListener(
+      "applied-opportunities-updated",
+      updateApplicationCount
+    );
+
+    return () => {
+      window.removeEventListener(
+        "applied-opportunities-updated",
+        updateApplicationCount
+      );
+    };
+  }, []);
+
+  return (
+    <StudentDashboard
+      stats={{
+        newOpportunities: 0,
+        applicationsInProgress: applicationCount,
+        reminders: 0,
+      }}
+    />
   );
 }

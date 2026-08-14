@@ -9,8 +9,6 @@ import {
 const STUDENT_PROFILE_ENDPOINT = "/me/profile/student/";
 const RECRUITER_PROFILE_ENDPOINT = "/me/profile/recruiter/";
 
-//helper
-
 function buildFormData<T>(data: Partial<T>): FormData {
   const formData = new FormData();
 
@@ -18,15 +16,25 @@ function buildFormData<T>(data: Partial<T>): FormData {
     if (value === undefined || value === null) return;
 
     if (Array.isArray(value)) {
-      value.forEach((item) => formData.append(key, item as string));
+      value.forEach((item) => {
+        formData.append(key, String(item));
+      });
+
       return;
     }
 
-    formData.append(key, value as string | Blob);
+    if (value instanceof File || value instanceof Blob) {
+      formData.append(key, value);
+      return;
+    }
+
+    formData.append(key, String(value));
   });
 
   return formData;
 }
+
+/* RECRUITER*/
 
 export async function createRecruiterProfile(
   data: RecruiterProfileRequest
@@ -58,6 +66,7 @@ export async function deleteRecruiterProfile(): Promise<RecruiterProfileResponse
   });
 }
 
+/*STUDENT*/
 
 export async function createStudentProfile(
   data: StudentProfileRequest

@@ -70,7 +70,7 @@ const ProfileDropdown = ({
 
           <div className="py-2">
             <Link
-              href="/dashboard"
+              href={role === "student" ? "/student-dashboard" : "/recruiter-dashboard"}
               className="flex items-center gap-3 px-5 py-3 hover:bg-gray-50"
             >
               <LayoutDashboard size={18} />

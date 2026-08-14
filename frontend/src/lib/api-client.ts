@@ -1,5 +1,4 @@
-// const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
-const BASE_URL = 'https://opportunityhubng.my.to/api/v1';
+const BASE_URL = "https://opportunityhubng.my.to/api/v1";
 
 import {
   getAccessToken,
@@ -14,11 +13,25 @@ interface ApiFetchOptions extends RequestInit {
   _isRetry?: boolean;
 }
 
+export class ApiError extends Error {
+  status: number;
+  data: unknown;
+
+  constructor(message: string, status: number, data?: unknown) {
+    super(message);
+    this.name = "ApiError";
+    this.status = status;
+    this.data = data;
+  }
+}
+
+export const API_ORIGIN = BASE_URL.replace("/api/v1", "");
 
 let refreshPromise: Promise<string | null> | null = null;
 
 async function refreshAccessToken(): Promise<string | null> {
   const refreshToken = getRefreshToken();
+
   if (!refreshToken) return null;
 
   if (!refreshPromise) {
@@ -26,16 +39,23 @@ async function refreshAccessToken(): Promise<string | null> {
       try {
         const response = await fetch(`${BASE_URL}/auth/token/refresh/`, {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ refresh: refreshToken }),
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            refresh: refreshToken,
+          }),
         });
 
         if (!response.ok) return null;
 
         const data = await response.json();
+
         setAccessToken(data.access);
-        // this endpoint also returns a fresh refresh token - save it too
-        if (data.refresh) setRefreshToken(data.refresh);
+
+        if (data.refresh) {
+          setRefreshToken(data.refresh);
+        }
 
         return data.access as string;
       } catch {
@@ -57,7 +77,11 @@ export async function apiFetch<T>(
   endpoint: string,
   options: ApiFetchOptions = {}
 ): Promise<T> {
-  const { skipAuth = false, _isRetry = false, ...fetchOptions } = options;
+  const {
+    skipAuth = false,
+    _isRetry = false,
+    ...fetchOptions
+  } = options;
 
   const isFormData = fetchOptions.body instanceof FormData;
   const token = skipAuth ? null : getAccessToken();
@@ -65,31 +89,62 @@ export async function apiFetch<T>(
   const response = await fetch(`${BASE_URL}${endpoint}`, {
     ...fetchOptions,
     headers: {
-      ...(isFormData ? {} : { "Content-Type": "application/json" }),
-      ...(token ? { Authorization: `Bearer ${token}` } : {}),
+      ...(isFormData
+        ? {}
+        : {
+            "Content-Type": "application/json",
+          }),
+
+      ...(token
+        ? {
+            Authorization: `Bearer ${token}`,
+          }
+        : {}),
+
       ...(fetchOptions.headers ?? {}),
     },
   });
 
   const text = await response.text();
-  const data = text ? JSON.parse(text) : {};
+
+  let data: any = {};
+
+  try {
+    data = text ? JSON.parse(text) : {};
+  } catch {
+    data = {};
+  }
+
   console.log(data);
 
   if (!response.ok) {
-    // Access token expired - try to refresh and retry the request ONCE
-    if (!skipAuth && !_isRetry && isExpiredTokenError(response.status, data)) {
+    // Access token expired.
+    // Refresh and retry the original request once.
+    if (
+      !skipAuth &&
+      !_isRetry &&
+      isExpiredTokenError(response.status, data)
+    ) {
       const newAccessToken = await refreshAccessToken();
 
       if (newAccessToken) {
-        return apiFetch<T>(endpoint, { ...options, _isRetry: true });
+        return apiFetch<T>(endpoint, {
+          ...options,
+          _isRetry: true,
+        });
       }
 
-      // refresh token itself is invalid/expired - fully log out
       clearAuth();
+
       if (typeof window !== "undefined") {
         window.location.href = "/login";
       }
-      throw new Error("Session expired. Please log in again.");
+
+      throw new ApiError(
+        "Session expired. Please log in again.",
+        401,
+        data
+      );
     }
 
     let message = "Something went wrong";
@@ -108,6 +163,7 @@ export async function apiFetch<T>(
           if (Array.isArray(value)) {
             return `${field}: ${value.join(", ")}`;
           }
+
           return `${field}: ${value}`;
         })
         .join("\n");
@@ -117,7 +173,7 @@ export async function apiFetch<T>(
       }
     }
 
-    throw new Error(message);
+    throw new ApiError(message, response.status, data);
   }
 
   return data;
