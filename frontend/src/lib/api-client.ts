@@ -115,7 +115,6 @@ export async function apiFetch<T>(
     data = {};
   }
 
-  console.log(data);
 
   if (!response.ok) {
     // Access token expired.
