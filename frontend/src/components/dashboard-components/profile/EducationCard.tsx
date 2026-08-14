@@ -1,3 +1,4 @@
+import { GraduationCap } from "lucide-react";
 interface EducationCardProps {
   institution: string;
   course: string;
@@ -25,7 +26,7 @@ export default function EducationCard({
 
       <div className="flex items-start gap-3">
         <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-md bg-[#e6e6e6] text-xs">
-          🎓
+          <GraduationCap />
         </div>
 
         <div>
