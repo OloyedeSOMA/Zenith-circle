@@ -10,6 +10,7 @@ import GoogleIcon from "../../../public/Social.png";
 import AuthFormCard from "./AuthFormCard";
 
 import { useLogin } from "@/hooks/useAuth";
+import { getRecruiterProfile } from "@/lib/profile-api";
 import StatusModal from "../StatusModal";
 import {
   setAccessToken,
@@ -58,10 +59,17 @@ const LoginForm = ({ onRedirecting }: LoginFormProps) => {
 
         const nextPath = searchParams.get("next");
 
-        const destination =
-          response.user.role === "recruiter"
-            ? "/recruiter-profile"
-            : nextPath || "/";
+        if (response.user.role === "recruiter") {
+          getRecruiterProfile().then(() => {
+            router.push("/recruiter-dashboard");
+          })
+          .catch(() => {
+            router.push("/recruiter-profile");
+          });
+
+       return;
+        }
+
         
         setTimeout(() => {
           router.push(destination);
