@@ -27,7 +27,7 @@ const Input = ({
   const inputType = isPassword ? (showPassword ? "text" : "password") : type;
 
   return (
-    <div className={`flex w-full flex-col gap-1.5 ${className}`}>
+    <div className={`flex w-full flex-col gap-1 ${className}`}>
       <label className="text-sm font-medium text-gray-700">{label}</label>
 
       <div className="relative w-full">

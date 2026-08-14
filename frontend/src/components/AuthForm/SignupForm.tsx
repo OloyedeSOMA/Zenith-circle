@@ -4,11 +4,14 @@ import { useForm } from "react-hook-form";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+
 import Input from "../Input";
 import Select from "../Select";
 import Button from "../Button";
 import AuthFormCard from "./AuthFormCard";
 import StatusModal from "@/components/StatusModal";
+import PrivacyPolicyModal from "../PrivacyPolicyModal";
+
 import { useRegister } from "@/hooks/useAuth";
 import { trackEvent } from "@/lib/gtag";
 
@@ -24,10 +27,15 @@ interface SignupFormValues {
 
 const SignupForm = () => {
   const router = useRouter();
-  const {mutate, isPending,} = useRegister();
+
+  const { mutate, isPending } = useRegister();
+
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState("");
+  const [policyOpen, setPolicyOpen] = useState(false);
+
   const closeErrorModal = () => setError("");
+
   const {
     register,
     reset,
@@ -43,53 +51,56 @@ const SignupForm = () => {
 
   const onSubmit = (data: SignupFormValues) => {
     mutate(
-    {
-      email: data.email,
-      first_name: data.firstName,
-      last_name: data.lastName,
-      password: data.password,
-      role: data.role,
-    },
-    {
-      onSuccess: (response) => {
-        trackEvent("sign_up", {
-          method: "email",
-        });
-        console.log("Register response:", response);
-        reset();
-        setSuccess(true);
+      {
+        email: data.email,
+        first_name: data.firstName,
+        last_name: data.lastName,
+        password: data.password,
+        role: data.role,
       },
+      {
+        onSuccess: (response) => {
+          trackEvent("sign_up", {
+            method: "email",
+          });
 
-      onError: (error: any) => {
-        setError(error.message || "Unable to create account.");
-      },
-    }
-  );
+          console.log("Register response:", response);
+
+          reset();
+          setSuccess(true);
+        },
+
+        onError: (error: any) => {
+          setError(error.message || "Unable to create account.");
+        },
+      }
+    );
   };
-
-  const policyLink = "https://docs.google.com/document/d/1Hobafy_YF06Isxz3KFYNMCsY3cc8UJTR/edit?usp=sharing&ouid=111787107402201421453&rtpof=true&sd=true";
 
   return (
     <AuthFormCard
       title="OpportunityHub NG"
       subtitle="Create Account"
     >
-
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="mt-0 flex w-full max-w-[440px] flex-col gap-2"
+        className="mt-0 flex w-full max-w-[440px] flex-col gap-1"
       >
         <Input
           label="First name"
           placeholder="First name"
-          register={register("firstName", { required: "First name is required" })}
+          register={register("firstName", {
+            required: "First name is required",
+          })}
           error={errors.firstName?.message}
         />
 
         <Input
           label="Last name"
           placeholder="Last name"
-          register={register("lastName", { required: "First name is required" })}
+          register={register("lastName", {
+            required: "Last name is required",
+          })}
           error={errors.lastName?.message}
         />
 
@@ -109,8 +120,14 @@ const SignupForm = () => {
           })}
           error={errors.role?.message}
           options={[
-            { label: "Student", value: "student" },
-            { label: "Recruiter", value: "recruiter" },
+            {
+              label: "Student",
+              value: "student",
+            },
+            {
+              label: "Recruiter",
+              value: "recruiter",
+            },
           ]}
         />
 
@@ -120,7 +137,10 @@ const SignupForm = () => {
           type="password"
           register={register("password", {
             required: "Password is required",
-            minLength: { value: 8, message: "Password should contain at least 8 Characters" }
+            minLength: {
+              value: 8,
+              message: "Password should contain at least 8 Characters",
+            },
           })}
           error={errors.password?.message}
         />
@@ -131,7 +151,9 @@ const SignupForm = () => {
           type="password"
           register={register("confirmPassword", {
             required: "Please confirm your password",
-            validate: (value) => value === watch("password") || "Passwords do not match",
+            validate: (value) =>
+              value === watch("password") ||
+              "Passwords do not match",
           })}
           error={errors.confirmPassword?.message}
         />
@@ -142,36 +164,54 @@ const SignupForm = () => {
           className="h-[49px] w-full font-medium"
           disabled={isPending}
         >
-          {isPending? "Creating Account.." : "Create Account"}
+          {isPending ? "Creating Account.." : "Create Account"}
         </Button>
 
         <label className="flex w-full items-start gap-2 text-xs text-gray-600">
           <input
             type="checkbox"
-            {...register("agreeToTerms", { required: true })}
+            {...register("agreeToTerms", {
+              required: true,
+            })}
             className="mt-0.5 h-4 w-4 rounded border-gray-300 accent-primary"
           />
+
           <span>
             By continuing, you agree to our{" "}
-            <Link href={policyLink} className="text-primary underline">
+            <button
+              type="button"
+              onClick={() => setPolicyOpen(true)}
+              className="text-primary underline"
+            >
               Terms of Service
-            </Link>{" "}
+            </button>{" "}
             and{" "}
-            <Link href={policyLink} className="text-primary underline">
+            <button
+              type="button"
+              onClick={() => setPolicyOpen(true)}
+              className="text-primary underline"
+            >
               Privacy Policy
-            </Link>
+            </button>
           </span>
         </label>
 
         <p className="text-center text-sm text-gray-600">
           Already have an account?{" "}
-          <Link href="/login" className="font-medium text-primary">
+          <Link
+            href="/login"
+            className="font-medium text-primary"
+          >
             Login
           </Link>
         </p>
-
-        
       </form>
+
+      <PrivacyPolicyModal
+        open={policyOpen}
+        onClose={() => setPolicyOpen(false)}
+      />
+
       <StatusModal
         open={success}
         type="success"
@@ -179,16 +219,16 @@ const SignupForm = () => {
         buttonText="Okay"
         onButtonClick={() => router.push("/login")}
         onClose={() => setSuccess(false)}
-    />
+      />
 
-    <StatusModal
-      open={!!error}
-      type="error"
-      message={error}
-      buttonText="Okay"
-      onButtonClick={closeErrorModal}
-      onClose={closeErrorModal}
-    />
+      <StatusModal
+        open={!!error}
+        type="error"
+        message={error}
+        buttonText="Okay"
+        onButtonClick={closeErrorModal}
+        onClose={closeErrorModal}
+      />
     </AuthFormCard>
   );
 };
