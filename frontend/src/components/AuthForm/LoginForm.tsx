@@ -72,7 +72,7 @@ const LoginForm = ({ onRedirecting }: LoginFormProps) => {
 
         
         setTimeout(() => {
-          router.push(nextpath || "/");
+          router.push(nextPath || "/");
         }, 1000);
       },
 
