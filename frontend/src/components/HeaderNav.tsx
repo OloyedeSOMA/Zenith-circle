@@ -127,7 +127,7 @@ const HeaderNav = () => {
           {mounted && (loggedIn && user ? (
            <ProfileDropdown
            email={user.email}
-           role={user.role}
+           role={user.role as "student" | "recruiter"}
            onLogout={handleLogout}
           />
          ) : (
