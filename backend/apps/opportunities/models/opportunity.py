@@ -14,7 +14,7 @@ class OpportunityField(BaseModel):
         ordering = ["name"]
 
     def __str__(self):
-        return self.name
+        return f'{self.name}'
 
 
 class OpportunityType(models.TextChoices):
@@ -60,7 +60,7 @@ class Opportunity(BaseModel):
         ]
 
     def __str__(self):
-        return self.title
+        return f'{self.title} - {self.organisation}, {self.location} - Status: {self.status}'
 
 
 

@@ -18,7 +18,7 @@ class StudentProfile(BaseModel):
 
 
     def __str__(self):
-        return f'{self.user.email} -  Student Profile'
+        return f'Student: {self.user.first_name} {self.user.last_name} - {self.user.email}'
 
 
 
@@ -34,4 +34,4 @@ class RecruiterProfile(BaseModel):
     logo = models.URLField(blank=True, null=True)
 
     def __str__(self):
-        return f'{self.user.email} - Recruiter Profile'
+        return f'Recruiter: {self.user.first_name} {self.user.last_name} - {self.user.email} - {self.website}'
