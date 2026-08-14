@@ -99,11 +99,7 @@ export default function CreateOpportunity() {
 
   const [error, setError] = useState("");
 
-  /*
-   * =========================
-   * GET EDIT ID
-   * =========================
-   */
+  
 
   useEffect(() => {
     const params = new URLSearchParams(
@@ -115,11 +111,6 @@ export default function CreateOpportunity() {
     );
   }, []);
 
-  /*
-   * =========================
-   * QUERIES / MUTATIONS
-   * =========================
-   */
 
   const {
     data: existingOpportunity,
@@ -137,11 +128,7 @@ export default function CreateOpportunity() {
   const updateMutation =
     useUpdateOpportunity();
 
-  /*
-   * =========================
-   * POPULATE EDIT FORM
-   * =========================
-   */
+  /* POPULATE EDIT FORM  */
 
   useEffect(() => {
     if (!existingOpportunity) return;
@@ -204,11 +191,6 @@ export default function CreateOpportunity() {
     });
   }, [existingOpportunity]);
 
-  /*
-   * =========================
-   * HELPERS
-   * =========================
-   */
 
   const updateField = (
     field: keyof FormValues,
@@ -295,11 +277,6 @@ export default function CreateOpportunity() {
     return true;
   };
 
-  /*
-   * =========================
-   * SUBMIT
-   * =========================
-   */
 
   const handleSubmit = () => {
     if (!validateBasic()) {
@@ -344,12 +321,7 @@ export default function CreateOpportunity() {
 
       location:
         form.location.trim(),
-
-      /*
-       * IMPORTANT:
-       * This is now the UUID selected
-       * from /opportunities/fields/
-       */
+      
       field: form.field,
 
       deadline: new Date(
@@ -409,11 +381,7 @@ export default function CreateOpportunity() {
     createMutation.isPending ||
     updateMutation.isPending;
 
-  /*
-   * =========================
-   * LOADING EDIT
-   * =========================
-   */
+  
 
   if (
     editId &&
@@ -435,7 +403,7 @@ export default function CreateOpportunity() {
           event.preventDefault();
           handleSubmit();
         }}
-        className="mx-auto w-full max-w-[1100px]"
+        className="mx-auto w-full max-w-[1100px] text-black"
       >
         {/* Header */}
 
