@@ -1,7 +1,8 @@
+export type UserRole = "student" | "recruiter";
 export interface AuthUser {
   id?: string;
   email: string;
-  role: string;
+  role: UserRole;
   first_name?: string;
   last_name?: string;
 }
