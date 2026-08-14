@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { Home, LayoutDashboard, Bookmark, Clock, Bell, User, Menu,} from "lucide-react";
+import { Home, LayoutDashboard, Bookmark, FilePlus2, ClipboardList, User, Menu,} from "lucide-react";
 import Sidebar, { type SidebarNavLink } from "@/components/dashboard-components/Sidebar";
 import ProtectedRoute from "@/components/ProtectedRoute";
 import { Suspense } from "react";
@@ -21,12 +21,12 @@ const recruiterNavLinks: SidebarNavLink[] = [
     {
       label: "Create Opportunities",
       href: "/recruiter-dashboard/create-opportunity",
-      icon: Bookmark,
+      icon: FilePlus2,
     },
     {
       label: "Submissions",
       href: "/recruiter-dashboard/submissions",
-      icon: Bookmark,
+      icon: ClipboardList,
     },
     {
       label: "Profile",
