@@ -85,14 +85,21 @@ export default function OpportunityDetailsHeader({
   }, [id]);
 
   const handleApply = () => {
+    trackEvent("apply_click", {
+      opportunity_id: id,
+      opportunity_title: title,
+      company_name: company,
+      application_link: application_url,
+    }),
     requireStudentAccess(router, {
+      
       onSuccess: () => {
         if (!id) return;
 
         addAppliedOpportunity(id);
         setIsApplied(true);
 
-        trackEvent("apply_opportunity", {
+        trackEvent("apply_redirect", {
           opportunity_id: id,
           opportunity_title: title,
           company_name: company,
@@ -243,11 +250,8 @@ export default function OpportunityDetailsHeader({
             type="button"
             onClick={handleSave}
             disabled={isSavingOrRemoving}
-            className={`inline-flex w-full items-center justify-center gap-1 rounded-xl px-4 py-3 text-sm font-medium transition ${
-              isSaved
-                ? "border border-primary bg-primary text-white"
-                : "border border-gray-300 text-gray-700 hover:bg-gray-50"
-            } ${
+            className={`inline-flex w-full items-center justify-center gap-1 rounded-xl px-4 py-3 text-sm font-medium transition border border-gray-300 text-gray-700 hover:bg-gray-50
+             ${
               isSavingOrRemoving
                 ? "cursor-not-allowed opacity-50"
                 : "cursor-pointer"
@@ -257,7 +261,7 @@ export default function OpportunityDetailsHeader({
 
             <Bookmark
               size={16}
-              fill={isSaved ? "currentColor" : "none"}
+              fill={isSaved ? "text-primary" : "none"}
             />
           </button>
 

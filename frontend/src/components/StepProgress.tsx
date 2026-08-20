@@ -1,7 +1,7 @@
 "use client";
 
 interface StepProgressProps {
-  currentStep: number; // 0-indexed
+  currentStep: number; 
   totalSteps: number;
 }
 

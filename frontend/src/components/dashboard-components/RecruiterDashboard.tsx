@@ -2,10 +2,8 @@
 
 import Link from "next/link";
 import { Plus, FileText } from "lucide-react";
-
 import StatSection from "./StatSection";
 import OpportunityTable from "./OpportunityTable";
-
 import { useMyOpportunities } from "@/hooks/useOpportunity";
 
 export default function RecruiterDashboard() {
@@ -67,7 +65,6 @@ export default function RecruiterDashboard() {
   return (
     <div className="mx-auto w-full max-w-[1200px] space-y-6">
 
-      {/* Header */}
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h1 className="text-xl font-bold text-[#1f1f1f]">
@@ -88,13 +85,9 @@ export default function RecruiterDashboard() {
         </Link>
       </div>
 
-      {/* Stats */}
       <StatSection stats={stats} />
-
-      {/* Recent submissions */}
       <section className="rounded-[16px] border border-[#a9aaa4] bg-white">
 
-        {/* Section header */}
         <div className="flex items-center justify-between border-b border-[#eeeeee] px-5 py-4">
           <div>
             <h2 className="text-base font-bold text-[#1f1f1f]">
@@ -114,7 +107,7 @@ export default function RecruiterDashboard() {
           </Link>
         </div>
 
-        {/* Table / states */}
+        
         {isLoading ? (
           <div className="flex min-h-[260px] items-center justify-center">
             <p className="text-sm text-[#70696b]">

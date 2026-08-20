@@ -59,7 +59,6 @@ export default function DashboardHeader() {
         />
       </div>
 
-      {/* Profile */}
       <div className="flex shrink-0 items-center gap-3">
         {profilePhoto ? (
           <Image

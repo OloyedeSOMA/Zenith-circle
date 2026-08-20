@@ -18,20 +18,20 @@ export default function ProfileHeader({
   onEdit,
 }: ProfileHeaderProps) {
   return (
-    <div className="relative rounded-[12px] border border-[#a9aaa4] bg-white p-4">
+    <div className="relative rounded-[12px] border border-[#a9aaa4] bg-white p-5">
       <button
         type="button"
         onClick={onEdit}
-        className="absolute right-3 top-3 rounded-md bg-[#2b6b41] px-3 py-1.5 text-xs font-medium text-white transition hover:bg-[#245b37]"
+        className="absolute right-4 top-4 rounded-md bg-[#2b6b41] px-3 py-2 text-sm font-medium text-white transition hover:bg-[#245b37]"
       >
-        <span className="flex items-center gap-1">
-          <Pencil size={12} />
+        <span className="flex items-center gap-1.5">
+          <Pencil size={14} />
           Edit Profile
         </span>
       </button>
 
-      <div className="flex items-start gap-3 pr-28">
-        <div className="h-[64px] w-[64px] shrink-0 overflow-hidden rounded-full bg-[#e6e6e6]">
+      <div className="flex items-start gap-4 pr-32">
+        <div className="h-[72px] w-[72px] shrink-0 overflow-hidden rounded-full bg-[#e6e6e6]">
           {image ? (
             <img
               src={image}
@@ -39,23 +39,23 @@ export default function ProfileHeader({
               className="h-full w-full object-cover"
             />
           ) : (
-            <div className="flex h-full w-full items-center justify-center text-sm font-bold text-[#2b6b41]">
+            <div className="flex h-full w-full items-center justify-center text-lg font-bold text-[#2b6b41]">
               {name.charAt(0).toUpperCase()}
             </div>
           )}
         </div>
 
-        <div className="min-w-0">
-          <h2 className="text-sm font-bold text-[#1f1f1f]">
+        <div className="min-w-0 pt-1">
+          <h2 className="text-lg font-bold text-[#1f1f1f]">
             {name}
           </h2>
 
-          <p className="text-xs text-[#625c5d]">
+          <p className="mt-0.5 text-sm text-[#625c5d]">
             {email}
           </p>
 
           {subtitle && (
-            <p className="mt-1 text-xs text-[#625c5d]">
+            <p className="mt-1.5 text-sm text-[#625c5d]">
               {subtitle}
             </p>
           )}

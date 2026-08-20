@@ -6,7 +6,6 @@ import {
   useRecruiterProfile,
   useStudentProfile,
 } from "@/hooks/useProfile";
-
 import ProfileHeader from "./ProfileHeader";
 import AccountInformation from "./AccountInformation";
 import EducationCard from "./EducationCard";
@@ -26,10 +25,7 @@ export default function DashboardProfile({
   const studentQuery = useStudentProfile(role === "student");
   const recruiterQuery = useRecruiterProfile(role === "recruiter");
 
-  const query =
-    role === "student"
-      ? studentQuery
-      : recruiterQuery;
+  const query = role === "student" ? studentQuery : recruiterQuery;
 
   const profile =
     role === "student"
@@ -49,7 +45,7 @@ export default function DashboardProfile({
   if (query.isLoading) {
     return (
       <div className="flex min-h-[400px] items-center justify-center">
-        <p className="text-sm text-[#70696b]">
+        <p className="text-base text-[#70696b]">
           Loading profile...
         </p>
       </div>
@@ -59,43 +55,29 @@ export default function DashboardProfile({
   if (!profile) {
     return null;
   }
+
   // STUDENT PROFILE
-
   if (role === "student") {
-    const name =
-      studentQuery.data?.display_name || "Student";
-
-    const email =
-      studentQuery.data?.email || "—";
-
-    const photo =
-      studentQuery.data?.profile_photo || null;
-
-    const institution =
-      studentQuery.data?.institution || "—";
-
-    const course =
-      studentQuery.data?.course_of_study || "—";
-
-    const level =
-      studentQuery.data?.current_level || "—";
-
+    const name = studentQuery.data?.display_name || "Student";
+    const email = studentQuery.data?.email || "—";
+    const photo = studentQuery.data?.profile_photo || null;
+    const institution = studentQuery.data?.institution || "—";
+    const course = studentQuery.data?.course_of_study || "—";
+    const level = studentQuery.data?.current_level || "—";
     const graduation =
       studentQuery.data?.expected_graduation || "—";
-
-    const skills =
-      studentQuery.data?.skills || [];
+    const skills = studentQuery.data?.skills || [];
 
     return (
       <>
-        <div className="flex flex-col gap-3">
+        <div className="flex flex-col gap-5">
           {/* Page heading */}
           <div>
-            <h1 className="text-sm font-bold text-[#1f1f1f]">
+            <h1 className="text-xl font-bold text-[#1f1f1f]">
               My Profile
             </h1>
 
-            <p className="text-[11px] text-[#70696b]">
+            <p className="mt-1 text-sm text-[#70696b]">
               Manage your personal information
             </p>
           </div>
@@ -162,34 +144,26 @@ export default function DashboardProfile({
   }
 
   // RECRUITER PROFILE
-
-
   const organisation =
-    recruiterQuery.data?.organisation ||
-    "Organisation";
+    recruiterQuery.data?.organisation || "Organisation";
 
   const description =
     recruiterQuery.data?.description || "";
 
-  const website =
-    recruiterQuery.data?.website || "—";
-
-  const location =
-    recruiterQuery.data?.location || "—";
-
-  const logo =
-    recruiterQuery.data?.logo || null;
+  const website = recruiterQuery.data?.website || "—";
+  const location = recruiterQuery.data?.location || "—";
+  const logo = recruiterQuery.data?.logo || null;
 
   return (
     <>
-      <div className="flex flex-col gap-3">
+      <div className="flex flex-col gap-5">
         {/* Page heading */}
         <div>
-          <h1 className="text-sm font-bold text-[#1f1f1f]">
+          <h1 className="text-xl font-bold text-[#1f1f1f]">
             My Profile
           </h1>
 
-          <p className="text-[11px] text-[#70696b]">
+          <p className="mt-1 text-sm text-[#70696b]">
             Manage your organisation information
           </p>
         </div>
@@ -203,38 +177,35 @@ export default function DashboardProfile({
           onEdit={() => setEditOpen(true)}
         />
 
-        {/* Account information*/}
-        
-          <AccountInformation
-            items={[
-              {
-                label: "Organisation",
-                value: organisation,
-              },
-              {
-                label: "Description",
-                value: description,
-              },
-              {
-                label: "Website",
-                value: website,
-              },
-              {
-                label: "Location",
-                value: location,
-              },
-            ]}
-          />
-
-         
+        {/* Account information */}
+        <AccountInformation
+          items={[
+            {
+              label: "Organisation",
+              value: organisation,
+            },
+            {
+              label: "Description",
+              value: description,
+            },
+            {
+              label: "Website",
+              value: website,
+            },
+            {
+              label: "Location",
+              value: location,
+            },
+          ]}
+        />
 
         {/* About organisation */}
-        <div className="rounded-[12px] border border-[#a9aaa4] bg-white p-4">
-          <h3 className="mb-2 text-xs font-bold text-[#1f1f1f]">
+        <div className="rounded-[12px] border border-[#a9aaa4] bg-white p-5">
+          <h3 className="mb-3 text-base font-bold text-[#1f1f1f]">
             About Organisation
           </h3>
 
-          <p className="text-[11px] leading-relaxed text-[#70696b]">
+          <p className="text-sm leading-6 text-[#70696b]">
             {description ||
               "No organisation description provided."}
           </p>

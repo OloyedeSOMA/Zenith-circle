@@ -18,7 +18,6 @@ export default function SubmissionsPage() {
   return (
     <div className="mx-auto w-full max-w-[1200px] space-y-6">
 
-      {/* Header */}
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <Link
@@ -38,8 +37,6 @@ export default function SubmissionsPage() {
           </p>
         </div>
       </div>
-
-      {/* Table */}
       <section className="rounded-[16px] border border-[#a9aaa4] bg-white">
 
         <div className="flex items-center justify-between border-b border-[#eeeeee] px-5 py-4">

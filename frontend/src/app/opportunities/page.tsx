@@ -3,7 +3,7 @@ import OpportunitiesSection from "@/components/OpportunitiesSection";
 import Footer from "@/components/Footer";
 
 
-export default function Home() {
+export default function OpportunitiesPage() {
   return (
     <div className="min-h-screen mx-auto w-full max-w-[100%] bg-white gap-5">
       <HeaderNav />

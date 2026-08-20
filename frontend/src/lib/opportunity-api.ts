@@ -109,9 +109,7 @@ export const createOpportunity = (
   );
 };
 
-/* =========================
-   UPDATE
-========================= */
+/* UPDATE*/
 
 export const updateOpportunity = (
   opportunityId: string,
@@ -126,9 +124,7 @@ export const updateOpportunity = (
   );
 };
 
-/* =========================
-   DELETE
-========================= */
+/*DELETE*/
 
 export const deleteOpportunity = (
   opportunityId: string
@@ -141,9 +137,7 @@ export const deleteOpportunity = (
   );
 };
 
-/* =========================
-   PUBLIC SINGLE OPPORTUNITY
-========================= */
+/*PUBLIC SINGLE OPPORTUNITY*/
 
 export const fetchOpportunityBySlug = (
   slug: string

@@ -17,9 +17,9 @@ const iconColorClasses: Record<CategoryItem["color"], string> = {
 };
 
 const categories: CategoryItem[] = [
-  { label: "Internships", count: "100+", href: "/opportunities?type=internship", icon: Briefcase, color: "orange" },
-  { label: "Scholarships", count: "50+", href: "/opportunities?type=scholarship", icon: GraduationCap, color: "green" },
-  { label: "Jobs", count: "70+", href: "/opportunities?type=job", icon: Building2, color: "blue" },
+  { label: "Internships", count: "100+", href: "/internships", icon: Briefcase, color: "orange" },
+  { label: "Scholarships", count: "50+", href: "/scholarships", icon: GraduationCap, color: "green" },
+  { label: "Jobs", count: "70+", href: "/jobs", icon: Building2, color: "blue" },
   { label: "Remote", count: "50+", href: "/opportunities?remote=true", icon: Globe, color: "purple" },
 ];
 

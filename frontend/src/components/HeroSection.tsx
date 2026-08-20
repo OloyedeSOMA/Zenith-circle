@@ -7,6 +7,7 @@ import { Search, ShieldCheck } from "lucide-react";
 import HeroImage from "../../public/hero-image1.png";
 import VerifiedCard from "../../public/hero-image2.png";
 import SaveTrackCard from "../../public/hero-image3.png";
+
 import { trackEvent } from "@/lib/gtag";
 
 interface HeroSectionProps {
@@ -18,16 +19,17 @@ const HeroSection = ({ onSearch }: HeroSectionProps) => {
 
   const handleSearch = () => {
     onSearch?.(searchValue);
+
     trackEvent("search_opportunity", {
       keyword: searchValue,
     });
   };
 
   return (
-    <section className="w-full bg-[#F5F6F7] max-w-[100%] flex justify-center">
+    <section className="w-full bg-[#F5F6F7]">
       <div className="mx-auto flex w-full max-w-[90%] mt-2 items-center justify-between py-10 lg:py-10">
         {/* Left */}
-        <div className="w-full lg:w-[70%]">
+        <div className="min-w-0 flex-1">
           <div className="inline-flex items-center gap-2 rounded-lg bg-[#DDF4DD] px-4 py-2">
             <ShieldCheck
               size={18}
@@ -67,7 +69,7 @@ const HeroSection = ({ onSearch }: HeroSectionProps) => {
                   handleSearch();
                 }
               }}
-              className="h-8 w-full text-black rounded-xl border border-gray-200 bg-white p-5 px-8 right-5 text-sm outline-none transition focus:border-primary"
+              className="h-8 w-full rounded-xl border border-gray-200 bg-white p-5 px-8 text-sm text-black outline-none transition focus:border-primary"
             />
 
             <button
@@ -81,38 +83,42 @@ const HeroSection = ({ onSearch }: HeroSectionProps) => {
         </div>
 
         {/* Right */}
-            <div className="relative hidden h-[480px] w-[460px] shrink-0 lg:block">
-            {/* Main Image */}
-            <div className="absolute right-0 top-0 h-[430px] w-[320px] overflow-hidden rounded-3xl">
-                <Image
-                src={HeroImage}
-                alt="OpportunityHub"
-                fill
-                priority
-                className="object-cover"
-                />
-            </div>
+        <div className="relative hidden aspect-[460/480] w-[42%] max-w-[460px] shrink-0 lg:block">
+          {/* Main Image */}
+          <div className="absolute right-0 top-0 h-[90%] w-[70%] overflow-hidden rounded-3xl">
+            <Image
+              src={HeroImage}
+              alt="OpportunityHub"
+              fill
+              priority
+              className="object-cover"
+            />
+          </div>
 
-            {/* Verified Card */}
-            <div className="absolute left-0 top-14 w-[185px]">
-                <Image
-                src={VerifiedCard}
-                alt="Verified Opportunities"
-                priority
-                className="h-auto w-auto"
-                />
-            </div>
+          {/* Verified Card */}
+          <div className="absolute left-0 top-[12%] w-[40%]">
+            <Image
+              src={VerifiedCard}
+              alt="Verified Opportunities"
+              width={185}
+              height={185}
+              priority
+              className="h-auto w-full"
+            />
+          </div>
 
-            {/* Save & Track Card */}
-            <div className="absolute bottom-10 right-[-15px] w-[150px]">
-                <Image
-                src={SaveTrackCard}
-                alt="Save and Track"
-                priority
-                className="h-auto w-auto"
-                />
-            </div>
-            </div>
+          {/* Save & Track Card */}
+          <div className="absolute bottom-[8%] right-[-3%] w-[33%]">
+            <Image
+              src={SaveTrackCard}
+              alt="Save and Track"
+              width={150}
+              height={150}
+              priority
+              className="h-auto w-full"
+            />
+          </div>
+        </div>
       </div>
     </section>
   );

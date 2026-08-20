@@ -923,8 +923,6 @@ export default function CreateOpportunity() {
         </div>
       </form>
 
-      {/* Success */}
-
       <StatusModal
         open={success}
         type="success"
@@ -941,8 +939,6 @@ export default function CreateOpportunity() {
           setSuccess(false)
         }
       />
-
-      {/* Error */}
 
       <StatusModal
         open={!!error}

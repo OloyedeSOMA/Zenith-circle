@@ -6,8 +6,8 @@ export default function SkillsCard({
   skills,
 }: SkillsCardProps) {
   return (
-    <div className="rounded-[12px] border border-[#a9aaa4] bg-white p-4">
-      <h3 className="mb-3 text-xs font-bold text-[#1f1f1f]">
+    <div className="rounded-[12px] border border-[#a9aaa4] bg-white p-5">
+      <h3 className="mb-4 text-base font-bold text-[#1f1f1f]">
         Skills
       </h3>
 
@@ -16,14 +16,14 @@ export default function SkillsCard({
           {skills.map((skill, index) => (
             <span
               key={`${skill}-${index}`}
-              className="rounded-md bg-[#d5f4cf] px-2.5 py-1 text-[10px] text-[#2b6b41]"
+              className="rounded-md bg-[#d5f4cf] px-3 py-1.5 text-sm text-[#2b6b41]"
             >
               {skill}
             </span>
           ))}
         </div>
       ) : (
-        <p className="text-[11px] text-[#70696b]">
+        <p className="text-sm text-[#70696b]">
           No skills added yet.
         </p>
       )}

@@ -1,16 +1,11 @@
 "use client";
-
-
 import { useEffect, useState } from "react";
-
 import { getUser, type AuthUser } from "@/lib/auth-storage";
-// import Sidebar, { type SidebarNavLink } from "./Sidebar";
 import DashboardHeader from "./DashboardHeader";
 import StatsSection, { type StatItem } from "./StatSection";
 import RecommendedOpportunities from "./RecommendedOpportunities";
 import BrowseByCategory from "./BrowseByCategory";
 import { useGetSavedOpportunities } from "@/hooks/useSaved";
-
 
 interface StudentDashboardProps {
   stats: {
