@@ -1,3 +1,4 @@
+export type UserRole = "student" | "recruiter";
 export interface AuthUser {
   id?: string;
   email: string;

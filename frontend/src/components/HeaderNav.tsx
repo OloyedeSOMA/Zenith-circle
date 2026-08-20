@@ -124,13 +124,13 @@ const HeaderNav = () => {
             <Bell size={20} />
           </button>
 
-          {mounted && (loggedIn ? (
-            <ProfileDropdown
-              email={user?.email}
-              role={user?.role}
-              onLogout={handleLogout}
-            />
-          ) : (
+          {mounted && (loggedIn && user ? (
+           <ProfileDropdown
+           email={user.email}
+           role={user.role as "student" | "recruiter"}
+           onLogout={handleLogout}
+          />
+         ) : (
             <>
               <Link href="/login">
                 <Button
